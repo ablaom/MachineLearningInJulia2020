@@ -32,9 +32,13 @@ From elsewhere:
 
 - Installing MLJ and the tutorials
 
-- Part 1: Data ingestion and pre-processing 
+- Part 1. Data containers
+
+- Part 2. Grabbing data
 
 Break
+
+- Part 3. Scientific types
 
 - Part 2: Basic fit and predict/transform
 
@@ -46,7 +50,7 @@ Break
 
 - Part 5: Model pipelines
 
-- Part 6: Learning networks (lecture)
+- Part 6: Advanced features (lecture)
 
 Each Parts 2-6 begins with demonstration on the "teacher's dataset", with
 time for participants to carry out a similar exercise on a "student's
@@ -137,6 +141,7 @@ Re-enforcement learning - out of scope
 
 - working with categorical data 
 
+
 ### Tabular data
 
 - Lots of things can be considered as tabular data; examples: native
@@ -151,15 +156,9 @@ Re-enforcement learning - out of scope
    - use RDatasets
    - use UrlDownload (or is there something better?)
    
-### Demo - 
-
+### Demo 
 
 ### Exercise
 
-
-
-
-
-
-	
+## 
 
