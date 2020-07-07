@@ -32,25 +32,19 @@ From elsewhere:
 
 - Installing MLJ and the tutorials
 
-- Part 1. Data containers
-
-- Part 2. Grabbing data
+- Part 1. Data representations
 
 Break
 
-- Part 3. Scientific types
+- Part 2: Selecting, training and evaluating models
 
-- Part 2: Basic fit and predict/transform
-
-- Part 3: Evaluating model performance
-
-- Part 4: Tuning model hyper-parameters 
+- Part 3: Tuning model hyper-parameters 
 
 Break
 
-- Part 5: Model pipelines
+- Part 4: Model pipelines
 
-- Part 6: Advanced features (lecture)
+- Part 5: Advanced features (lecture)
 
 Each Parts 2-6 begins with demonstration on the "teacher's dataset", with
 time for participants to carry out a similar exercise on a "student's

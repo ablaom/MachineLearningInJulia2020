@@ -23,16 +23,10 @@ Pkg.instantiate()
 
 #### Resources
 
+- From the MLJ manual: [A preview of data type specification in
+  MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#A-preview-of-data-type-specification-in-MLJ-1), [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1), [Working with Categorical Data](https://alan-turing-institute.github.io/MLJ.jl/dev/working_with_categorical_data/)
+
 - [MLJScientificTypes.jl](https://alan-turing-institute.github.io/MLJScientificTypes.jl/dev/)
-
-- From the MLJ manual:
-
-    - [A preview of data type specification in
-  MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#A-preview-of-data-type-specification-in-MLJ-1) 
-  
-    - [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1)
-	
-	- [Working with Categorical Data](https://alan-turing-institute.github.io/MLJ.jl/dev/working_with_categorical_data/)
 
 - From Data Science Tutorials: [Data interpretation: Scientific
   Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/),
@@ -46,8 +40,9 @@ illustrated below:
 ![](assets/scitypes.png)
 
 A scientific type is an ordinary Julia type (so it can be used for
-method dispatch, for example) but it usually has no instances. Use
-the `scitype` function to see how MLJ is going to interpret your data:
+method dispatch, for example) but it usually has no instances. The
+`scitype` function is used to articulate MLJ's convention about how
+different machine types will be interpreted by MLJ models:
 
 ```@example tutorials
 using MLJ
@@ -96,21 +91,12 @@ Subsampling preserves levels:
 levels(exam_mark[1:2])
 ```
 
+Note that there is no separate scientific type for binary
+data. Binary data is `OrderedFactor{2}` if it has an intrinsic
+"true" class (eg, "pass"/"fail") and `Multiclass{2}` otherwise (eg,
+"male"/"female").
+
 ### Two-dimensional data
-
-#### Resources
-
-- [MLJScientificTypes.jl](https://alan-turing-institute.github.io/MLJScientificTypes.jl/dev/)
-
-- From the MLJ manual:
-
-    - [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1)
-	
-- From Data Science Tutorials:
-
-    - [Data interpretation: Scientific Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/) 
-	
-- [Tables.jl](https://juliadata.github.io/Tables.jl/stable/)
 
 Whenever it makes sense, MLJ Models generally expect two-dimensional
 data to be *tabular*. All the tabular formats listed
@@ -129,7 +115,7 @@ column_table = (h=height, e=exam_mark, t=time)
 scitype(column_table)
 ```
 
-Notice the type parameter `K` in `Table{K}`encodes the scientific
+Notice the `Table{K}` type parameter `K` encodes the scientific
 types of the columns. To see the individual types of columns, we use
 the `schema` method:
 
@@ -172,6 +158,154 @@ schema(matrix_table)
 Under the hood many algorithms convert tabular data to matrices. If
 your table is a wrapped matrix like the above, then the compiler
 will generally collapse the conversions to a no-op.
+
+### Fixing scientific types in tabular data
+
+#### Resources
+
+- [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+
+- From Julia Data Science Tutorials: [Horse colic data](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/)
+
+To show how we can correct the scientific types of data in tables,
+we introduce a cleaned up version of the UCI Horse Colic Data Set
+(the cleaning workflow is described
+[here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
+
+```@example tutorials
+using CSV
+file = CSV.File(joinpath(DIR, "data", "horse.csv"));
+horse = CSV.DataFrame!(file); # convert to data frame without copying columns
+first(horse, 4)
+```
+
+From [the UCI
+docs](http://archive.ics.uci.edu/ml/datasets/Horse+Colic) we can
+surmise how each variable ought to be interpreted (a step in our
+workflow that cannot reliably be left to the computer):
+
+variable                    | scientific type (interpretation)
+----------------------------|-----------------------------------
+`:surgery`                  | Multiclass
+`:age`                      | Multiclass
+`:rectal_temperature`       | Continuous
+`:pulse`                    | Continuous
+`:respiratory_rate`         | Continuous
+`:temperature_extremities`  | OrderedFactor
+`:mucous_membranes`         | Multiclass
+`:capillary_refill_time`    | Multiclass
+`:pain`                     | OrderedFactor
+`:peristalsis`              | OrderedFactor
+`:abdominal_distension`     | OrderedFactor
+`:packed_cell_volume`       | Continuous
+`:total_protein`            | Continuous
+`:outcome`                  | Multiclass
+`:surgical_lesion`          | OrderedFactor
+`:cp_data`                  | Multiclass
+
+Let's see how MLJ will actually interpret the data, as it is
+currently encoded:
+
+```@example tutorials
+schema(horse)
+```
+
+As a first correction step, we can get MLJ to "guess" the
+appropriate fix, using the `autotype` method:
+
+```@example tutorials
+autotype(horse)
+```
+
+Okay, this is not perfect, but a step in the right direction, which
+we implement like this:
+
+```@example tutorials
+coerce!(horse, autotype(horse));
+schema(horse)
+```
+
+All remaining `Count` data should be `Continuous`:
+
+```@example tutorials
+coerce!(horse, Count => Continuous);
+schema(horse)
+```
+
+We'll correct the remaining truant entries manually:
+
+```@example tutorials
+coerce!(horse,
+        :surgery               => Multiclass,
+        :age                   => Multiclass,
+        :mucous_membranes      => Multiclass,
+        :capillary_refill_time => Multiclass,
+        :outcome               => Multiclass,
+        :cp_data               => Multiclass);
+schema(horse)
+```
+
+### Exercises
+
+#### Ex 1 (scitype of tuples and arrays)
+
+Evaluate the following cells:
+
+```@example tutorials
+t = (3.141, 42, "how")
+scitype(t)
+```
+
+```@example tutorials
+A = rand(2, 3)
+
+using SparseArrays
+Asparse = sparse(A)
+```
+
+```@example tutorials
+using CategoricalArrays
+Acategorical = categorical(A)
+
+scitype(A)
+```
+
+```@example tutorials
+scitype(Asparse)
+```
+
+```@example tutorials
+scitype(Acategorical)
+```
+
+```@example tutorials
+v = [1, 2, missing, 4]
+scitype(v)
+```
+
+Try to guess the following before evaluation:
+
+```@example tutorials
+scitype(v[1:2])
+```
+
+Can you guess at the general behaviour of `scitype` with respect to
+tuples, abstract arrays and missing values? The answers are
+[here](https://github.com/alan-turing-institute/ScientificTypes.jl#2-the-scitype-and-scitype-methods)
+(ignore "Property 1").
+
+#### Ex 2 (fixing scitypes in a table)
+
+Fix the scitypes for the [House Prices in King County data
+set](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/):
+
+```@example tutorials
+file = CSV.File(joinpath(DIR, "data", "homes.csv"));
+homes = CSV.DataFrame!(file); # convert to data frame without copying columns
+first(homes, 4)
+```
+
+## Part 2: Selecting, training and evaluating models
 
 ---
 
