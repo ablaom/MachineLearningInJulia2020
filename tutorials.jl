@@ -280,9 +280,9 @@ scitype(v[1:2])
 # Fix the scitypes for the [House Prices in King County data
 # set](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/):
 
-file = CSV.File(joinpath(DIR, "data", "homes.csv"));
-homes = CSV.DataFrame!(file); # convert to data frame without copying columns
-first(homes, 4)
+file = CSV.File(joinpath(DIR, "data", "house.csv"));
+house = CSV.DataFrame!(file); # convert to data frame without copying columns
+first(house, 4)
 
 
 # ## Part 2: Selecting, training and evaluating models

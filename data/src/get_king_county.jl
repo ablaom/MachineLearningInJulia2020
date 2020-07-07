@@ -13,4 +13,4 @@ using CSV
 
 df = DataFrame(urldownload("https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/kc_housing.csv", true))
 describe(df)
-CSV.write("homes.csv", df)
+CSV.write("house.csv", df)
