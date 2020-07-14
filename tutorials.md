@@ -13,6 +13,11 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 ## Part 1: Data representation
 
+> **Goals:**
+> 1. Learn how MLJ specifies it's data requirements using "scientific" types
+> 2. Understand the options for representing tabular data
+> 3. Learn how to inspect and fix the representation of data to meet MLJ requirements
+
 ### Scientific types
 
 To help you focus on the intended *purpose* or *interpretation* of
@@ -50,7 +55,8 @@ scitype(height)
 height = coerce(height, Continuous)
 ```
 
-Here's an example of data we would want interpreted as `OrderedFactor`:
+Here's an example of data we would want interpreted as
+`OrderedFactor` but isn't:
 
 ```@example tutorials
 exam_mark = ["rotten", "great", "bla",  missing, "great"]
@@ -78,7 +84,7 @@ Subsampling preserves levels:
 levels(exam_mark[1:2])
 ```
 
-Note that there is no separate scientific type for binary
+**Note on binary data.** There is no separate scientific type for binary
 data. Binary data is `OrderedFactor{2}` if it has an intrinsic
 "true" class (eg, "pass"/"fail") and `Multiclass{2}` otherwise (eg,
 "male"/"female").
@@ -105,7 +111,7 @@ scitype(column_table)
 
 Notice the `Table{K}` type parameter `K` encodes the scientific
 types of the columns. To see the individual types of columns, we use
-the `schema` method:
+the `schema` method instead:
 
 ```@example tutorials
 schema(column_table)
@@ -122,7 +128,7 @@ schema(row_table)
 
 ```@example tutorials
 using DataFrames
-df = DataFrame(column_table)
+df = DataFrames.DataFrame(column_table)
 ```
 
 ```@example tutorials
@@ -227,7 +233,7 @@ coerce!(horse,
 schema(horse)
 ```
 
-#### Resources
+### Resources for Part 1
 
 - From the MLJ manual:
    - [A preview of data type specification in
@@ -241,19 +247,23 @@ schema(horse)
     - [Horse colic data](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/)
 - [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
-#### Exercises
+### Exercises for Part 1
 
-##### Ex 1
+#### Ex 1
 
-Have a go at guessing at some scitypes before evaluating the
-following cells:
+Try to guess how each code snippet below will evaluate:
 
 ```@example tutorials
 scitype(42)
 ```
 
 ```@example tutorials
-scitype(["who", "why", "what", "when"])
+questions = ["who", "why", "what", "when"]
+scitype(questions)
+```
+
+```@example tutorials
+elscitype(questions)
 ```
 
 ```@example tutorials
@@ -264,6 +274,10 @@ scitype(t)
 ```@example tutorials
 A = rand(2, 3)
 scitype(A)
+```
+
+```@example tutorials
+elscitype(A)
 ```
 
 ```@example tutorials
@@ -279,6 +293,10 @@ scitype(C1)
 ```
 
 ```@example tutorials
+elscitype(C1)
+```
+
+```@example tutorials
 C2 = categorical(A, ordered=true)
 scitype(C2)
 ```
@@ -286,6 +304,10 @@ scitype(C2)
 ```@example tutorials
 v = [1, 2, missing, 4]
 scitype(v)
+```
+
+```@example tutorials
+elscitype(v)
 ```
 
 ```@example tutorials
@@ -298,7 +320,7 @@ values? The answers are
 [here](https://github.com/alan-turing-institute/ScientificTypes.jl#2-the-scitype-and-scitype-methods)
 (ignore "Property 1").
 
-##### Ex 2
+#### Ex 2
 
 Coerce the following vector to make MLJ recognize it as an ordered
 factor (with the factors in appropriate order):
@@ -307,18 +329,17 @@ factor (with the factors in appropriate order):
 quality = ["good", "poor", "poor", "excellent", missing, "good", "excellent"]
 ```
 
-##### Ex 3 (fixing scitypes in a table)
+#### Ex 3 (fixing scitypes in a table)
 
-Fix the scitypes for the [House Prices in King County data
-set](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/):
+Fix the scitypes for the [House Prices in King County
+data](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/)
+dataset:
 
 ```@example tutorials
 file = CSV.File(joinpath(DIR, "data", "house.csv"));
 house = CSV.DataFrame!(file); # convert to data frame without copying columns
 first(house, 4)
 ```
-
----
 
 ## Part 2: Selecting, training and evaluating models
 
@@ -328,11 +349,11 @@ famous iris data set. This time, we'll grab the data from
 
 ```@example tutorials
 iris = OpenML.load(61); # a row table
-iris = DataFrame(iris);
+iris = DataFrames.DataFrame(iris);
 first(iris, 4)
 ```
 
-**Our goal** is to build and evaluate models for predicting the
+**Goal.** To build and evaluate models for predicting the
 `:class` variable, given the four remaining measurement variables.
 
 ### Step 1. Inspect and fix scientific types
@@ -353,11 +374,15 @@ is needed for MLJ supervised models. We randomize the data at the
 same time:
 
 ```@example tutorials
-y, X, = unpack(iris, ==(:class), col->true, rng=123);
+y, X = unpack(iris, ==(:class), name->true; rng=123);
 scitype(y)
 ```
 
-Do `?unpack` to learn more.
+Do `?unpack` to learn more:
+
+```@example tutorials
+@doc unpack
+```
 
 ### On searching for a model
 
@@ -381,13 +406,12 @@ targetscitype = meta.target_scitype
 scitype(y) <: targetscitype
 ```
 
-Find all pure julia classifiers:
+So this model won't do. Let's  find all pure julia classifiers:
 
 ```@example tutorials
-filter(meta) = AbstractVector{Finite} <: meta.target_scitype &&
+filt(meta) = AbstractVector{Finite} <: meta.target_scitype &&
         meta.is_pure_julia
-
-models(filter)
+models(filt)
 ```
 
 Find all models with "Classifier" in `name` (or `docstring`):
@@ -417,28 +441,29 @@ that's all. A model does not store *learned* parameters. Models are
 mutable:
 
 ```@example tutorials
-model.epochs = 20
+model.epochs = 12
 ```
 
-And all models have a key-word constructor:
+And all models have a key-word constructor that works once `@load`
+has been performed:
 
 ```@example tutorials
-NeuralNetworkClassifier(epochs=20) == model
+NeuralNetworkClassifier(epochs=12) == model
 ```
 
 ### On fitting and predicting
 
-In MLJ model and training/evaluation data are typically bound
+In MLJ a model and training/evaluation data are typically bound
 together in a machine:
 
 ```@example tutorials
 mach = machine(model, X, y)
 ```
 
-A machine stores *learned* parameters, among other things. Let's fit
-our machine on some subset of the data and make a prediction on a
-30% holdout set. We start by dividing all row indices into `train` and
-`test` subsets:
+A machine stores *learned* parameters, among other things. We'll
+train this machine on 70% of the data and evaluate on a 30% holdout
+set. Let's start by dividing all row indices into `train` and `test`
+subsets:
 
 ```@example tutorials
 train, test = partition(eachindex(y), 0.7)
@@ -479,7 +504,7 @@ Let's train silently for a total of 50 epochs, and look at a prediction:
 ```@example tutorials
 model.epochs = 50
 fit!(mach, rows=train)
-yhat = predict(mach, X[test,:]);
+yhat = predict(mach, X[test,:]); # or predict(mach, rows=test)
 yhat[1]
 ```
 
@@ -494,7 +519,7 @@ info(model).prediction_type
 - For most probabilistic predictors, the predicted object is a `Distributions.Distribution` object, supporting the `Distributions.jl` [API](https://juliastats.org/Distributions.jl/latest/extends/#Create-a-Distribution-1) for such objects. In particular, the methods `rand`,  `pdf`, `mode`, `median` and `mean` will apply, where appropriate.
 
 So, to obtain the probability of "Iris-virginica" in the first test
-observation, we do
+prediction, we do
 
 ```@example tutorials
 pdf(yhat[1], "Iris-virginica")
@@ -520,7 +545,7 @@ Or, alternatively, you can use the `predict_mode` operation instead
 of `predict`:
 
 ```@example tutorials
-predict_mode(mach, X[test,:])[1:4]
+predict_mode(mach, X[test,:])[1:4] # or predict_mode(mach, rows=test)[1:4]
 ```
 
 For a more conventional matrix of probabilities you can do this:
@@ -544,8 +569,6 @@ To apply a deterministic measure, we first need to obtain point-estimates:
 misclassification_rate(mode.(yhat), y[test])
 ```
 
-About 95% accurate.
-
 ### Step 4. Evaluate the model performance
 
 Naturally, MLJ provides boilerplate code for carrying out a model
@@ -553,24 +576,293 @@ evaluation with a lot less fuss. Let's repeat the performance
 evaluation above and add an extra measure, `brier_score`:
 
 ```@example tutorials
-evaluate!(mach, resampling=Holdout(fraction_train=0.7),
-                measures=[cross_entropy, brier_score])
+evaluate!(mach, resampling=Holdout(fraction_train=0.8),
+          measures=[cross_entropy, brier_score])
 ```
 
 Or applying cross-validation instead:
 
 ```@example tutorials
 evaluate!(mach, resampling=CV(nfolds=6),
-                measures=[cross_entropy, brier_score])
+          measures=[cross_entropy, brier_score])
 ```
 
-Or, Monte-Carlo cross-validation (cross-validation repeated with
-randomizied folds and aggregated):
+Or, Monte-Carlo cross-validation (cross-validation repeated
+randomizied folds)
 
 ```@example tutorials
-evaluate!(mach, resampling=CV(nfolds=6, rng=123),
+e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
                 repeats=3,
-                measures=[cross_entropy, brier_score])
+              measures=[cross_entropy, brier_score])
+```
+
+One can access the following properties of the output `e` of an
+evaluation: `measure`, `measurement`, `per_fold` (measurement for
+each fold) and `per_observation` (measurement per observation, if
+reported).
+
+We finally note that you can restrict the rows of observations from
+which train and test folds are drawn, by specifying `rows=...`. For
+example, imagining the last 30% of target observations are `missing`
+you might have a workflow like this:
+
+```@example tutorials
+train, test = partition(eachindex(y), 0.7)
+mach = machine(model, X, y)
+evaluate!(mach, resampling=CV(nfolds=6),
+          measures=[cross_entropy, brier_score],
+          rows=train)     # cv estimate, resampling from `train`
+fit!(mach, rows=train)    # re-train using all of `train` observations
+predict(mach, rows=test); # and predict missing targets
+nothing #hide
+```
+
+### On learning curves
+
+Since our model is an iterative one, we might want to inspect the
+out-of-sample performance as a function of the iteration
+parameter. For this we can use the `learning_curve` function (which,
+incidentally can be applied to any model hyper-parameter). This
+starts by defining a one-dimensional range object for the parameter
+(more on this when we discuss tuning in Part 4):
+
+```@example tutorials
+r = range(model, :epochs, lower=1, upper=60, scale=:log)
+curve = learning_curve(mach,
+                       range=r,
+                       resampling=Holdout(fraction_train=0.7), # (default)
+                       measure=cross_entropy)
+
+using Plots
+pyplot()
+plt=plot(curve.parameter_values, curve.measurements)
+xlabel!(plt, "epochs")
+ylabel!(plt, "cross entropy on holdout set")
+savefig("iris_learning_curve.png")
+```
+
+### Exercises for Part 2
+
+#### Ex 4
+
+(a) Identify all supervised MLJ models that can be applied (without
+type coercion or one-hot encoding) to a supervised learning problem
+with input features `X4` and target `y4` defined below:
+
+```@example tutorials
+import Distributions
+poisson = Distributions.Poisson
+
+age = 18 .+ 60*rand(10);
+salary = coerce(rand([:small, :big, :huge], 10), OrderedFactor);
+levels!(salary, [:small, :big, :huge]);
+X4 = DataFrames.DataFrame(age=age, salary=salary)
+
+n_devices(salary) = salary > :small ? rand(poisson(1.3)) : rand(poisson(2.9))
+y4 = [n_devices(row.salary) for row in eachrow(X4)]
+```
+
+(b) What models can be applied if you coerce the salary to a
+`Continuous` scitype?
+
+#### Ex 5 (unpack)
+
+After evaluating the following ...
+
+```@example tutorials
+data = (a = [1, 2, 3, 4],
+     b = rand(4),
+     c = rand(4),
+     d = coerce(["male", "female", "female", "male"], OrderedFactor));
+pretty(data)
+
+using Tables
+y, X, w = unpack(data, ==(:a),
+                 name -> elscitype(Tables.getcolumn(data, name)) == Continuous,
+                 name -> true)
+```
+
+...attempt to guess the evaluations of the following:
+
+```@example tutorials
+y
+```
+
+```@example tutorials
+pretty(X)
+```
+
+```@example tutorials
+w
+```
+
+#### Ex 6 (horse data)
+
+(a) Suppose we want to use predict the `:outcome` variable in the
+Horse Colic study introduced in Part 1, based on the remaining
+variables that are `Continuous` (one-hot encoding categorical
+variables is discussed later in Part 3) *while ignoring the others*.
+Extract from the `horse` data set (defined in Part 1) appropriate
+input features `X` and target variable `y`? (Do not, however,
+randomize the obserations.)
+
+(b) Create a 70:30 `train`/`test` split of the data and train a
+`KNNClassifier` model on the `train` data, using `K = 20` and
+default values for the other hyper-parameters. (Although one would
+normally standardize (whiten) the continuous features for this
+model, do not do so here.) After training:
+
+- (i) Evaluate the `cross_entropy` performance on the `test`
+  observations.
+
+- &star;(ii) In how many `test` observations does the predicted
+  probablility of the observed class exceed 50%?
+
+- &star;(iii) Find the `misclassification_rate` in the `test`
+  set. (*Hint.* As this measure is deterministic, you will either
+  need to broadcast `mode` or use `predict_mode` instead of
+  `predict`.)
+
+(c) Instead use a `RandomForestClassifier` model from the
+    `DecisionTree` package and:
+
+- (i) Generate an appropriate learning curve to
+  convince yourself that out-of-sample estimates of the
+  `cross_entropy` loss do not substatially improve for `n_trees >
+  50`. Use default values for all other hyper-parameters, and feel
+  free to use all available data to generate the curve.
+
+- (ii) Fix `n_trees=90` and use `evaluate!` to obtain a 9-fold
+  cross-validation estimate of the `cross_entropy`, restricting
+  sub-sampling to the `train` observations.
+
+- (iii) Now use *all* available data but set
+  `resampling=Holdout(fraction_train=0.7)` to obtain a score you can
+  compare with the `KNNClassifier` in part (b)(iii). Which model is
+  better?
+
+## Solutions to exercises
+
+#### Ex 2 solution
+
+```@example tutorials
+quality = coerce(quality, OrderedFactor);
+levels!(quality, ["poor", "good", "excellent"]);
+elscitype(quality)
+```
+
+#### Ex 3 solution
+
+TODO
+
+#### Ex 4 solution
+
+4(a)
+
+There are *no* models that apply immediately:
+
+```@example tutorials
+models(matching(X4, y4))
+```
+
+4(b)
+
+```@example tutorials
+y4 = coerce(y4, Continuous);
+models(matching(X4, y4))
+```
+
+#### Ex 6 solution
+
+6(a)
+
+```@example tutorials
+y, X = unpack(horse,
+              ==(:outcome),
+              name -> elscitype(Tables.getcolumn(horse, name)) == Continuous);
+nothing #hide
+```
+
+6(b)(i)
+
+```@example tutorials
+model = @load KNNClassifier
+model.K = 20
+mach = machine(model, X, y)
+fit!(mach, rows=train)
+yhat = predict(mach, rows=test) # or predict(mach, X[test,:]);
+err = cross_entropy(yhat, y[test]) |> mean
+```
+
+6(b)(ii)
+
+The predicted probabilities of the actual observations in the test
+are given by
+
+```@example tutorials
+p = broadcast(pdf, yhat, y[test]);
+nothing #hide
+```
+
+The number of times this probability exceeds 50% is:
+
+```@example tutorials
+n50 = filter(x -> x > 0.5, p) |> length
+```
+
+Or, as a proportion:
+
+```@example tutorials
+n50/length(test)
+```
+
+6(c)(iii)
+
+```@example tutorials
+misclassification_rate(mode.(yhat), y[test])
+```
+
+6(c)(i)
+
+```@example tutorials
+model = @load RandomForestClassifier pkg=DecisionTree
+mach = machine(model, X, y)
+evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
+
+r = range(model, :n_trees, lower=10, upper=70, scale=:log)
+```
+
+Since random forests are inherently randomized, we generate multiple
+curves:
+
+```@example tutorials
+plt = plot()
+for i in 1:4
+    curve = learning_curve(mach,
+                           range=r,
+                           resampling=Holdout(),
+                           measure=cross_entropy)
+    plt=plot!(curve.parameter_values, curve.measurements)
+end
+xlabel!(plt, "n_trees")
+ylabel!(plt, "cross entropy")
+```
+
+6(c)(ii)
+
+```@example tutorials
+evaluate!(mach, resampling=CV(nfolds=9),
+                measure=cross_entropy,
+                rows=train).measurement[1]
+
+model.n_trees = 90
+```
+
+6(c)(iii)
+
+```@example tutorials
+err_forest = evaluate!(mach, resampling=Holdout(),
+                       measure=cross_entropy).measurement[1]
 ```
 
 ---
