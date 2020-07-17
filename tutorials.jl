@@ -2,12 +2,14 @@
 
 # A workshop introducing the machine learning toolbox
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
-
 # ### Environment instantiation
 
-# The following loads a Julia environment, defined in Project.toml and
-# Manifest.toml files **which must be in the same directory as this
-# file**:
+# The following loads a Julia environment and assumes you have the
+# following files in the same directory as this file:
+
+# - Project.toml
+# - Manifest.toml
+# - setup.jl
 
 include(joinpath(@__DIR__, "setup.jl"))
 
@@ -1178,5 +1180,5 @@ curve = learning_curve(mach,
 plot!(curve.parameter_values, curve.measurements)
     
 using Literate #src
-Literate.markdown(@__FILE__, @__DIR__) #src
+Literate.markdown(@__FILE__, @__DIR__, execute=true) #src
 Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
