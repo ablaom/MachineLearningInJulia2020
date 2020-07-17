@@ -22,11 +22,6 @@ used a Julia IDE before, or never cloned a GitHub repository, then use
 this option.
 
 
-#### Instructions 
-
-Click [here]() BINDER NOTEBOOK LINK
-
-
 #### Pros
 
 No need to install Julia or any libraries on your local machine
@@ -39,6 +34,11 @@ No need to install Julia or any libraries on your local machine
 - If the online notebook crashes or drops your connection, you will have to start over
 
 
+#### Instructions 
+
+Click [here]() BINDER NOTEBOOK LINK
+
+
 ### 2. Clone the repo and choose your preferred interface
 
 Assumes that you have a working installation of Julia 1.3 or higher and that either:
@@ -46,6 +46,15 @@ Assumes that you have a working installation of Julia 1.3 or higher and that eit
 - You can run Julia/Juptyer notebooks on your local machine without problems; or
 
 - You are comfortable running Julia scripts from an IDE, such as [Juno](https://junolab.org) or [Emacs](https://github.com/JuliaEditorSupport/julia-emacs) (see the bottom of [this page](https://julialang.org) for a complete list).
+
+
+#### Pros
+
+More stable option
+
+#### Cons
+
+You need to meet above requirements
 
 
 #### Instructions
