@@ -5,8 +5,20 @@
 
 # ### Environment instantiation
 
-# This line loads a Julia environment (defined in Project.toml and Manifest.toml files which must be in the same directory as this file):
+# The following loads a Julia environment, defined in Project.toml and
+# Manifest.toml files **which must be in the same directory as this
+# file**:
+
 include(joinpath(@__DIR__, "setup.jl"))
+
+# If this is the notebook version of the tutorial, then it is
+# recommended that you clear all cell outputs before attempting the
+# tutorial.
+
+# ## Contents
+
+# - [Part 1: Data Representation](#part-1-data-representation)
+# - [Part 2: Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 
 # ## Part 1: Data Representation
 
@@ -237,7 +249,7 @@ schema(horse)
 # ### Exercises for Part 1
 
 
-# #### Ex 1
+# #### Exercise 1
 
 # Try to guess how each code snippet below will evaluate:
 
@@ -316,7 +328,7 @@ scitype(v[1:2])
 # (ignore "Property 1").
 
 
-# #### Ex 2
+# #### Exercise 2
 
 # Coerce the following vector to make MLJ recognize it as a vector of
 # ordered factors (with an appropriate ordering):
@@ -326,7 +338,7 @@ quality = ["good", "poor", "poor", "excellent", missing, "good", "excellent"]
 #-
 
 
-# #### Ex 3 (fixing scitypes in a table)
+# #### Exercise 3 (fixing scitypes in a table)
 
 # Fix the scitypes for the [House Prices in King
 # County](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/)
@@ -604,12 +616,12 @@ curve = learning_curve(mach,
                        resampling=Holdout(fraction_train=0.7), # (default)
                        measure=cross_entropy)
 
-# using Plots
-# pyplot()
-# plt=plot(curve.parameter_values, curve.measurements)
-# xlabel!(plt, "epochs")
-# ylabel!(plt, "cross entropy on holdout set")
-# savefig("iris_learning_curve.png")
+using Plots
+pyplot(size=(490,300))
+plt=plot(curve.parameter_values, curve.measurements)
+xlabel!(plt, "epochs")
+ylabel!(plt, "cross entropy on holdout set")
+plt
 
 # We will return to learning curves when we look at tuning in Part 4.
 
@@ -630,7 +642,7 @@ curve = learning_curve(mach,
 # ### Exercises for Part 2
 
 
-# #### Ex 4
+# #### Exercise 4
 
 # (a) Identify all supervised MLJ models that can be applied (without
 # type coercion or one-hot encoding) to a supervised learning problem
@@ -651,7 +663,7 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 # `Continuous` scitype?
 
 
-# #### Ex 5 (unpack)
+# #### Exercise 5 (unpack)
 
 # After evaluating the following ...
 
@@ -679,7 +691,7 @@ pretty(X)
 w
 
 
-# #### Ex 6 (first steps in modelling Horse Colic)
+# #### Exercise 6 (first steps in modelling Horse Colic)
 
 # (a) Suppose we want to use predict the `:outcome` variable in the
 # Horse Colic study introduced in Part 1, based on the remaining
@@ -740,21 +752,42 @@ w
 # Unsupervised models, which receive no target `y` during training,
 # always have a `transform` operation. They sometimes also support an
 # `inverse_transform` operation, with obvious meaning, and sometimes
-# support a `predict` operation operation (eg, some clustering
-# algorithms). Otherwise, they are handled much like supervised
-# models.
+# support a `predict` operation (see the clustering example discussed
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/#Transformers-that-also-predict-1)).
+# Otherwise, they are handled much like supervised models.
 
-# For an illustration, let's re-encode *all* of the King County House
-# input features (see [Ex 3](#ex-3-fixing-scitypes-in-a-table)) into a
-# set of `Continuous` features. We do this with the `ContinousEncoder`
-# model, which, by default, will:
+# Here's a simple standardization example:
+
+x = rand(100);
+@show mean(x) std(x); 
+
+#-
+
+model = UnivariateStandardizer() # a built-in model
+mach = machine(model, x)
+fit!(mach)
+x̂ = transform(mach, x);
+@show mean(x̂) std(x̂);
+
+# This particular model has an `inverse_transform`:
+
+inverse_transform(mach, x̂) ≈ x
+
+
+# ### Re-encoding the King County House data as continuous
+
+# For further illustrations of tranformers, let's re-encode *all* of the
+# King County House input features (see [Ex
+# 3](#ex-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
+# features. We do this with the `ContinousEncoder` model, which, by
+# default, will:
 
 # - one-hot encode all `Multiclass` features
 # - coerce all `OrderedFactor` features to `Continuous` ones
 # - coerce all `Count` features to `Continuous` ones (there aren't any)
-# - drop any remaining non-Continuous features (there won't be any of these)
+# - drop any remaining non-Continuous features (none of these either)
 
-# First, we load a version of the data with scitypes already fixed:
+# First, we reload the data and fix the scitypes (Exercise 3):
 
 file = CSV.File(joinpath(DIR, "data", "house.csv"));
 house = DataFrames.DataFrame(file)
@@ -779,7 +812,11 @@ mach = machine(encoder, X) |> fit!;
 Xcont = transform(mach, X);
 schema(Xcont)
 
-# Here's a list of MLJ's built-in transformers:
+
+# ### More transformers
+
+# Here's how to list all of MLJ's unsupervised models:
+
 models(m->!m.is_supervised)
 
 # Some commonly used ones are built-in (do not require `@load`ing):
@@ -794,6 +831,13 @@ models(m->!m.is_supervised)
 # UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
 # UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
 # UnivariateStandardizer| standardize (whiten) a `Continuous` vector
+
+# In addition to "dynamic" transformers (ones that learn something
+# from the data and must be `fit!`) users can wrap ordinary functions
+# as transformers, and such *static* transformers can depend on
+# parameters, like the dynamic ones. See
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/#Static-transformers-1)
+# for how to define your own static transformers.
 
 
 # ### Pipelines
@@ -817,7 +861,7 @@ reducer = @load PCA
 pipe = @pipeline encoder reducer
 
 # Notice that `pipe` is an *instance* of an automatically generated
-# type called `Pipeline???`.
+# type (called `Pipeline<some digits>`).
 
 # The new model behaves like any other transformer:
 
@@ -825,12 +869,12 @@ mach = machine(pipe, X) |> fit!;
 Xsmall = transform(mach, X)
 schema(Xsmall)
 
-# Want to combine this pre-processing with a logistic classifier?
+# Want to combine this pre-processing with ridge regression?
 
 rgs = @load RidgeRegressor pkg=MLJLinearModels
 pipe2 = @pipeline encoder reducer rgs
 
-# Now our pipeline is a supervised model, instead of a transformer:
+# Now our pipeline is a supervised model, instead of a transformer,
 # whose performance we can evaluate:
 
 mach = machine(pipe2, X, y) |> fit!
@@ -890,15 +934,66 @@ pipe3 = @pipeline encoder reducer rgs target=log inverse=exp
 mach = machine(pipe3, X, y)
 evaluate!(mach, measure=mae)
 
-
-# MLJ will even allow you to insert *learned* target
+# MLJ will also allow you to insert *learned* target
 # transformations. For example, we might want to apply
 # `UnivariateStandardizer()` to the target, to standarize it, or
 # `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
-# instead of specifying a *function* for `target`, we specify a model
-# (or model type). One does not specify `inverse` because these are
-# models that implement `inverse_transform` in addition to
-# `transform`:
+# instead of specifying a *function* for `target`, we specify a
+# unsupervised *model* (or model type). One does not specify `inverse`
+# because only models implementing `inverse_transform` are
+# allowed.
+
+# Let's see which of these two options results in a better outcome:
+
+box = UnivariateBoxCoxTransformer(n=20)
+stand = UnivariateStandardizer()
+
+pipe4 = @pipeline encoder reducer rgs target=box
+mach = machine(pipe4, X, y)
+evaluate!(mach, measure=mae)
+
+#-
+
+pipe4.target = stand
+evaluate!(mach, measure=mae)
+
+
+# ### Resources for Part 3
+
+# - From the MLJ manual:
+#     - [Transformers and other unsupervised models](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/)
+#     - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Linear-pipelines-1)
+# - From Data Science Tutorials:
+#     - [Composing models](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/)
+
+
+# ### Exercises for Part 3
+
+# #### Exercise 7
+
+# Consider again the Horse Colic classification problem considered in
+# Exercise 6, but with all features, `Finite` and `Infinite`:
+
+y, X = unpack(horse, ==(:outcome), name -> true);
+schema(X)
+
+# (a) Define a pipeline that:
+# - uses `Standardizer` to ensure that features that are already
+#   continuous are centred at zero and have unit variance
+# - re-encodes the full set of features as `Continuous`, using
+#   `ContinuousEncoder`
+# - uses the `KMeans` clustering model from `Clustering.jl`
+#   to reduce the dimension of the feature space to `k=10`.
+# - trains a `EvoTreeClassifier` (a gradient tree boosting
+#   algorithm in `EvoTrees.jl`) on the reduced data, using
+#   `nrounds=50` and default values for the other
+#    hyper-parameters
+
+# (b) Evaluate the pipeline on all data, using 6-fold cross-validation
+# and `cross_entropy` loss.
+
+# &star;(c) Plot a learning curve which examines the effect on this loss
+# as the tree booster parameter `max_depth` varies from 2 to 10.
 
 
 # ## Part 4 - Tuning hyper-parameters
@@ -915,14 +1010,14 @@ iterator(r, 10)
 # ## Solutions to exercises
 
 
-# #### Ex 2 solution
+# #### Exercise 2 solution
 
 quality = coerce(quality, OrderedFactor);
 levels!(quality, ["poor", "good", "excellent"]);
 elscitype(quality)
 
 
-# #### Ex 3 solution
+# #### Exercise 3 solution
 
 # First pass:
 
@@ -949,7 +1044,7 @@ import StatsBase.countmap
 countmap(house.bathrooms)
 
 
-# #### Ex 4 solution
+# #### Exercise 4 solution
 
 # 4(a)
 
@@ -963,7 +1058,7 @@ y4 = coerce(y4, Continuous);
 models(matching(X4, y4))
 
 
-# #### Ex 6 solution
+# #### Exercise 6 solution
 
 # 6(a)
 
@@ -1018,17 +1113,17 @@ r = range(model, :n_trees, lower=10, upper=70, scale=:log)
 # Since random forests are inherently randomized, we generate multiple
 # curves:
 
-# plt = plot()
-# for i in 1:4
-#     curve = learning_curve(mach,
-#                            range=r,
-#                            resampling=Holdout(),
-#                            measure=cross_entropy)
-#     plt=plot!(curve.parameter_values, curve.measurements)
-# end
-# xlabel!(plt, "n_trees")
-# ylabel!(plt, "cross entropy")
-
+plt = plot()
+for i in 1:4
+    curve = learning_curve(mach,
+                           range=r,
+                           resampling=Holdout(),
+                           measure=cross_entropy)
+    plt=plot!(curve.parameter_values, curve.measurements)
+end
+xlabel!(plt, "n_trees")
+ylabel!(plt, "cross entropy")
+plt
 
 # 6(c)(ii)
 
@@ -1043,8 +1138,45 @@ model.n_trees = 90
 err_forest = evaluate!(mach, resampling=Holdout(),
                        measure=cross_entropy).measurement[1]
 
+# #### Exercise 7
 
+# (a)
 
+@load KMeans pkg=Clustering
+@load EvoTreeClassifier
+pipe = @pipeline(Standardizer,
+                 ContinuousEncoder,
+                 KMeans(k=10),
+                 EvoTreeClassifier(nrounds=50))
+
+# (b)
+
+mach = machine(pipe, X, y)
+evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
+
+# (c)
+
+r = range(pipe, :(evo_tree_classifier.max_depth), lower=1, upper=10)
+
+curve = learning_curve(mach,
+                       range=r,
+                       resampling=CV(nfolds=6),
+                       measure=cross_entropy)
+
+plt = plot(curve.parameter_values, curve.measurements)
+xlabel!(plt, "max_depth")
+ylabel!(plt, "CV estimate of cross entropy")
+plt
+
+# Here's a second curve using a different random seed for the booster:
+
+pipe.evo_tree_classifier.seed = 123
+curve = learning_curve(mach,
+                       range=r,
+                       resampling=CV(nfolds=6),
+                       measure=cross_entropy)
+plot!(curve.parameter_values, curve.measurements)
+    
 using Literate #src
 Literate.markdown(@__FILE__, @__DIR__) #src
-Literate.notebook(@__FILE__, @__DIR__, evaluate=false) #src
+Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
