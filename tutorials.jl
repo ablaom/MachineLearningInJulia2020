@@ -3,9 +3,12 @@
 # A workshop introducing the machine learning toolbox
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 
+# ### Environment instantiation
+
+# This line loads a Julia environment (defined in Project.toml and Manifest.toml files which must be in the same directory as this file):
 include(joinpath(@__DIR__, "setup.jl"))
 
-# ## Part 1: Data representation
+# ## Part 1: Data Representation
 
 # > **Goals:**
 # > 1. Learn how MLJ specifies it's data requirements using "scientific" types
@@ -65,7 +68,7 @@ levels(exam_mark)
 levels!(exam_mark, ["rotten", "bla", "great"])
 exam_mark[1] < exam_mark[2]
 
-# Subsampling preserves levels:
+# When subsampling, no levels are not lost:
 
 levels(exam_mark[1:2])
 
@@ -97,8 +100,9 @@ scitype(column_table)
 #-
 
 # Notice the `Table{K}` type parameter `K` encodes the scientific
-# types of the columns. To see the individual types of columns, we use
-# the `schema` method instead:
+# types of the columns. (This is useful when comparing table scitypes
+# with `<:`). To inspect the individual column scitypes, we use the
+# `schema` method instead:
 
 schema(column_table)
 
@@ -111,7 +115,7 @@ schema(row_table)
 
 #-
 
-using DataFrames
+import DataFrames
 df = DataFrames.DataFrame(column_table)
 
 #-
@@ -136,6 +140,12 @@ schema(matrix_table)
 # will generally collapse the conversions to a no-op.
 
 
+# **Manipulating tabular data.** In this workshop we assume
+# familiarity with some kind of tabular data container (although it is
+# possible, in principle, to carry out the exercises without this.)
+# For a quick start introduction to `DataFrames`, see [this
+# tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/)
+
 # ### Fixing scientific types in tabular data
 
 # To show how we can correct the scientific types of data in tables,
@@ -145,7 +155,7 @@ schema(matrix_table)
 
 using CSV
 file = CSV.File(joinpath(DIR, "data", "horse.csv"));
-horse = CSV.DataFrame!(file); # convert to data frame without copying columns
+horse = DataFrames.DataFrame(file); # convert to data frame without copying columns
 first(horse, 4)
 
 #-
@@ -250,6 +260,9 @@ scitype(t)
 #-
 
 A = rand(2, 3)
+
+# -
+
 scitype(A)
 
 #-
@@ -260,12 +273,18 @@ elscitype(A)
 
 using SparseArrays
 Asparse = sparse(A)
+
+#-
+
 scitype(Asparse)
 
 #-
 
 using CategoricalArrays
 C1 = categorical(A)
+
+#-
+
 scitype(C1)
 
 #-
@@ -299,8 +318,8 @@ scitype(v[1:2])
 
 # #### Ex 2
 
-# Coerce the following vector to make MLJ recognize it as an ordered
-# factor (with the factors in appropriate order):
+# Coerce the following vector to make MLJ recognize it as a vector of
+# ordered factors (with an appropriate ordering):
 
 quality = ["good", "poor", "poor", "excellent", missing, "good", "excellent"]
 
@@ -309,16 +328,26 @@ quality = ["good", "poor", "poor", "excellent", missing, "good", "excellent"]
 
 # #### Ex 3 (fixing scitypes in a table)
 
-# Fix the scitypes for the [House Prices in King County
-# data](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/)
+# Fix the scitypes for the [House Prices in King
+# County](https://mlr3gallery.mlr-org.com/posts/2020-01-30-house-prices-in-king-county/)
 # dataset:
 
 file = CSV.File(joinpath(DIR, "data", "house.csv"));
-house = CSV.DataFrame!(file); # convert to data frame without copying columns
+house = DataFrames.DataFrame(file); # convert to data frame without copying columns
 first(house, 4)
 
+# (Two features in the original data set have been deemed uninformative
+# and dropped, namely `:id` and `:date`. The original feature
+# `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
-# ## Part 2: Selecting, training and evaluating models
+
+# ## Part 2: Selecting, Training and Evaluating Models
+
+# > **Goals:**
+# > 1. Search MLJ's database of model metadata to identify model candidates for a supervised learning task.
+# > 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` workflow.
+# > 3. Evaluate performance using other resampling strategies, such as cross-validation, in one line, using `evaluate!`
+# > 4. Plot a "learning curve", to inspect performance as a function of some model hyper-parameter, such as an iteration parameter
 
 # The "Hello World!" of machine learning is to classify Fisher's
 # famous iris data set. This time, we'll grab the data from
@@ -400,7 +429,7 @@ model = @load NeuralNetworkClassifier
 
 info(model)
 
-# In MLJ a *model* is just a struct containing hyperparameters, and
+# In MLJ a *model* is just a struct containing hyper-parameters, and
 # that's all. A model does not store *learned* parameters. Models are
 # mutable:
 
@@ -412,7 +441,7 @@ model.epochs = 12
 NeuralNetworkClassifier(epochs=12) == model
 
 
-# ### On fitting and predicting
+# ### On fitting, predicting, and inspecting models
 
 # In MLJ a model and training/validation data are typically bound
 # together in a machine:
@@ -430,22 +459,34 @@ train, test = partition(eachindex(y), 0.7)
 
 fit!(mach, rows=train, verbosity=2)
 
-# Machines remember the last set of hyperparameters used during fit,
-# which, in the case of iterative models, allows them to restart
-# computations where they left off, when the iteration parameter is
+# After training, one can inspect the learned parameters:
+
+fitted_params(mach)
+
+#-
+
+# Everything else the user might be interested in is accessed from the
+# training *report*:
+
+report(mach)
+
+# Machines remember the last set of hyper-parameters used during fit,
+# which, in the case of iterative models, allows for a warm restart of
+# computations in the case that only the iteration parameter is
 # increased:
 
 model.epochs = model.epochs + 4
 fit!(mach, rows=train, verbosity=2)
 
-# By default, we can also increase `:learning_rate` without a cold restart:
+# By default (for this particular model) we can also increase
+# `:learning_rate` without triggering a cold restart:
 
 model.epochs = model.epochs + 4
 model.optimiser.eta = 10*model.optimiser.eta
 fit!(mach, rows=train, verbosity=2)
 
-# However, change the regularization parameter and training will
-# restart from scratch:
+# However, change any other parameter and training will restart from
+# scratch:
 
 model.lambda = 0.001
 fit!(mach, rows=train, verbosity=2)
@@ -563,12 +604,27 @@ curve = learning_curve(mach,
                        resampling=Holdout(fraction_train=0.7), # (default)
                        measure=cross_entropy)
 
-using Plots
-pyplot()
-plt=plot(curve.parameter_values, curve.measurements)
-xlabel!(plt, "epochs")
-ylabel!(plt, "cross entropy on holdout set")
-savefig("iris_learning_curve.png")
+# using Plots
+# pyplot()
+# plt=plot(curve.parameter_values, curve.measurements)
+# xlabel!(plt, "epochs")
+# ylabel!(plt, "cross entropy on holdout set")
+# savefig("iris_learning_curve.png")
+
+# We will return to learning curves when we look at tuning in Part 4.
+
+
+# ### Resources for Part 2
+
+# - From the MLJ manual:
+#     - [Getting Started](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/)
+#     - [Model Search](https://alan-turing-institute.github.io/MLJ.jl/dev/model_search/)
+#     - [Evaluating Performance](https://alan-turing-institute.github.io/MLJ.jl/dev/evaluating_model_performance/) (using `evaluate!`)
+#     - [Learning Curves](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
+#     - [Performance Measures](https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/) (loss functions, scores, etc)
+# - From Data Science Tutorials:
+#     - [Choosing and evaluating a model](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/)
+#     - [Fit, predict, transform](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/)
 
 
 # ### Exercises for Part 2
@@ -608,7 +664,7 @@ pretty(data)
 using Tables
 y, X, w = unpack(data, ==(:a),
                  name -> elscitype(Tables.getcolumn(data, name)) == Continuous,
-                 name -> true)
+                 name -> true);
 
 # ...attempt to guess the evaluations of the following:
 
@@ -623,29 +679,37 @@ pretty(X)
 w
 
 
-# #### Ex 6 (horse data)
+# #### Ex 6 (first steps in modelling Horse Colic)
 
 # (a) Suppose we want to use predict the `:outcome` variable in the
 # Horse Colic study introduced in Part 1, based on the remaining
 # variables that are `Continuous` (one-hot encoding categorical
 # variables is discussed later in Part 3) *while ignoring the others*.
 # Extract from the `horse` data set (defined in Part 1) appropriate
-# input features `X` and target variable `y`? (Do not, however,
-# randomize the obserations.)
+# input features `X` and target variable `y`. (Do not, however,
+# randomize the observations.)
 
 # (b) Create a 70:30 `train`/`test` split of the data and train a
-# `KNNClassifier` model on the `train` data, using `K = 20` and
-# default values for the other hyper-parameters. (Although one would
-# normally standardize (whiten) the continuous features for this
-# model, do not do so here.) After training:
+# `LogisticClassifier` model, from the `MLJLinearModels` package, on
+# the `train` rows. Use `lambda=100` and default values for the
+# other hyper-parameters. (Although one would normally standardize
+# (whiten) the continuous features for this model, do not do so here.)
+# After training:
 
-# - (i) Evaluate the `cross_entropy` performance on the `test`
-#   observations. 
+# - (i) Recalling that a logistic classifier (aka logistic regressor) is
+#   a linear-based model learning a *vector* of coefficients for each
+#   feature (one coefficient for each target class), use the
+#   `fitted_params` method to find this vector of coefficients in the
+#   case of the `:pulse` feature. (To convert a vector of pairs `v =
+#   [x1 => y1, x2 => y2, ...]` into a dictionary, do `Dict(v)`.)
 
-# - &star;(ii) In how many `test` observations does the predicted
+# - (ii) Evaluate the `cross_entropy` performance on the `test`
+#   observations.
+
+# - &star;(iii) In how many `test` observations does the predicted
 #   probablility of the observed class exceed 50%?
 
-# - &star;(iii) Find the `misclassification_rate` in the `test`
+# - (iv) Find the `misclassification_rate` in the `test`
 #   set. (*Hint.* As this measure is deterministic, you will either
 #   need to broadcast `mode` or use `predict_mode` instead of
 #   `predict`.)
@@ -653,11 +717,11 @@ w
 # (c) Instead use a `RandomForestClassifier` model from the
 #     `DecisionTree` package and:
 #
-# - (i) Generate an appropriate learning curve to
-#   convince yourself that out-of-sample estimates of the
-#   `cross_entropy` loss do not substatially improve for `n_trees >
-#   50`. Use default values for all other hyper-parameters, and feel
-#   free to use all available data to generate the curve.
+# - (i) Generate an appropriate learning curve to convince yourself
+#   that out-of-sample estimates of the `cross_entropy` loss do not
+#   substatially improve for `n_trees > 50`. Use default values for
+#   all other hyper-parameters, and feel free to use all available
+#   data to generate the curve.
 
 # - (ii) Fix `n_trees=90` and use `evaluate!` to obtain a 9-fold
 #   cross-validation estimate of the `cross_entropy`, restricting
@@ -667,6 +731,185 @@ w
 #   `resampling=Holdout(fraction_train=0.7)` to obtain a score you can
 #   compare with the `KNNClassifier` in part (b)(iii). Which model is
 #   better?
+
+
+# ## Part 3 - Transformers and Pipelines
+
+# ### Transformers
+
+# Unsupervised models, which receive no target `y` during training,
+# always have a `transform` operation. They sometimes also support an
+# `inverse_transform` operation, with obvious meaning, and sometimes
+# support a `predict` operation operation (eg, some clustering
+# algorithms). Otherwise, they are handled much like supervised
+# models.
+
+# For an illustration, let's re-encode *all* of the King County House
+# input features (see [Ex 3](#ex-3-fixing-scitypes-in-a-table)) into a
+# set of `Continuous` features. We do this with the `ContinousEncoder`
+# model, which, by default, will:
+
+# - one-hot encode all `Multiclass` features
+# - coerce all `OrderedFactor` features to `Continuous` ones
+# - coerce all `Count` features to `Continuous` ones (there aren't any)
+# - drop any remaining non-Continuous features (there won't be any of these)
+
+# First, we load a version of the data with scitypes already fixed:
+
+file = CSV.File(joinpath(DIR, "data", "house.csv"));
+house = DataFrames.DataFrame(file)
+coerce!(house, autotype(file))
+coerce!(house, Count => Continuous, :zipcode => Multiclass);
+schema(house)
+
+#-
+
+y, X = unpack(house, ==(:price), name -> true, rng=123);
+
+# Instantiate the unsupervised model (transformer):
+
+encoder = ContinuousEncoder() # a built-in model; no need to @load it
+
+# Bind the model to the data and fit!
+
+mach = machine(encoder, X) |> fit!;
+
+# Transform and inspect the result:
+
+Xcont = transform(mach, X);
+schema(Xcont)
+
+# Here's a list of MLJ's built-in transformers:
+models(m->!m.is_supervised)
+
+# Some commonly used ones are built-in (do not require `@load`ing):
+
+# model type                  | does what?
+# ----------------------------|----------------------------------------------
+# ContinuousEncoder | transform input to a table of `Continuous` features (see above)
+# FeatureSelector | retain or dump selected features
+# FillImputer | impute missing values
+# OneHotEncoder | one-hot encoder `Multiclass` (and optionally `OrderedFactor`) features
+# Standardizer | standardize (whiten) the `Continuous` features in a table
+# UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
+# UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
+# UnivariateStandardizer| standardize (whiten) a `Continuous` vector
+
+
+# ### Pipelines
+
+length(schema(Xcont).names)
+
+# Let's suppose that additionally we'd like to reduce the dimension of
+# our data.  A model that will do this is `PCA` from
+# `MultivariateStats`:
+
+reducer = @load PCA
+
+# Now, rather simply repeating the workflow above, applying the new
+# transformation to `Xcont`, we can combine both the encoding and the
+# dimension-reducing models into a single model, known as a
+# *pipeline*. While MLJ offers a powerful interface for composing
+# models in a variety of ways, we'll stick to these simplest class of
+# composite models for now. The easiest way to construct them is using
+# the `@pipeline` macro:
+
+pipe = @pipeline encoder reducer
+
+# Notice that `pipe` is an *instance* of an automatically generated
+# type called `Pipeline???`.
+
+# The new model behaves like any other transformer:
+
+mach = machine(pipe, X) |> fit!;
+Xsmall = transform(mach, X)
+schema(Xsmall)
+
+# Want to combine this pre-processing with a logistic classifier?
+
+rgs = @load RidgeRegressor pkg=MLJLinearModels
+pipe2 = @pipeline encoder reducer rgs
+
+# Now our pipeline is a supervised model, instead of a transformer:
+# whose performance we can evaluate:
+
+mach = machine(pipe2, X, y) |> fit!
+evaluate!(mach, measure=mae, resampling=Holdout()) # CV(nfolds=6) is default
+
+
+# ### Training of composite models is "smart"
+
+# Now notice what happens if we train on all the data, then change a
+# regressor hyper-parameter and retrain:
+
+fit!(mach)
+
+#-
+
+pipe2.ridge_regressor.lambda = 0.1
+fit!(mach)
+
+# Second time only the ridge regressor is retrained!
+
+# Mutate a hyper-parameter of the `PCA` model and every model except
+# the `ContinuousEncoder` (which comes before it will be retrained):
+
+pipe2.pca.pratio = 0.9999
+fit!(mach)
+
+
+# ### Inspecting composite models
+
+# The dot syntax used above to change the values of *nested*
+# hyper-parameters is also useful when inspecting the learned
+# parameters and report generated when training a composite model:
+
+fitted_params(mach).ridge_regressor
+
+#-
+
+report(mach).pca
+
+
+# ### Incorporating target transformations
+
+# Next, suppose that instead of using the raw `:price` as the
+# training target, we want to use the log-price (a common practice in
+# dealing with house price data). However, suppose that we still want
+# to report final *predictions* on the original linear scale (and use
+# these for evaluation purposes). Then we supply appropriate functions
+# to key-word arguments `target` and `inverse`.
+
+# First we'll overload `log` and `exp` for broadcasting:
+Base.log(v::AbstractArray) = log.(v)
+Base.exp(v::AbstractArray) = exp.(v)
+
+# Now for the new pipeline:
+
+pipe3 = @pipeline encoder reducer rgs target=log inverse=exp
+mach = machine(pipe3, X, y)
+evaluate!(mach, measure=mae)
+
+
+# MLJ will even allow you to insert *learned* target
+# transformations. For example, we might want to apply
+# `UnivariateStandardizer()` to the target, to standarize it, or
+# `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
+# instead of specifying a *function* for `target`, we specify a model
+# (or model type). One does not specify `inverse` because these are
+# models that implement `inverse_transform` in addition to
+# `transform`:
+
+
+# ## Part 4 - Tuning hyper-parameters
+
+r = range(pipe3, :(ridge_regressor.lambda), lower = 1e-6, upper=10, scale=:log)
+
+# If you're curious, you can see what `lambda` values this range will
+# generate for a given resolution:
+
+iterator(r, 10)
+
 
 
 # ## Solutions to exercises
@@ -681,7 +924,30 @@ elscitype(quality)
 
 # #### Ex 3 solution
 
-# TODO
+# First pass:
+
+coerce!(house, autotype(house));
+schema(house)
+
+#-
+
+# All the "sqft" fields refer to "square feet" so are
+# really `Continuous`. We'll regard `:yr_built` (the other `Count`
+# variable above) as `Continuous` as well. So:
+
+coerce!(house, Count => Continuous);
+
+# And `:zipcode` should not be ordered:
+
+coerce!(house, :zipcode => Multiclass);
+schema(house)
+
+# `:bathrooms` looks like it has a lot of levels, but on further
+# inspection we see why, and `OrderedFactor` remains appropriate:
+
+import StatsBase.countmap
+countmap(house.bathrooms)
+
 
 # #### Ex 4 solution
 
@@ -707,14 +973,23 @@ y, X = unpack(horse,
 
 # 6(b)(i)
 
-model = @load KNNClassifier
-model.K = 20
+model = @load LogisticClassifier pkg=MLJLinearModels;
+model.lambda = 100
 mach = machine(model, X, y)
 fit!(mach, rows=train)
-yhat = predict(mach, rows=test) # or predict(mach, X[test,:]);
+fitted_params(mach)
+
+#-
+
+coefs_given_feature = Dict(fitted_params(mach).coefs)
+coefs_given_feature[:pulse]
+
+#6(b)(ii)
+
+yhat = predict(mach, rows=test); # or predict(mach, X[test,:])
 err = cross_entropy(yhat, y[test]) |> mean
 
-# 6(b)(ii)
+# 6(b)(iii)
 
 # The predicted probabilities of the actual observations in the test
 # are given by
@@ -728,7 +1003,7 @@ n50 = filter(x -> x > 0.5, p) |> length
 
 n50/length(test)
 
-# 6(c)(iii)
+# 6(b)(iv)
 
 misclassification_rate(mode.(yhat), y[test])
 
@@ -743,16 +1018,16 @@ r = range(model, :n_trees, lower=10, upper=70, scale=:log)
 # Since random forests are inherently randomized, we generate multiple
 # curves:
 
-plt = plot()
-for i in 1:4
-    curve = learning_curve(mach,
-                           range=r,
-                           resampling=Holdout(),
-                           measure=cross_entropy)
-    plt=plot!(curve.parameter_values, curve.measurements)
-end
-xlabel!(plt, "n_trees")
-ylabel!(plt, "cross entropy")
+# plt = plot()
+# for i in 1:4
+#     curve = learning_curve(mach,
+#                            range=r,
+#                            resampling=Holdout(),
+#                            measure=cross_entropy)
+#     plt=plot!(curve.parameter_values, curve.measurements)
+# end
+# xlabel!(plt, "n_trees")
+# ylabel!(plt, "cross entropy")
 
 
 # 6(c)(ii)
@@ -773,4 +1048,3 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 using Literate #src
 Literate.markdown(@__FILE__, @__DIR__) #src
 Literate.notebook(@__FILE__, @__DIR__, evaluate=false) #src
-

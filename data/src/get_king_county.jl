@@ -13,4 +13,8 @@ using CSV
 
 df = DataFrame(urldownload("https://raw.githubusercontent.com/tlienart/DataScienceTutorialsData.jl/master/data/kc_housing.csv", true))
 describe(df)
-CSV.write("house.csv", df)
+
+df.is_renovated = df.yr_renovated .== 0
+
+select!(df, Not([:id, :date, :yr_renovated]))
+CSV.write(joinpath(@__DIR__, "..", "house.csv"), df)
