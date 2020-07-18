@@ -19,10 +19,10 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 # ## Contents
 
-# - [Part 1: Data Representation](#part-1-data-representation)
-# - [Part 2: Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
+# - [Part 1 - Data Representation](#part-1-data-representation)
+# - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 
-# ## Part 1: Data Representation
+# ## Part 1 - Data Representation
 
 # > **Goals:**
 # > 1. Learn how MLJ specifies it's data requirements using "scientific" types
@@ -355,7 +355,7 @@ first(house, 4)
 # `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
 
-# ## Part 2: Selecting, Training and Evaluating Models
+# ## Part 2 - Selecting, Training and Evaluating Models
 
 # > **Goals:**
 # > 1. Search MLJ's database of model metadata to identify model candidates for a supervised learning task.

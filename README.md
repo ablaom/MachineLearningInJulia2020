@@ -27,6 +27,20 @@ learning toolbox to working data scientists.
   MLJ can do, and are not a substitute for a course on machine
   learning fundamentals. Examples do not necessarily represent best
   practice or the best solution to a problem.
+  
+The tutorial topics are as follows:
+
+- Part 1 - Data Representation
+
+- Part 2 - Selecting, Training and Evaluating Models
+
+- Part 3 - Transformers and Pipelines
+
+- Part 4 - Tuning hyper-parameters
+
+- Part 5 - Advanced model composition
+
+The tutorials include links to external resources and exercises with solutions.
 
 
 ## Options for running the tutorials
@@ -90,3 +104,4 @@ You need to meet above requirements
 
 - Either run the Juptyper notebook called "tutorials.ipynb", or open
   "tutorials.jl" in your favourite IDE
+
