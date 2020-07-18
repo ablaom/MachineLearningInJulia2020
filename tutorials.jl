@@ -1,7 +1,5 @@
 # # Machine Learning in Julia, JuliaCon2020
 
-&#128679;
-
 # A workshop introducing the machine learning toolbox
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 # ### Environment instantiation

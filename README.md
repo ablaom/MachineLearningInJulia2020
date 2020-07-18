@@ -3,11 +3,11 @@
 A workshop introducing the machine learning toolbox
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 
-
 <div align="center">
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
 </div>
 
+&#128679;
 
 ## About the tutorials
 
