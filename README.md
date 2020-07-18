@@ -9,6 +9,26 @@ A workshop introducing the machine learning toolbox
 </div>
 
 
+## About the tutorials
+
+These tutorials were prepared for use in a 3.5 hour online workshop at
+JuliaCon2020. Their main aim is to introuduce the
+[MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
+learning toolbox to working data scientists.
+
+- The tutorials focus on *machine learning* part of the data science
+  workflow, and less on exploratory data analysis and other
+  conventional "data analytics" methodology
+
+- "Machine learning" is meant here in a broad sense, and is not
+  restricted to so-called *deep learning* (neural networks)
+
+- The tutorials are crafted to rapidly familiarize the user with what
+  MLJ can do, and are not a substitute for a course on machine
+  learning fundamentals. Examples do not necessarily represent best
+  practice or the best solution to a problem.
+
+
 ## Options for running the tutorials
 
 **If all else fails**, a static version of the tutorials can be viewed
@@ -20,7 +40,7 @@ A workshop introducing the machine learning toolbox
 Recommended for users with little Julia experience or users having
 problems with the other options.
 
-If you never run a Julia/Juptyer notebook on your local machine, never
+If you never ran a Julia/Juptyer notebook on your local machine before, never
 used a Julia IDE before, or never cloned a GitHub repository, then use
 this option.
 
