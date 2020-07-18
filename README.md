@@ -24,9 +24,9 @@ learning toolbox to working data scientists.
   restricted to so-called *deep learning* (neural networks)
 
 - The tutorials are crafted to rapidly familiarize the user with what
-  MLJ can do, and are not a substitute for a course on machine
-  learning fundamentals. Examples do not necessarily represent best
-  practice or the best solution to a problem.
+  MLJ can do and how to do it, and are not a substitute for a course
+  on machine learning fundamentals. Examples do not necessarily
+  represent best practice or the best solution to a problem.
   
 The tutorial topics are as follows:
 
