@@ -30,15 +30,15 @@ learning toolbox to working data scientists.
   
 The tutorial topics are as follows:
 
-- Part 1 - Data Representation
+- Part 1 - **Data Representation**
 
-- Part 2 - Selecting, Training and Evaluating Models
+- Part 2 - **Selecting, Training and Evaluating Models**
 
-- Part 3 - Transformers and Pipelines
+- Part 3 - **Transformers and Pipelines**
 
-- Part 4 - Tuning hyper-parameters
+- Part 4 - **Tuning hyper-parameters**
 
-- Part 5 - Advanced model composition
+- Part 5 - **Advanced model composition** (not covered during workshop)
 
 The tutorials include links to external resources and exercises with solutions.
 
