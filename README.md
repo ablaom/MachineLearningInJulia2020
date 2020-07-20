@@ -104,7 +104,7 @@ You need to meet above requirements
 
 #### Instructions
 
-- Clone this repository
+- Clone [this repository](https://github.com/ablaom/MachineLearningInJulia2020)
 
 - Change to your local repo directory "MachineLearningInJulia2020/"
 

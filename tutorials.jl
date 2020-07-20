@@ -13,9 +13,6 @@
 
 include(joinpath(@__DIR__, "setup.jl"))
 
-# If this is the notebook version of the tutorial, then it is
-# recommended that you clear all cell outputs before attempting the
-# tutorial.
 
 # ## Contents
 
@@ -789,7 +786,7 @@ x = rand(100);
 
 #-
 
-model = UnivariateStandardizer() # a built-in model
+model = Standardizer() # a built-in model
 mach = machine(model, x)
 fit!(mach)
 x̂ = transform(mach, x);
@@ -849,14 +846,14 @@ models(m->!m.is_supervised)
 
 # model type                  | does what?
 # ----------------------------|----------------------------------------------
-# ContinuousEncoder | transform input to a table of `Continuous` features (see above)
+# ContinuousEncoder | transform input table to a table of `Continuous` features (see above)
 # FeatureSelector | retain or dump selected features
 # FillImputer | impute missing values
 # OneHotEncoder | one-hot encoder `Multiclass` (and optionally `OrderedFactor`) features
-# Standardizer | standardize (whiten) the `Continuous` features in a table
+# Standardizer | standardize (whiten) a vector or all `Continuous` features of a table
 # UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
 # UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
-# UnivariateStandardizer| standardize (whiten) a `Continuous` vector
+
 
 # In addition to "dynamic" transformers (ones that learn something
 # from the data and must be `fit!`) users can wrap ordinary functions
@@ -962,7 +959,7 @@ evaluate!(mach, measure=mae)
 
 # MLJ will also allow you to insert *learned* target
 # transformations. For example, we might want to apply
-# `UnivariateStandardizer()` to the target, to standarize it, or
+# `Standardizer()` to the target, to standarize it, or
 # `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
 # instead of specifying a *function* for `target`, we specify a
 # unsupervised *model* (or model type). One does not specify `inverse`
@@ -972,7 +969,7 @@ evaluate!(mach, measure=mae)
 # Let's see which of these two options results in a better outcome:
 
 box = UnivariateBoxCoxTransformer(n=20)
-stand = UnivariateStandardizer()
+stand = Standardizer()
 
 pipe4 = @pipeline encoder reducer rgs target=box
 mach = machine(pipe4, X, y)
