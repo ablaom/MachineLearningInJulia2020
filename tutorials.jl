@@ -27,7 +27,7 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 # ### Advanced
 
-# - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyperparameters)
+# - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
 
 
 # <a id='part-1-data-representation'></a>
@@ -770,7 +770,7 @@ w
 #   compare with the `KNNClassifier` in part (b)(iii). Which model is
 #   better?
 
-# <a id='part-2-transformers-and-pipelines'></a>
+# <a id='part-3-transformers-and-pipelines'></a>
 # ## Part 3 - Transformers and Pipelines
 
 # ### Transformers
@@ -1021,7 +1021,7 @@ schema(X)
 # &star;(c) Plot a learning curve which examines the effect on this loss
 # as the tree booster parameter `max_depth` varies from 2 to 10.
 
-
+# <a id='part-4-tuning-hyper-parameters'></a>
 # ## Part 4 - Tuning Hyper-parameters
 
 r = range(pipe3, :(ridge_regressor.lambda), lower = 1e-6, upper=10, scale=:log)
