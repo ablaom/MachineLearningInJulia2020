@@ -45,7 +45,7 @@ The tutorial topics are as follows:
 
 - Part 4 - **Tuning hyper-parameters**
 
-- Part 5 - **Advanced model composition** (not covered during workshop)
+- Part 5 - **Advanced model composition** (as time permits)
 
 The tutorials include links to external resources and exercises with solutions.
 
