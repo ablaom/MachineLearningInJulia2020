@@ -3,11 +3,13 @@
 const REPO = "https://github.com/ablaom/MachineLearningInJulia2020"
 
 using Pkg
-DIR = @__DIR__
-last(splitpath(DIR)) == "MachineLearningInJulia2020" ||
-    error("This script is not intended to be run outside "*
-          "of the MachineLearningInJulia2020 root directory. "*
-          "\n You can clone that repository from $REPO .")
+uuid = Pkg.TOML.parsefile("Project.toml")["uuid"]
+uuid == "4764ce03-6504-4302-ab9a-b32cdba420f3" ||
+    error("It appears this file is not in the same directory as other "*
+          "files it needs (and in particular, the intended "*
+          "Project.toml file). "*
+          "A complete tutorial can be obtained by cloning the"*
+          "MachineLearningInJulia repository from $REPO. ")
 Pkg.activate(DIR)
 Pkg.instantiate()
 using CategoricalArrays
@@ -16,7 +18,7 @@ import DataFrames
 import CSV
 import DecisionTree
 import MLJFlux
-#import Plots
+import Plots
 import MLJLinearModels
 import MultivariateStats
 using MLJ
