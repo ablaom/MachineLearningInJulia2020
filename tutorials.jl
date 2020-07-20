@@ -19,8 +19,16 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 # ## Contents
 
+# ### Basic
+
 # - [Part 1 - Data Representation](#part-1-data-representation)
 # - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
+# - [Part 3 - Transformers and Pipelines](#part-3-transformers-and-pipelines)
+
+# ### Advanced
+
+# - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyperparameters)
+
 
 # <a id='part-1-data-representation'></a>
 # ## Part 1 - Data Representation
@@ -374,7 +382,7 @@ iris = DataFrames.DataFrame(iris);
 first(iris, 4)
 
 
-# **Goal.** To build and evaluate models for predicting the
+# **Main goal.** To build and evaluate models for predicting the
 # `:class` variable, given the four remaining measurement variables.
 
 
@@ -628,7 +636,7 @@ predict(mach, rows=test); # and predict missing targets
 # starts by defining a one-dimensional range object for the parameter
 # (more on this when we discuss tuning in Part 4):
 
-r = range(model, :epochs, lower=1, upper=60, scale=:log)
+r = range(model, :epochs, lower=1, upper=50, scale=:log)
 curve = learning_curve(mach,
                        range=r,
                        resampling=Holdout(fraction_train=0.7), # (default)
@@ -762,7 +770,7 @@ w
 #   compare with the `KNNClassifier` in part (b)(iii). Which model is
 #   better?
 
-
+# <a id='part-2-transformers-and-pipelines'></a>
 # ## Part 3 - Transformers and Pipelines
 
 # ### Transformers
@@ -1014,7 +1022,7 @@ schema(X)
 # as the tree booster parameter `max_depth` varies from 2 to 10.
 
 
-# ## Part 4 - Tuning hyper-parameters
+# ## Part 4 - Tuning Hyper-parameters
 
 r = range(pipe3, :(ridge_regressor.lambda), lower = 1e-6, upper=10, scale=:log)
 
