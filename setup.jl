@@ -1,7 +1,7 @@
 # Setup:
 
 const REPO = "https://github.com/ablaom/MachineLearningInJulia2020"
-
+DIR = @__DIR__
 using Pkg
 uuid = Pkg.TOML.parsefile("Project.toml")["uuid"]
 uuid == "4764ce03-6504-4302-ab9a-b32cdba420f3" ||
