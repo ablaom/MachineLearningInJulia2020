@@ -1,7 +1,7 @@
 # Machine Learning in Julia, JuliaCon2020
 
-A workshop introducing the machine learning toolbox
-[MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
+Interactive tutorials for a workshop introducing the machine learning
+toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 
 <div align="center">
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
@@ -9,9 +9,12 @@ A workshop introducing the machine learning toolbox
 
 &#128679;
 
+Static version of the tutorials: [tutorials.md](tutorials.md)
+
+
 ## About the tutorials
 
-These tutorials were prepared for use in a 3.5 hour online workshop at
+These tutorials were prepared for use in a 3 1/2 hour online workshop at
 JuliaCon2020. Their main aim is to introuduce the
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
 learning toolbox to working data scientists.
@@ -30,11 +33,15 @@ learning toolbox to working data scientists.
   
 The tutorial topics are as follows:
 
+#### Basic
+
 - Part 1 - **Data Representation**
 
 - Part 2 - **Selecting, Training and Evaluating Models**
 
 - Part 3 - **Transformers and Pipelines**
+
+#### Advanced
 
 - Part 4 - **Tuning hyper-parameters**
 
