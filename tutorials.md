@@ -38,7 +38,7 @@ tutorial.
 
 ### Advanced
 
-- [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyperparameters)
+- [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
 
 <a id='part-1-data-representation'></a>
 ## Part 1 - Data Representation
@@ -1250,7 +1250,7 @@ NeuralNetworkClassifier(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false)[34m @899[39m
+    optimiser_changes_trigger_retraining = false)[34m @008[39m
 ```
 
 ```julia
@@ -1317,10 +1317,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @438[39m trained 0 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 0 times.
   args: 
-    1:	[34mSource @327[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @704[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1342,10 +1342,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @438[39m trained 1 time.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 1 time.
   args: 
-    1:	[34mSource @327[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @704[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1398,10 +1398,10 @@ fit!(mach3)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @889[39m trained 2 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @837[39m trained 2 times.
   args: 
-    1:	[34mSource @376[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @122[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @337[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @900[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1416,10 +1416,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @438[39m trained 2 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 2 times.
   args: 
-    1:	[34mSource @327[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @704[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1433,10 +1433,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @438[39m trained 3 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 3 times.
   args: 
-    1:	[34mSource @327[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @704[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1449,10 +1449,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @438[39m trained 4 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 4 times.
   args: 
-    1:	[34mSource @327[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @704[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1683,8 +1683,8 @@ nothing #hide
 ```
 ┌ Info: Creating subsamples from a subset of all rows. 
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/resampling.jl:336
-Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:02[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
-┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @293[39m.
+Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
+┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @572[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
 
@@ -1896,7 +1896,7 @@ After training:
   compare with the `KNNClassifier` in part (b)(iii). Which model is
   better?
 
-<a id='part-2-transformers-and-pipelines'></a>
+<a id='part-3-transformers-and-pipelines'></a>
 ## Part 3 - Transformers and Pipelines
 
 ### Transformers
@@ -1932,7 +1932,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{UnivariateStandardizer} @997[39m.
+┌ Info: Training [34mMachine{UnivariateStandardizer} @043[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 mean(x̂) = 1.2212453270876722e-17
 std(x̂) = 1.0
@@ -2014,7 +2014,7 @@ encoder = ContinuousEncoder() # a built-in model; no need to @load it
 ```
 ContinuousEncoder(
     drop_last = false,
-    one_hot_ordered_factors = false)[34m @286[39m
+    one_hot_ordered_factors = false)[34m @060[39m
 ```
 
 Bind the model to the data and fit!
@@ -2025,7 +2025,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{ContinuousEncoder} @705[39m.
+┌ Info: Training [34mMachine{ContinuousEncoder} @519[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 
 ```
@@ -2216,7 +2216,7 @@ PCA(
     maxoutdim = 0,
     method = :auto,
     pratio = 0.99,
-    mean = nothing)[34m @455[39m
+    mean = nothing)[34m @019[39m
 ```
 
 Now, rather simply repeating the workflow above, applying the new
@@ -2232,7 +2232,7 @@ pipe = @pipeline encoder reducer
 ```
 
 ```
-Pipeline544(
+Pipeline645(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2240,7 +2240,7 @@ Pipeline544(
             maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
-            mean = nothing))[34m @784[39m
+            mean = nothing))[34m @278[39m
 ```
 
 Notice that `pipe` is an *instance* of an automatically generated
@@ -2273,7 +2273,7 @@ pipe2 = @pipeline encoder reducer rgs
 ```
 
 ```
-Pipeline552(
+Pipeline653(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2286,7 +2286,7 @@ Pipeline552(
             lambda = 1.0,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing))[34m @683[39m
+            solver = nothing))[34m @400[39m
 ```
 
 Now our pipeline is a supervised model, instead of a transformer,
@@ -2317,10 +2317,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline552} @861[39m trained 3 times.
+[34mMachine{Pipeline653} @710[39m trained 3 times.
   args: 
-    1:	[34mSource @350[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @838[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2330,10 +2330,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline552} @861[39m trained 4 times.
+[34mMachine{Pipeline653} @710[39m trained 4 times.
   args: 
-    1:	[34mSource @350[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @838[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2348,10 +2348,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline552} @861[39m trained 5 times.
+[34mMachine{Pipeline653} @710[39m trained 5 times.
   args: 
-    1:	[34mSource @350[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @838[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2525,6 +2525,7 @@ and `cross_entropy` loss.
 &star;(c) Plot a learning curve which examines the effect on this loss
 as the tree booster parameter `max_depth` varies from 2 to 10.
 
+<a id='part-4-tuning-hyper-parameters'></a>
 ## Part 4 - Tuning Hyper-parameters
 
 ```julia
@@ -2857,7 +2858,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ```
 
 ```
-0.6864133190079904
+0.6994959934209135
 ```
 
 #### Exercise 7
@@ -2874,7 +2875,7 @@ pipe = @pipeline(Standardizer,
 ```
 
 ```
-Pipeline584(
+Pipeline685(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -2899,7 +2900,7 @@ Pipeline584(
             nbins = 64,
             α = 0.5f0,
             metric = :mlogloss,
-            seed = 444))[34m @556[39m
+            seed = 444))[34m @811[39m
 ```
 
 (b)
