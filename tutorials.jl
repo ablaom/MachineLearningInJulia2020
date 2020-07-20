@@ -22,6 +22,7 @@ include(joinpath(@__DIR__, "setup.jl"))
 # - [Part 1 - Data Representation](#part-1-data-representation)
 # - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 
+# <a id='part-1-data-representation'></a>
 # ## Part 1 - Data Representation
 
 # > **Goals:**
@@ -354,12 +355,13 @@ first(house, 4)
 # and dropped, namely `:id` and `:date`. The original feature
 # `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
-
+# <a id='part-2-selecting-training-and-evaluating-models'></a>
 # ## Part 2 - Selecting, Training and Evaluating Models
 
 # > **Goals:**
 # > 1. Search MLJ's database of model metadata to identify model candidates for a supervised learning task.
 # > 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` workflow.
+# > 3. Inspect the outcomes of training and save these to a file.
 # > 3. Evaluate performance using other resampling strategies, such as cross-validation, in one line, using `evaluate!`
 # > 4. Plot a "learning curve", to inspect performance as a function of some model hyper-parameter, such as an iteration parameter
 
@@ -483,6 +485,20 @@ fitted_params(mach)
 # training *report*:
 
 report(mach)
+
+# You save a machine like this:
+
+MLJ.save("neural_net.jlso", mach)
+
+# And retrieve it like this:
+
+mach2 = machine("neural_net.jlso")
+predict(mach2, X)[1:3]
+
+# If you want to fit a retrieved model, you will need to bind some data to it:
+
+mach3 = machine("neural_net.jlso", X, y)
+fit!(mach3)
 
 # Machines remember the last set of hyper-parameters used during fit,
 # which, in the case of iterative models, allows for a warm restart of
@@ -761,7 +777,7 @@ w
 # Here's a simple standardization example:
 
 x = rand(100);
-@show mean(x) std(x); 
+@show mean(x) std(x);
 
 #-
 
@@ -1178,7 +1194,7 @@ curve = learning_curve(mach,
                        resampling=CV(nfolds=6),
                        measure=cross_entropy)
 plot!(curve.parameter_values, curve.measurements)
-    
+
 using Literate #src
 Literate.markdown(@__FILE__, @__DIR__, execute=true) #src
 Literate.notebook(@__FILE__, @__DIR__, execute=false) #src

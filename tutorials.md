@@ -33,6 +33,7 @@ tutorial.
 - [Part 1 - Data Representation](#part-1-data-representation)
 - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 
+<a id='part-1-data-representation'></a>
 ## Part 1 - Data Representation
 
 > **Goals:**
@@ -753,6 +754,7 @@ first(house, 4)
 and dropped, namely `:id` and `:date`. The original feature
 `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
+<a id='part-2-selecting-training-and-evaluating-models'></a>
 ## Part 2 - Selecting, Training and Evaluating Models
 
 > **Goals:**
@@ -846,7 +848,12 @@ Do `?unpack` to learn more:
 ```
 
 ```
-  t1, t2, ...., tk = unnpack(table, f1, f2, ... fk; wrap_singles=false)
+  t1, t2, ...., tk = unnpack(table, f1, f2, ... fk;
+                             wrap_singles=false,
+                             shuffle=false,
+                             rng::Union{AbstractRNG,Int}=nothing)
+
+  )
 
   Split any Tables.jl compatible table into smaller tables (or vectors) t1, t2, ..., tk by
   making selections without replacement from the column names defined by the filters f1,
@@ -859,6 +866,10 @@ Do `?unpack` to learn more:
   Scientific type conversions can be optionally specified (note semicolon):
 
   unpack(table, t...; wrap_singles=false, col1=>scitype1, col2=>scitype2, ... )
+
+  If shuffle=true then the rows of table are first shuffled, using the global RNG, unless
+  rng is specified; if rng is an integer, it specifies the seed of an automatically
+  generated Mersenne twister. If rng is specified then shuffle=true is implicit.
 
   Example
   –––––––––
@@ -1231,7 +1242,7 @@ NeuralNetworkClassifier(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false)[34m @061[39m
+    optimiser_changes_trigger_retraining = false)[34m @066[39m
 ```
 
 ```julia
@@ -1298,10 +1309,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @139[39m trained 0 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @952[39m trained 0 times.
   args: 
-    1:	[34mSource @611[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @618[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @074[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @072[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1323,10 +1334,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @139[39m trained 1 time.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @952[39m trained 1 time.
   args: 
-    1:	[34mSource @611[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @618[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @074[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @072[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1362,10 +1373,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @139[39m trained 2 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @952[39m trained 2 times.
   args: 
-    1:	[34mSource @611[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @618[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @074[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @072[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1379,10 +1390,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @139[39m trained 3 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @952[39m trained 3 times.
   args: 
-    1:	[34mSource @611[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @618[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @074[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @072[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1395,10 +1406,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @139[39m trained 4 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @952[39m trained 4 times.
   args: 
-    1:	[34mSource @611[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @618[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @074[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @072[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1628,10 +1639,10 @@ nothing #hide
 
 ```
 ┌ Info: Creating subsamples from a subset of all rows. 
-└ @ MLJBase /Users/anthony/.julia/packages/MLJBase/r3heT/src/resampling.jl:336
-Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:01[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
-┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @177[39m.
-└ @ MLJBase /Users/anthony/.julia/packages/MLJBase/r3heT/src/machines.jl:317
+└ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/resampling.jl:336
+Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:02[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:01[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
+┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @647[39m.
+└ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
 
 ```
@@ -1877,8 +1888,8 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{UnivariateStandardizer} @294[39m.
-└ @ MLJBase /Users/anthony/.julia/packages/MLJBase/r3heT/src/machines.jl:317
+┌ Info: Training [34mMachine{UnivariateStandardizer} @133[39m.
+└ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 mean(x̂) = 1.298960938811433e-16
 std(x̂) = 0.9999999999999999
 
@@ -1959,7 +1970,7 @@ encoder = ContinuousEncoder() # a built-in model; no need to @load it
 ```
 ContinuousEncoder(
     drop_last = false,
-    one_hot_ordered_factors = false)[34m @709[39m
+    one_hot_ordered_factors = false)[34m @296[39m
 ```
 
 Bind the model to the data and fit!
@@ -1970,8 +1981,8 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{ContinuousEncoder} @121[39m.
-└ @ MLJBase /Users/anthony/.julia/packages/MLJBase/r3heT/src/machines.jl:317
+┌ Info: Training [34mMachine{ContinuousEncoder} @422[39m.
+└ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 
 ```
 
@@ -2158,10 +2169,10 @@ reducer = @load PCA
 
 ```
 PCA(
-    maxoutdim = nothing,
+    maxoutdim = 0,
     method = :auto,
     pratio = 0.99,
-    mean = nothing)[34m @190[39m
+    mean = nothing)[34m @118[39m
 ```
 
 Now, rather simply repeating the workflow above, applying the new
@@ -2177,15 +2188,15 @@ pipe = @pipeline encoder reducer
 ```
 
 ```
-Pipeline1478(
+Pipeline443(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
     pca = PCA(
-            maxoutdim = nothing,
+            maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
-            mean = nothing))[34m @064[39m
+            mean = nothing))[34m @124[39m
 ```
 
 Notice that `pipe` is an *instance* of an automatically generated
@@ -2218,12 +2229,12 @@ pipe2 = @pipeline encoder reducer rgs
 ```
 
 ```
-Pipeline1486(
+Pipeline451(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
     pca = PCA(
-            maxoutdim = nothing,
+            maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
             mean = nothing),
@@ -2231,7 +2242,7 @@ Pipeline1486(
             lambda = 1.0,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing))[34m @219[39m
+            solver = nothing))[34m @673[39m
 ```
 
 Now our pipeline is a supervised model, instead of a transformer,
@@ -2262,10 +2273,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline1486} @863[39m trained 3 times.
+[34mMachine{Pipeline451} @919[39m trained 3 times.
   args: 
-    1:	[34mSource @976[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @778[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @244[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @517[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2275,10 +2286,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline1486} @863[39m trained 4 times.
+[34mMachine{Pipeline451} @919[39m trained 4 times.
   args: 
-    1:	[34mSource @976[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @778[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @244[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @517[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2293,10 +2304,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline1486} @863[39m trained 5 times.
+[34mMachine{Pipeline451} @919[39m trained 5 times.
   args: 
-    1:	[34mSource @976[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @778[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @244[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @517[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2802,7 +2813,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ```
 
 ```
-0.6939493305989599
+0.9678963593228945
 ```
 
 #### Exercise 7
@@ -2819,7 +2830,7 @@ pipe = @pipeline(Standardizer,
 ```
 
 ```
-Pipeline1518(
+Pipeline483(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -2844,7 +2855,7 @@ Pipeline1518(
             nbins = 64,
             α = 0.5f0,
             metric = :mlogloss,
-            seed = 444))[34m @728[39m
+            seed = 444))[34m @088[39m
 ```
 
 (b)
