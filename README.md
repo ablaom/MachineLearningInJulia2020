@@ -108,6 +108,9 @@ You need to meet above requirements
 
 - Change to your local repo directory "MachineLearningInJulia2020/"
 
-- Either run the Juptyper notebook called "tutorials.ipynb", or open
-  "tutorials.jl" in your favourite IDE
+- Either run the Juptyper notebook called "tutorials.ipynb" from that
+  directory (corresponding to [this file](tutorials.ipynb) on GitHub)
+  or open "tutorials.jl" from that directory in your favourite IDE
+  (corresponding to [this file](tutorials.jl) on GitHub). You cannot
+  download these files individually - you need the whole directory.
 
