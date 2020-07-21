@@ -1190,8 +1190,53 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy
 # - [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 
-# ## Exercises for Part 4
+# ### Exercises for Part 4
 
+# #### Exercise 8
+
+# This exercise continues our analysis of the King County House price
+# prediction problem:
+
+y, X = unpack(house, ==(:price), name -> true, rng=123);
+
+# Your task will be to tune the following pipeline regression model:
+
+@load(EvoTreeRegressor)
+tree_booster = EvoTreeRegressor(nrounds = 70)
+model = @pipeline ContinuousEncoder tree_booster
+
+# (a) Construct a bounded range `r1` for the `evo_tree_booster`
+# parameter `max_depth`, varying between 1 and 12.
+
+# &star;(b) Define the one-dimensional range
+
+r2 = range(model,
+           :(evo_tree_regressor.nbins),
+           lower = 2.5,
+           upper= 7.5, scale=x->2^round(Int, x))
+
+# and try to guess the outcome of evaluating the following two code blocks:
+
+r2_sampler = sampler(r2, Distributions.Uniform)
+samples = rand(r2_sampler, 1000);
+histogram(samples, nbins=50)
+
+#-
+
+sort(unique(samples))
+
+# (c) Optimize these two parameters over the ranges `r1` and `r2`
+# using a random search with uniform priors. Use `Holdout()`
+# resampling, and implement your search by first constructing a
+# "self-tuning" wrap of `model`, as described above. Make `mae` (mean
+# absolute error) the loss function that you optimize, and search a
+# total 40 models (combinations of hyper-parameters).  Plot the
+# results of your search. Feel free to use all available data.
+
+# (d) Evaluate the best model found in the search using 3-fold
+# cross-validation and compare with that of the self-tuning model
+# (which is different!). Setting data hygiene concerns aside, feel
+# free to use all available data.
 
 
 # ## Solutions to exercises
@@ -1364,6 +1409,43 @@ curve = learning_curve(mach,
                        measure=cross_entropy)
 plot!(curve.parameter_values, curve.measurements)
 
+
+# #### Exercise 8
+
+y, X = unpack(house, ==(:price), name -> true, rng=123);
+
+@load(EvoTreeRegressor)
+tree_booster = EvoTreeRegressor(nrounds = 70)
+model = @pipeline ContinuousEncoder tree_booster
+
+# (a)
+
+r1 = range(model, :(evo_tree_regressor.max_depth), lower=1, upper=12)
+
+# (c)
+
+tuned_model = TunedModel(model=model,
+                         ranges=[r1, r2],
+                         resampling=Holdout(),
+                         measures=mae,
+                         tuning=RandomSearch(rng=123),
+                         n=40)
+
+tuned_mach = machine(tuned_model, X, y) |> fit!
+plot(tuned_mach)
+
+# (d)
+
+best_model = report(tuned_mach).best_model;
+best_mach = machine(best_model, X, y);
+best_err = evaluate!(best_mach, resampling=CV(nfolds=3), measure=mae)
+
+#-
+
+tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=mae)
+
+
 using Literate #src
 Literate.markdown(@__FILE__, @__DIR__, execute=true) #src
 Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
+

@@ -1,7 +1,7 @@
 # Machine Learning in Julia, JuliaCon2020
 
 Interactive tutorials for a workshop introducing the machine learning
-toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
+toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 
 <div align="center">
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
@@ -15,7 +15,7 @@ Static version of the tutorials: [tutorials.md](tutorials.md)
 ## About the tutorials
 
 These tutorials were prepared for use in a 3 1/2 hour online workshop at
-JuliaCon2020. Their main aim is to introuduce the
+JuliaCon2020. Their main aim is to introduce the
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
 learning toolbox to working data scientists.
 
@@ -91,7 +91,7 @@ either:
 - You can run Julia/Juptyer notebooks on your local machine without problems; or
 
 - You are comfortable running Julia scripts from an IDE, such as [Juno](https://junolab.org) or [Emacs](https://github.com/JuliaEditorSupport/julia-emacs) (see [here](https://julialang.org) for a complete list).
-
+\
 
 #### Pros
 
