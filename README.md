@@ -79,7 +79,7 @@ No need to install Julia or any libraries on your local machine
 
 #### Instructions
 
-Click this button  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/master?filepath=tutorials.ipynb)
+Click this button: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/master?filepath=tutorials.ipynb)
 
 
 ### 2. Clone the repo and choose your preferred interface

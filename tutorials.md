@@ -24,10 +24,6 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 ```
 
-If this is the notebook version of the tutorial, then it is
-recommended that you clear all cell outputs before attempting the
-tutorial.
-
 ## Contents
 
 ### Basic
@@ -41,6 +37,7 @@ tutorial.
 - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
 
 <a id='part-1-data-representation'></a>
+
 ## Part 1 - Data Representation
 
 > **Goals:**
@@ -762,6 +759,7 @@ and dropped, namely `:id` and `:date`. The original feature
 `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
 <a id='part-2-selecting-training-and-evaluating-models'></a>
+
 ## Part 2 - Selecting, Training and Evaluating Models
 
 > **Goals:**
@@ -1250,7 +1248,7 @@ NeuralNetworkClassifier(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false)[34m @008[39m
+    optimiser_changes_trigger_retraining = false)[34m @833[39m
 ```
 
 ```julia
@@ -1317,10 +1315,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 0 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @076[39m trained 0 times.
   args: 
-    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @784[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @946[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1342,10 +1340,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 1 time.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @076[39m trained 1 time.
   args: 
-    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @784[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @946[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1398,10 +1396,10 @@ fit!(mach3)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @837[39m trained 2 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @663[39m trained 2 times.
   args: 
-    1:	[34mSource @337[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @900[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @068[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @930[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1416,10 +1414,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 2 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @076[39m trained 2 times.
   args: 
-    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @784[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @946[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1433,10 +1431,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 3 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @076[39m trained 3 times.
   args: 
-    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @784[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @946[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1449,10 +1447,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-[34mMachine{NeuralNetworkClassifier{Short,…}} @819[39m trained 4 times.
+[34mMachine{NeuralNetworkClassifier{Short,…}} @076[39m trained 4 times.
   args: 
-    1:	[34mSource @316[39m ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	[34mSource @923[39m ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	[34mSource @784[39m ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	[34mSource @946[39m ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1684,9 +1682,9 @@ nothing #hide
 ┌ Info: Creating subsamples from a subset of all rows. 
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/resampling.jl:336
 Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
-┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @572[39m.
+┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @559[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
-Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
+Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:01[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:01[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:01[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -1897,6 +1895,7 @@ After training:
   better?
 
 <a id='part-3-transformers-and-pipelines'></a>
+
 ## Part 3 - Transformers and Pipelines
 
 ### Transformers
@@ -1923,7 +1922,7 @@ std(x) = 0.3250514128119984
 ```
 
 ```julia
-model = UnivariateStandardizer() # a built-in model
+model = Standardizer() # a built-in model
 mach = machine(model, x)
 fit!(mach)
 x̂ = transform(mach, x);
@@ -1932,7 +1931,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{UnivariateStandardizer} @043[39m.
+┌ Info: Training [34mMachine{Standardizer} @282[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 mean(x̂) = 1.2212453270876722e-17
 std(x̂) = 1.0
@@ -2014,7 +2013,7 @@ encoder = ContinuousEncoder() # a built-in model; no need to @load it
 ```
 ContinuousEncoder(
     drop_last = false,
-    one_hot_ordered_factors = false)[34m @060[39m
+    one_hot_ordered_factors = false)[34m @142[39m
 ```
 
 Bind the model to the data and fit!
@@ -2025,7 +2024,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training [34mMachine{ContinuousEncoder} @519[39m.
+┌ Info: Training [34mMachine{ContinuousEncoder} @332[39m.
 └ @ MLJBase /Users/anthony/Dropbox/Julia7/MLJ/MLJBase/src/machines.jl:317
 
 ```
@@ -2177,14 +2176,13 @@ Some commonly used ones are built-in (do not require `@load`ing):
 
 model type                  | does what?
 ----------------------------|----------------------------------------------
-ContinuousEncoder | transform input to a table of `Continuous` features (see above)
+ContinuousEncoder | transform input table to a table of `Continuous` features (see above)
 FeatureSelector | retain or dump selected features
 FillImputer | impute missing values
 OneHotEncoder | one-hot encoder `Multiclass` (and optionally `OrderedFactor`) features
-Standardizer | standardize (whiten) the `Continuous` features in a table
+Standardizer | standardize (whiten) a vector or all `Continuous` features of a table
 UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
 UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
-UnivariateStandardizer| standardize (whiten) a `Continuous` vector
 
 In addition to "dynamic" transformers (ones that learn something
 from the data and must be `fit!`) users can wrap ordinary functions
@@ -2216,7 +2214,7 @@ PCA(
     maxoutdim = 0,
     method = :auto,
     pratio = 0.99,
-    mean = nothing)[34m @019[39m
+    mean = nothing)[34m @803[39m
 ```
 
 Now, rather simply repeating the workflow above, applying the new
@@ -2232,7 +2230,7 @@ pipe = @pipeline encoder reducer
 ```
 
 ```
-Pipeline645(
+Pipeline499(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2240,7 +2238,7 @@ Pipeline645(
             maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
-            mean = nothing))[34m @278[39m
+            mean = nothing))[34m @029[39m
 ```
 
 Notice that `pipe` is an *instance* of an automatically generated
@@ -2273,7 +2271,7 @@ pipe2 = @pipeline encoder reducer rgs
 ```
 
 ```
-Pipeline653(
+Pipeline507(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2286,7 +2284,7 @@ Pipeline653(
             lambda = 1.0,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing))[34m @400[39m
+            solver = nothing))[34m @567[39m
 ```
 
 Now our pipeline is a supervised model, instead of a transformer,
@@ -2317,10 +2315,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline653} @710[39m trained 3 times.
+[34mMachine{Pipeline507} @676[39m trained 3 times.
   args: 
-    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @875[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @501[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2330,10 +2328,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline653} @710[39m trained 4 times.
+[34mMachine{Pipeline507} @676[39m trained 4 times.
   args: 
-    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @875[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @501[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2348,10 +2346,10 @@ fit!(mach)
 ```
 
 ```
-[34mMachine{Pipeline653} @710[39m trained 5 times.
+[34mMachine{Pipeline507} @676[39m trained 5 times.
   args: 
-    1:	[34mSource @354[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	[34mSource @706[39m ⏎ `AbstractArray{Continuous,1}`
+    1:	[34mSource @875[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	[34mSource @501[39m ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2420,7 +2418,7 @@ _.per_observation = [missing]
 
 MLJ will also allow you to insert *learned* target
 transformations. For example, we might want to apply
-`UnivariateStandardizer()` to the target, to standarize it, or
+`Standardizer()` to the target, to standarize it, or
 `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
 instead of specifying a *function* for `target`, we specify a
 unsupervised *model* (or model type). One does not specify `inverse`
@@ -2431,7 +2429,7 @@ Let's see which of these two options results in a better outcome:
 
 ```julia
 box = UnivariateBoxCoxTransformer(n=20)
-stand = UnivariateStandardizer()
+stand = Standardizer()
 
 pipe4 = @pipeline encoder reducer rgs target=box
 mach = machine(pipe4, X, y)
@@ -2526,36 +2524,306 @@ and `cross_entropy` loss.
 as the tree booster parameter `max_depth` varies from 2 to 10.
 
 <a id='part-4-tuning-hyper-parameters'></a>
+
 ## Part 4 - Tuning Hyper-parameters
 
+### Naive tuning of a single parameter
+
+The most naive way to tune a single hyper-parameter is to use
+`learning_curve`, which we alread saw in Part 2. Let's see this in
+the Horse Colic classification problem, in a case where the parameter
+to be tuned is *nested* (because the model is a pipeline):
+
 ```julia
-r = range(pipe3, :(ridge_regressor.lambda), lower = 1e-6, upper=10, scale=:log)
+y, X = unpack(horse, ==(:outcome), name -> true);
+
+@load LogisticClassifier pkg=MLJLinearModels
+model = @pipeline Standardizer ContinuousEncoder LogisticClassifier
+mach = machine(model, X, y)
 ```
 
 ```
-MLJBase.NumericRange(Float64, :(ridge_regressor.lambda), ... )
+[34mMachine{Pipeline536} @974[39m trained 0 times.
+  args: 
+    1:	[34mSource @030[39m ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}, AbstractArray{Multiclass{6},1}, AbstractArray{Multiclass{3},1}, AbstractArray{OrderedFactor{2},1}, AbstractArray{OrderedFactor{4},1}, AbstractArray{OrderedFactor{5},1}}}`
+    2:	[34mSource @185[39m ⏎ `AbstractArray{Multiclass{3},1}`
+
+```
+
+```julia
+r = range(model, :(logistic_classifier.lambda), lower = 1e-2, upper=100, scale=:log10)
+```
+
+```
+MLJBase.NumericRange(Float64, :(logistic_classifier.lambda), ... )
 ```
 
 If you're curious, you can see what `lambda` values this range will
 generate for a given resolution:
 
 ```julia
-iterator(r, 10)
+iterator(r, 5)
 ```
 
 ```
-10-element Array{Float64,1}:
-  1.0000000000000004e-6
-  5.994842503189412e-6
-  3.593813663804628e-5
-  0.0002154434690031884
-  0.0012915496650148838
-  0.007742636826811276
-  0.046415888336127795
-  0.27825594022071254
-  1.668100537200059
- 10.000000000000002
+5-element Array{Float64,1}:
+   0.01
+   0.1
+   1.0
+  10.0
+ 100.0
 ```
+
+```julia
+_, _, lambdas, losses = learning_curve(mach,
+                                       range=r,
+                                       resampling=CV(nfolds=6),
+                                       resolution=30, # default
+                                       measure=cross_entropy)
+plt=plot(lambdas, losses, xscale=:log10)
+xlabel!(plt, "epochs")
+ylabel!(plt, "cross entropy on holdout set")
+```
+![](2797619445.png)
+
+```julia
+best_lambda = lambdas[argmin(losses)]
+```
+
+```
+5.736152510448679
+```
+
+### Self tuning models
+
+A more sophisticated way to view hyper-parameter tuning (inspired by
+MLR) is as a model *wrapper*. The wrapped model is a new model in
+its own right and when you fit it, it tunes specified
+hyper-parameters of the model being wrapped, before training on all
+supplied data. Calling `predict` on the wrapped model is like
+calling `predict` on the original model, but with the
+hyper-parameters already optimized.
+
+In other words, we can think of the wrapped model as a "self-tuning"
+version of the original.
+
+We now create a self-tuning version of the pipeline above, adding a
+parameter from the `ContiuousEncoder` to the parameters we want
+optimized.
+
+First, let's choose a tuning strategy (from [these
+options](https://github.com/alan-turing-institute/MLJTuning.jl#what-is-provided-here). MLJ
+supports ordinary `Grid` search (query `?Grid` for
+details). However, as the utility of `Grid` search is limited to a
+small number of parameters, we'll demonstrate `RandomSearch` here:
+
+```julia
+tuning = RandomSearch(rng=123)
+```
+
+```
+RandomSearch(
+    bounded = Distributions.Uniform,
+    positive_unbounded = Distributions.Gamma,
+    other = Distributions.Normal,
+    rng = MersenneTwister(UInt32[0x0000007b]) @ 1002)[34m @833[39m
+```
+
+In this strategy each parameter is sampled according to a
+pre-specified prior distribution that is fit to the one-dimensional
+range object constructed using `range` as before. While one has a
+lot of control over the specification of the priors (run
+`?RandomSearch` for details) we'll let the algorithm generate these
+priors automatically.
+
+In `RandomSearch` the `scale` attribute of a one-dimensional range
+only plays a role if we specify a *function*, which means we'll need
+to apply the corresponding inverse transform to our bounds, like
+this:
+
+```julia
+r = range(model, :(logistic_classifier.lambda), lower = -2, upper=2, scale=x->10^x)
+```
+
+```
+MLJBase.NumericRange(Float64, :(logistic_classifier.lambda), ... )
+```
+
+By default, a *bounded* range is sampled uniformly (before the
+`:scale` function is applied). We can see what this means like this:
+
+```julia
+import Distributions
+sampler_r = sampler(r, Distributions.Uniform)
+histogram(rand(sampler_r, 10000), nbins=50)
+```
+![](517000181.png)
+
+Alternatively, we can replace `r` with a positive *unbounded* range
+which, by default, is sampled using a `Gamma` distribution (which
+has an infinite decaying tail). An positive unbounded range is specified in
+this way:
+
+```julia
+r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
+```
+
+```
+MLJBase.NumericRange(Float64, :(logistic_classifier.lambda), ... )
+```
+
+And we then get this kind of distribution:
+
+```julia
+sampler_r = sampler(r, Distributions.Gamma)
+histogram(rand(sampler_r, 10000), nbins=50)
+```
+![](1004588303.png)
+
+The second parameter we'll add to this is *nominal* (finite) and, by
+default, will be sampled uniformly. Since it is nominal, we specify
+`values` instead of `upper` and `lower` bounds:
+
+```julia
+s  = range(model, :(continuous_encoder.one_hot_ordered_factors),
+           values = [true, false])
+```
+
+```
+MLJBase.NominalRange(Bool, :(continuous_encoder.one_hot_ordered_factors), ... )
+```
+
+Now for the wrapper, which is an instance of `TunedModel`:
+
+```julia
+tuned_model = TunedModel(model=model,
+                         ranges=[r, s],
+                         resampling=CV(nfolds=6),
+                         measures=cross_entropy,
+                         tuning=tuning,
+                         n=15)
+```
+
+```
+ProbabilisticTunedModel(
+    model = Pipeline536(
+            standardizer = [34mStandardizer @053[39m,
+            continuous_encoder = [34mContinuousEncoder @936[39m,
+            logistic_classifier = [34mLogisticClassifier @538[39m),
+    tuning = RandomSearch(
+            bounded = Distributions.Uniform,
+            positive_unbounded = Distributions.Gamma,
+            other = Distributions.Normal,
+            rng = MersenneTwister(UInt32[0x0000007b]) @ 1002),
+    resampling = CV(
+            nfolds = 6,
+            shuffle = false,
+            rng = Random._GLOBAL_RNG()),
+    measure = cross_entropy(
+            eps = 2.220446049250313e-16),
+    weights = nothing,
+    operation = MLJModelInterface.predict,
+    range = MLJBase.ParamRange[[34mNumericRange{Float64,…} @153[39m, [34mNominalRange{Bool,…} @018[39m],
+    train_best = true,
+    repeats = 1,
+    n = 15,
+    acceleration = CPU1{Nothing}(nothing),
+    acceleration_resampling = CPU1{Nothing}(nothing),
+    check_measure = true)[34m @158[39m
+```
+
+We can apply the `fit!/predict` workflow to `tuned_model` just as
+for any other model:
+
+```julia
+tuned_mach = machine(tuned_model, X, y);
+fit!(tuned_mach);
+predict(tuned_mach, rows=1:3)
+```
+
+```
+3-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
+ UnivariateFinite{Multiclass{3}}(1=>0.631, 2=>0.22, 3=>0.149)
+ UnivariateFinite{Multiclass{3}}(1=>0.844, 2=>0.00889, 3=>0.147)
+ UnivariateFinite{Multiclass{3}}(1=>0.967, 2=>0.0128, 3=>0.0199)
+```
+
+The outcomes of the tuning can be inspected from a detailed
+report. For example, we have:
+
+```julia
+rep = report(tuned_mach);
+rep.best_model
+```
+
+```
+Pipeline536(
+    standardizer = Standardizer(
+            features = Symbol[],
+            ignore = false,
+            ordered_factor = false,
+            count = false),
+    continuous_encoder = ContinuousEncoder(
+            drop_last = false,
+            one_hot_ordered_factors = true),
+    logistic_classifier = LogisticClassifier(
+            lambda = 5.100906526305173,
+            gamma = 0.0,
+            penalty = :l2,
+            fit_intercept = true,
+            penalize_intercept = false,
+            solver = nothing))[34m @568[39m
+```
+
+By default, sampling of a bounded range is uniform. Lets
+
+In the special case of two-parameters, you can also plot the results:
+
+```julia
+plot(tuned_mach)
+```
+![](2218687897.png)
+
+Finally, let's compare cross-validation estimate of the
+performance of the self-tuning model with that of the model
+(an example of [*nested
+resampling*](https://mlr3book.mlr-org.com/nested-resampling.html) here):
+
+```julia
+err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy);
+nothing #hide
+```
+
+```
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:00[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:00[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:00[K
+
+```
+
+```julia
+tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy);
+nothing #hide
+```
+
+```
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:05[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:02[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:06[K
+
+```
+
+### Resources for Part 4
+
+- From the MLJ manual:
+   - [Learning Curves]https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
+   - [Tuning Models](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/)
+- The [MLJTuning repo](https://github.com/alan-turing-institute/MLJTuning.jl#who-is-this-repo-for) - mostly for developers
+
+- From Data Science Tutorials:
+    - [Tuning a model](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
+    - [Crabs with XGBoost](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/) `Grid` tuning in stages for a tree-boosting model with many parameters
+    - [Boston with LightGBM](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/) -  `Grid` tuning for another popular tree-booster
+    - [Boston with Flux](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/) - optimizing batch size in a simple neural network regressor
+- [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+
+## Exercises for Part 4
 
 ## Solutions to exercises
 
@@ -2858,7 +3126,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ```
 
 ```
-0.6994959934209135
+1.2689778272800054
 ```
 
 #### Exercise 7
@@ -2875,7 +3143,7 @@ pipe = @pipeline(Standardizer,
 ```
 
 ```
-Pipeline685(
+Pipeline555(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -2900,7 +3168,7 @@ Pipeline685(
             nbins = 64,
             α = 0.5f0,
             metric = :mlogloss,
-            seed = 444))[34m @811[39m
+            seed = 444))[34m @792[39m
 ```
 
 (b)
@@ -2911,12 +3179,12 @@ evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
 ```
 
 ```
-┌───────────────┬───────────────┬──────────────────────────────────────────────────┐
-│ _.measure     │ _.measurement │ _.per_fold                                       │
-├───────────────┼───────────────┼──────────────────────────────────────────────────┤
-│ cross_entropy │ 0.835         │ Float32[0.872, 1.06, 0.723, 0.739, 0.899, 0.722] │
-└───────────────┴───────────────┴──────────────────────────────────────────────────┘
-_.per_observation = [[[2.39, 0.891, ..., 0.422], [0.0627, 0.091, ..., 2.68], [0.0585, 1.39, ..., 0.149], [0.22, 1.09, ..., 1.38], [0.113, 0.831, ..., 0.141], [1.92, 0.114, ..., 0.236]]]
+┌───────────────┬───────────────┬───────────────────────────────────────────────────┐
+│ _.measure     │ _.measurement │ _.per_fold                                        │
+├───────────────┼───────────────┼───────────────────────────────────────────────────┤
+│ cross_entropy │ 0.806         │ Float32[0.772, 0.995, 0.699, 0.738, 0.907, 0.724] │
+└───────────────┴───────────────┴───────────────────────────────────────────────────┘
+_.per_observation = [[[1.08, 0.358, ..., 0.0598], [0.0498, 0.182, ..., 2.6], [0.0637, 1.45, ..., 0.197], [0.175, 0.567, ..., 1.33], [0.119, 0.756, ..., 0.123], [1.91, 0.11, ..., 0.294]]]
 
 ```
 

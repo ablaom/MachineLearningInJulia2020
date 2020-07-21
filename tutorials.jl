@@ -4,14 +4,15 @@
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 # ### Environment instantiation
 
-# The following loads a Julia environment and assumes you have the
-# following files in the same directory as this file:
+# To work properly the directory containing this file must be a copy
+# (clone) or [this]() repository directory. The loads a Julia
+# environment and forces pre-compilation of modules.
 
-# - Project.toml
-# - Manifest.toml
-# - setup.jl
+# If this the binder notebook version of the tutorial, you are better
+# off skipping the evaluation of this first cell.
 
-include(joinpath(@__DIR__, "setup.jl"))
+DIR = @__DIR__
+include(joinpath(DIR, "setup.jl"))
 
 
 # ## Contents
@@ -28,6 +29,8 @@ include(joinpath(@__DIR__, "setup.jl"))
 
 
 # <a id='part-1-data-representation'></a>
+
+
 # ## Part 1 - Data Representation
 
 # > **Goals:**
@@ -361,6 +364,8 @@ first(house, 4)
 # `:yr_renovated` has been replaced by the `Bool` feature `is_renovated`.)
 
 # <a id='part-2-selecting-training-and-evaluating-models'></a>
+
+
 # ## Part 2 - Selecting, Training and Evaluating Models
 
 # > **Goals:**
@@ -768,6 +773,8 @@ w
 #   better?
 
 # <a id='part-3-transformers-and-pipelines'></a>
+
+
 # ## Part 3 - Transformers and Pipelines
 
 # ### Transformers
@@ -1019,14 +1026,171 @@ schema(X)
 # as the tree booster parameter `max_depth` varies from 2 to 10.
 
 # <a id='part-4-tuning-hyper-parameters'></a>
+
+
 # ## Part 4 - Tuning Hyper-parameters
 
-r = range(pipe3, :(ridge_regressor.lambda), lower = 1e-6, upper=10, scale=:log)
+# ### Naive tuning of a single parameter
+
+# The most naive way to tune a single hyper-parameter is to use
+# `learning_curve`, which we alread saw in Part 2. Let's see this in
+# the Horse Colic classification problem, in a case where the parameter
+# to be tuned is *nested* (because the model is a pipeline):
+
+y, X = unpack(horse, ==(:outcome), name -> true);
+
+@load LogisticClassifier pkg=MLJLinearModels
+model = @pipeline Standardizer ContinuousEncoder LogisticClassifier
+mach = machine(model, X, y)
+
+#-
+
+r = range(model, :(logistic_classifier.lambda), lower = 1e-2, upper=100, scale=:log10)
 
 # If you're curious, you can see what `lambda` values this range will
 # generate for a given resolution:
 
-iterator(r, 10)
+iterator(r, 5)
+
+#-
+
+_, _, lambdas, losses = learning_curve(mach,
+                                       range=r,
+                                       resampling=CV(nfolds=6),
+                                       resolution=30, # default
+                                       measure=cross_entropy)
+plt=plot(lambdas, losses, xscale=:log10)
+xlabel!(plt, "epochs")
+ylabel!(plt, "cross entropy on holdout set")
+
+#-
+
+best_lambda = lambdas[argmin(losses)]
+
+
+# ### Self tuning models
+
+# A more sophisticated way to view hyper-parameter tuning (inspired by
+# MLR) is as a model *wrapper*. The wrapped model is a new model in
+# its own right and when you fit it, it tunes specified
+# hyper-parameters of the model being wrapped, before training on all
+# supplied data. Calling `predict` on the wrapped model is like
+# calling `predict` on the original model, but with the
+# hyper-parameters already optimized.
+
+# In other words, we can think of the wrapped model as a "self-tuning"
+# version of the original.
+
+# We now create a self-tuning version of the pipeline above, adding a
+# parameter from the `ContiuousEncoder` to the parameters we want
+# optimized.
+
+# First, let's choose a tuning strategy (from [these
+# options](https://github.com/alan-turing-institute/MLJTuning.jl#what-is-provided-here). MLJ
+# supports ordinary `Grid` search (query `?Grid` for
+# details). However, as the utility of `Grid` search is limited to a
+# small number of parameters, we'll demonstrate `RandomSearch` here:
+
+tuning = RandomSearch(rng=123)
+
+# In this strategy each parameter is sampled according to a
+# pre-specified prior distribution that is fit to the one-dimensional
+# range object constructed using `range` as before. While one has a
+# lot of control over the specification of the priors (run
+# `?RandomSearch` for details) we'll let the algorithm generate these
+# priors automatically.
+
+# In `RandomSearch` the `scale` attribute of a one-dimensional range
+# only plays a role if we specify a *function*, which means we'll need
+# to apply the corresponding inverse transform to our bounds, like
+# this:
+
+r = range(model, :(logistic_classifier.lambda), lower = -2, upper=2, scale=x->10^x)
+
+# By default, a *bounded* range is sampled uniformly (before the
+# `:scale` function is applied). We can see what this means like this:
+
+import Distributions
+sampler_r = sampler(r, Distributions.Uniform)
+histogram(rand(sampler_r, 10000), nbins=50)
+
+#-
+
+# Alternatively, we can replace `r` with a positive *unbounded* range
+# which, by default, is sampled using a `Gamma` distribution (which
+# has an infinite decaying tail). An positive unbounded range is specified in
+# this way:
+
+r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
+
+# And we then get this kind of distribution:
+
+sampler_r = sampler(r, Distributions.Gamma)
+histogram(rand(sampler_r, 10000), nbins=50)
+
+# The second parameter we'll add to this is *nominal* (finite) and, by
+# default, will be sampled uniformly. Since it is nominal, we specify
+# `values` instead of `upper` and `lower` bounds:
+
+s  = range(model, :(continuous_encoder.one_hot_ordered_factors),
+           values = [true, false])
+#-
+
+# Now for the wrapper, which is an instance of `TunedModel`:
+
+tuned_model = TunedModel(model=model,
+                         ranges=[r, s],
+                         resampling=CV(nfolds=6),
+                         measures=cross_entropy,
+                         tuning=tuning,
+                         n=15)
+
+# We can apply the `fit!/predict` workflow to `tuned_model` just as
+# for any other model:
+
+tuned_mach = machine(tuned_model, X, y);
+fit!(tuned_mach);
+predict(tuned_mach, rows=1:3)
+
+# The outcomes of the tuning can be inspected from a detailed
+# report. For example, we have:
+
+rep = report(tuned_mach);
+rep.best_model
+
+# By default, sampling of a bounded range is uniform. Lets
+
+# In the special case of two-parameters, you can also plot the results:
+
+plot(tuned_mach)
+
+# Finally, let's compare cross-validation estimate of the
+# performance of the self-tuning model with that of the model
+# (an example of [*nested
+# resampling*](https://mlr3book.mlr-org.com/nested-resampling.html) here):
+
+err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy);
+
+#-
+
+tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy);
+
+# ### Resources for Part 4
+#
+# - From the MLJ manual:
+#    - [Learning Curves]https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
+#    - [Tuning Models](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/)
+# - The [MLJTuning repo](https://github.com/alan-turing-institute/MLJTuning.jl#who-is-this-repo-for) - mostly for developers
+#
+# - From Data Science Tutorials:
+#     - [Tuning a model](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
+#     - [Crabs with XGBoost](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/) `Grid` tuning in stages for a tree-boosting model with many parameters
+#     - [Boston with LightGBM](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/) -  `Grid` tuning for another popular tree-booster
+#     - [Boston with Flux](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/) - optimizing batch size in a simple neural network regressor
+# - [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
+
+
+# ## Exercises for Part 4
 
 
 
