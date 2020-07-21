@@ -4,12 +4,11 @@
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 # ### Environment instantiation
 
-# To work properly the directory containing this file must be a copy
-# (clone) or [this]() repository directory. The loads a Julia
-# environment and forces pre-compilation of modules.
+# The following loads a Julia environment and forces pre-compilation
+# of some packages.
 
-# If this the binder notebook version of the tutorial, you are better
-# off skipping the evaluation of this first cell.
+# However, if this the **binder** notebook version of the tutorial, we
+# recommend you *skip* evaluation of this first cell.
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
