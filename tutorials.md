@@ -374,7 +374,7 @@ first(horse, 4)
 
 From [the UCI
 docs](http://archive.ics.uci.edu/ml/datasets/Horse+Colic) we can
-surmise how each variable ought to be interpreted (a step in our
+summarize how each variable ought to be interpreted (a step in our
 workflow that cannot reliably be left to the computer):
 
 variable                    | scientific type (interpretation)
@@ -1701,10 +1701,67 @@ nothing #hide
 ```
 ┌ Info: Creating subsamples from a subset of all rows. 
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/resampling.jl:336
-Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
-┌ Info: Training Machine{NeuralNetworkClassifier{Short,…}} @224.
+
+Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[K
+Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[K
+Evaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[K
+Evaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[K
+Evaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[K
+Evaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
+┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @563[39m.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/machines.jl:317
-Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
+
+Optimising neural net:  2%[>                        ]  ETA: 0:00:00[K
+Optimising neural net:  4%[>                        ]  ETA: 0:00:00[K
+Optimising neural net:  6%[=>                       ]  ETA: 0:00:00[K
+Optimising neural net:  8%[=>                       ]  ETA: 0:00:00[K
+Optimising neural net: 10%[==>                      ]  ETA: 0:00:00[K
+Optimising neural net: 12%[==>                      ]  ETA: 0:00:00[K
+Optimising neural net: 14%[===>                     ]  ETA: 0:00:00[K
+Optimising neural net: 16%[===>                     ]  ETA: 0:00:00[K
+Optimising neural net: 18%[====>                    ]  ETA: 0:00:00[K
+Optimising neural net: 20%[====>                    ]  ETA: 0:00:00[K
+Optimising neural net: 22%[=====>                   ]  ETA: 0:00:00[K
+Optimising neural net: 24%[=====>                   ]  ETA: 0:00:00[K
+Optimising neural net: 25%[======>                  ]  ETA: 0:00:00[K
+Optimising neural net: 27%[======>                  ]  ETA: 0:00:00[K
+Optimising neural net: 29%[=======>                 ]  ETA: 0:00:00[K
+Optimising neural net: 31%[=======>                 ]  ETA: 0:00:00[K
+Optimising neural net: 33%[========>                ]  ETA: 0:00:00[K
+Optimising neural net: 35%[========>                ]  ETA: 0:00:00[K
+Optimising neural net: 37%[=========>               ]  ETA: 0:00:00[K
+Optimising neural net: 39%[=========>               ]  ETA: 0:00:00[K
+Optimising neural net: 41%[==========>              ]  ETA: 0:00:00[K
+Optimising neural net: 43%[==========>              ]  ETA: 0:00:00[K
+Optimising neural net: 45%[===========>             ]  ETA: 0:00:00[K
+Optimising neural net: 47%[===========>             ]  ETA: 0:00:00[K
+Optimising neural net: 49%[============>            ]  ETA: 0:00:00[K
+Optimising neural net: 51%[============>            ]  ETA: 0:00:00[K
+Optimising neural net: 53%[=============>           ]  ETA: 0:00:00[K
+Optimising neural net: 55%[=============>           ]  ETA: 0:00:00[K
+Optimising neural net: 57%[==============>          ]  ETA: 0:00:00[K
+Optimising neural net: 59%[==============>          ]  ETA: 0:00:00[K
+Optimising neural net: 61%[===============>         ]  ETA: 0:00:00[K
+Optimising neural net: 63%[===============>         ]  ETA: 0:00:00[K
+Optimising neural net: 65%[================>        ]  ETA: 0:00:00[K
+Optimising neural net: 67%[================>        ]  ETA: 0:00:00[K
+Optimising neural net: 69%[=================>       ]  ETA: 0:00:00[K
+Optimising neural net: 71%[=================>       ]  ETA: 0:00:00[K
+Optimising neural net: 73%[==================>      ]  ETA: 0:00:00[K
+Optimising neural net: 75%[==================>      ]  ETA: 0:00:00[K
+Optimising neural net: 76%[===================>     ]  ETA: 0:00:00[K
+Optimising neural net: 78%[===================>     ]  ETA: 0:00:00[K
+Optimising neural net: 80%[====================>    ]  ETA: 0:00:00[K
+Optimising neural net: 82%[====================>    ]  ETA: 0:00:00[K
+Optimising neural net: 84%[=====================>   ]  ETA: 0:00:00[K
+Optimising neural net: 86%[=====================>   ]  ETA: 0:00:00[K
+Optimising neural net: 88%[======================>  ]  ETA: 0:00:00[K
+Optimising neural net: 90%[======================>  ]  ETA: 0:00:00[K
+Optimising neural net: 92%[=======================> ]  ETA: 0:00:00[K
+Optimising neural net: 94%[=======================> ]  ETA: 0:00:00[K
+Optimising neural net: 96%[========================>]  ETA: 0:00:00[K
+Optimising neural net: 98%[========================>]  ETA: 0:00:00[K
+Optimising neural net:100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -2837,7 +2894,10 @@ nothing #hide
 ```
 
 ```
-Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:00[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:00[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:00[K
+
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:00[K
+Evaluating over 3 folds:  67%[================>        ]  ETA: 0:00:00[K
+Evaluating over 3 folds: 100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -2847,7 +2907,9 @@ nothing #hide
 ```
 
 ```
-Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:05[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:02[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:06[K
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:04[K
+Evaluating over 3 folds:  67%[================>        ]  ETA: 0:00:02[K
+Evaluating over 3 folds: 100%[=========================] Time: 0:00:06[K
 
 ```
 
