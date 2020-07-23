@@ -1658,7 +1658,7 @@ _.per_observation = [[[0.282, 0.433, ..., 0.0142], [0.0149, 0.618, ..., 0.0134],
 ```
 
 Or, Monte-Carlo cross-validation (cross-validation repeated
-randomizied folds)
+on randomized folds)
 
 ```julia
 e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
@@ -1920,7 +1920,7 @@ w
 
 #### Exercise 6 (first steps in modelling Horse Colic)
 
-(a) Suppose we want to use predict the `:outcome` variable in the
+(a) Suppose we want to predict the `:outcome` variable in the
 Horse Colic study introduced in Part 1, based on the remaining
 variables that are `Continuous` (one-hot encoding categorical
 variables is discussed later in Part 3) *while ignoring the others*.
