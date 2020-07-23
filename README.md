@@ -72,7 +72,9 @@ No need to install Julia or any libraries on your local machine
 
 #### Cons
 
-- The (automatic) setup can take a little while
+- The (automatic) setup can take a little while, sometimes over 15
+  minutes (but you do get a static version of the notebook while it
+  loads)
 
 - If the online notebook crashes or drops your connection, you will have to start over
 
@@ -91,7 +93,7 @@ either:
 - You can run Julia/Juptyer notebooks on your local machine without problems; or
 
 - You are comfortable running Julia scripts from an IDE, such as [Juno](https://junolab.org) or [Emacs](https://github.com/JuliaEditorSupport/julia-emacs) (see [here](https://julialang.org) for a complete list).
-\
+
 
 #### Pros
 

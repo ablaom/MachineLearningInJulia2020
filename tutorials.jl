@@ -2,16 +2,22 @@
 
 # A workshop introducing the machine learning toolbox
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
+
+
 # ### Environment instantiation
 
 # The following loads a Julia environment and forces pre-compilation
 # of some packages.
 
-# However, if this the **binder** notebook version of the tutorial, we
+# If this the **binder** notebook version of the tutorial, we
 # recommend you *skip* evaluation of this first cell.
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
+
+# Skip this unless colors/boldface causes a problem in your IDE's REPL:
+
+color_off()
 
 
 # ## Contents
@@ -90,14 +96,19 @@ levels(exam_mark)
 levels!(exam_mark, ["rotten", "bla", "great"])
 exam_mark[1] < exam_mark[2]
 
-# When subsampling, no levels are not lost:
+# When subsampling, no levels are lost:
 
 levels(exam_mark[1:2])
 
-# **Note on binary data.** There is no separate scientific type for binary
-# data. Binary data is `OrderedFactor{2}` if it has an intrinsic
-# "true" class (eg, "pass"/"fail") and `Multiclass{2}` otherwise (eg,
-# "male"/"female").
+# **Note on binary data.** There is no separate scientific type for
+# binary data. Binary data is `OrderedFactor{2}` or
+# `Multiclass{2}`. If a binary measure like `truepositive` is a
+# applied to `OrderedFactor{2}` then the "positive" class is assumed
+# to appear *second* in the ordering. If such a measure is applied to
+# `Multiclass{2}` data, a warning is issued. A single `OrderedFactor`
+# can be coerced to a single `Continuous` variable, for models that
+# require this, while a `Multiclass` variable can only be one-hot
+# encoded.
 
 
 # ### Two-dimensional data
@@ -109,9 +120,8 @@ levels(exam_mark[1:2])
 # [list](https://github.com/JuliaData/Tables.jl/blob/master/INTEGRATIONS.md))
 # have a scientific type of `Table` and can be used with such models.
 
-# The simplest example of a table is a the julia native *column
+# The simplest example of a table is the julia native *column
 # table*, which is just a named tuple of equal-length vectors:
-
 
 column_table = (h=height, e=exam_mark, t=time)
 
@@ -157,9 +167,7 @@ schema(file) # (triggers a file read)
 matrix_table = MLJ.table(rand(2,3))
 schema(matrix_table)
 
-# Under the hood many algorithms convert tabular data to matrices. If
-# your table is a wrapped matrix like the above, then the compiler
-# will generally collapse the conversions to a no-op.
+# The matrix is *not* copied, only wrapped.
 
 
 # **Manipulating tabular data.** In this workshop we assume
@@ -414,11 +422,11 @@ scitype(y)
 
 # Here's how to see *all* models (not immediately useful):
 
-kitchen_sink = models()
+all_models = models()
 
 # Each entry contains metadata for a model whose defining code is not yet loaded:
 
-meta = kitchen_sink[3]
+meta = all_models[3]
 
 #-
 
@@ -430,10 +438,11 @@ scitype(y) <: targetscitype
 
 # So this model won't do. Let's  find all pure julia classifiers:
 
-filt(meta) = AbstractVector{Finite} <: meta.target_scitype &&
-        meta.is_pure_julia
-models(filt)
+filter_julia_classifiers(meta) =
+    AbstractVector{Finite} <: meta.target_scitype &&
+    meta.is_pure_julia
 
+models(filter_julia_classifiers)
 
 # Find all models with "Classifier" in `name` (or `docstring`):
 
@@ -447,6 +456,10 @@ models(matching(X, y))
 
 
 # ### Step 3. Select and instantiate a model
+
+# To load the code defining a new model type we use the `@load` macro,
+# which returns an *instance* of the type, with default
+# hyperparameters:
 
 model = @load NeuralNetworkClassifier
 
@@ -894,7 +907,8 @@ pipe = @pipeline encoder reducer
 
 # The new model behaves like any other transformer:
 
-mach = machine(pipe, X) |> fit!;
+mach = machine(pipe, X)
+fit!(mach)
 Xsmall = transform(mach, X)
 schema(Xsmall)
 
@@ -906,7 +920,7 @@ pipe2 = @pipeline encoder reducer rgs
 # Now our pipeline is a supervised model, instead of a transformer,
 # whose performance we can evaluate:
 
-mach = machine(pipe2, X, y) |> fit!
+mach = machine(pipe2, X, y)
 evaluate!(mach, measure=mae, resampling=Holdout()) # CV(nfolds=6) is default
 
 
@@ -1081,14 +1095,16 @@ best_lambda = lambdas[argmin(losses)]
 # version of the original.
 
 # We now create a self-tuning version of the pipeline above, adding a
-# parameter from the `ContiuousEncoder` to the parameters we want
+# parameter from the `ContinuousEncoder` to the parameters we want
 # optimized.
 
 # First, let's choose a tuning strategy (from [these
-# options](https://github.com/alan-turing-institute/MLJTuning.jl#what-is-provided-here). MLJ
+# options](https://github.com/alan-turing-institute/MLJTuning.jl#what-is-provided-here)). MLJ
 # supports ordinary `Grid` search (query `?Grid` for
 # details). However, as the utility of `Grid` search is limited to a
-# small number of parameters, we'll demonstrate `RandomSearch` here:
+# small number of parameters, and as `Grid` searches are demonstrated
+# elsewhere (see the [resources below](#resources-for-part-4)) we'll
+# demonstrate `RandomSearch` here:
 
 tuning = RandomSearch(rng=123)
 
@@ -1099,15 +1115,23 @@ tuning = RandomSearch(rng=123)
 # `?RandomSearch` for details) we'll let the algorithm generate these
 # priors automatically.
 
+
+# #### Aside on ranges and sampling (technical bit)
+
 # In `RandomSearch` the `scale` attribute of a one-dimensional range
-# only plays a role if we specify a *function*, which means we'll need
-# to apply the corresponding inverse transform to our bounds, like
-# this:
+# only plays a role if we specify a *function*, in which case we need
+# to apply the corresponding inverse transform to our bounds. If
+# instead of the above definition of `r` we use
 
 r = range(model, :(logistic_classifier.lambda), lower = -2, upper=2, scale=x->10^x)
 
-# By default, a *bounded* range is sampled uniformly (before the
-# `:scale` function is applied). We can see what this means like this:
+# then, in a grid search, we would get the same values as before:
+
+iterator(r, 5)
+
+# Since a *bounded* range (like this one) is sampled uniformly in a
+# `GridSearch` (before the `scale` function is applied), we'll get
+# sampling with a logarithmic spread. We can see in this way:
 
 import Distributions
 sampler_r = sampler(r, Distributions.Uniform)
@@ -1117,7 +1141,7 @@ histogram(rand(sampler_r, 10000), nbins=50)
 
 # Alternatively, we can replace `r` with a positive *unbounded* range
 # which, by default, is sampled using a `Gamma` distribution (which
-# has an infinite decaying tail). An positive unbounded range is specified in
+# has an infinite decaying tail). A positive unbounded range is specified in
 # this way:
 
 r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
@@ -1163,16 +1187,20 @@ rep.best_model
 
 plot(tuned_mach)
 
-# Finally, let's compare cross-validation estimate of the
-# performance of the self-tuning model with that of the model
-# (an example of [*nested
-# resampling*](https://mlr3book.mlr-org.com/nested-resampling.html) here):
+# Finally, let's compare cross-validation estimate of the performance
+# of the self-tuning model with that of the original model (an example
+# of [*nested
+# resampling*](https://mlr3book.mlr-org.com/nested-resampling.html)
+# here):
 
 err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy);
 
 #-
 
 tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy);
+
+# <a id='resources-for-part-4></a>
+
 
 # ### Resources for Part 4
 #
@@ -1224,7 +1252,7 @@ histogram(samples, nbins=50)
 
 sort(unique(samples))
 
-# (c) Optimize these two parameters over the ranges `r1` and `r2`
+# (c) Optimize `model` over these the parameter ranges `r1` and `r2`
 # using a random search with uniform priors. Use `Holdout()`
 # resampling, and implement your search by first constructing a
 # "self-tuning" wrap of `model`, as described above. Make `mae` (mean
@@ -1445,6 +1473,6 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=mae)
 
 
 using Literate #src
-Literate.markdown(@__FILE__, @__DIR__, execute=true) #src
-Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
+Literate.markdown(@__FILE__, DIR, execute=true) #src
+Literate.notebook(@__FILE__, DIR, execute=false) #src
 
