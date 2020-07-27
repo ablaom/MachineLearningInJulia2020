@@ -9,11 +9,12 @@ A workshop introducing the machine learning toolbox
 
 ### Environment instantiation
 
-The following loads a Julia environment and forces pre-compilation
-of some packages.
+The following loads a Julia environment and pre-loads some packages
+to avoid pauses later one. This includes plotting libraries and
+could take a few minutes.
 
-If this the **binder** notebook version of the tutorial, we
-recommend you *skip* evaluation of this first cell.
+If this the **binder** notebook version of the tutorial,
+you can *skip* evaluation of this first cell.
 
 ```julia
 DIR = @__DIR__
@@ -25,7 +26,8 @@ include(joinpath(DIR, "setup.jl"))
 
 ```
 
-Skip this unless colors/boldface causes a problem in your IDE's REPL:
+**Skip this** unless you're using an IDE that has issues with
+displaying color/boldface REPL output:
 
 ```julia
 color_off()
@@ -42,10 +44,9 @@ false
 - [Part 1 - Data Representation](#part-1-data-representation)
 - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 - [Part 3 - Transformers and Pipelines](#part-3-transformers-and-pipelines)
-
-### Advanced
-
 - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
+- [Part 5 - Advanced model composition](#advanced-model-composition)
+- [Solutions to Exercises](#solutions-to-exercises)
 
 <a id='part-1-data-representation'></a>
 
@@ -161,7 +162,7 @@ exam_mark[1] < exam_mark[2]
 true
 ```
 
-When subsampling, no levels are lost:
+When sub-sampling, no levels are lost:
 
 ```julia
 levels(exam_mark[1:2])
@@ -351,7 +352,7 @@ tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/d
 
 To show how we can correct the scientific types of data in tables,
 we introduce a cleaned up version of the UCI Horse Colic Data Set
-(the cleaning workflow is described
+(the cleaning work-flow is described
 [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
 
 ```julia
@@ -374,8 +375,8 @@ first(horse, 4)
 
 From [the UCI
 docs](http://archive.ics.uci.edu/ml/datasets/Horse+Colic) we can
-summarize how each variable ought to be interpreted (a step in our
-workflow that cannot reliably be left to the computer):
+surmise how each variable ought to be interpreted (a step in our
+work-flow that cannot reliably be left to the computer):
 
 variable                    | scientific type (interpretation)
 ----------------------------|-----------------------------------
@@ -719,7 +720,7 @@ scitype(v[1:2])
 AbstractArray{Union{Missing, Count},1}
 ```
 
-Can you guess at the general behaviour of
+Can you guess at the general behavior of
 `scitype` with respect to tuples, abstract arrays and missing
 values? The answers are
 [here](https://github.com/alan-turing-institute/ScientificTypes.jl#2-the-scitype-and-scitype-methods)
@@ -778,7 +779,7 @@ and dropped, namely `:id` and `:date`. The original feature
 
 > **Goals:**
 > 1. Search MLJ's database of model metadata to identify model candidates for a supervised learning task.
-> 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` workflow.
+> 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` work-flow.
 > 3. Inspect the outcomes of training and save these to a file.
 > 3. Evaluate performance using other resampling strategies, such as cross-validation, in one line, using `evaluate!`
 > 4. Plot a "learning curve", to inspect performance as a function of some model hyper-parameter, such as an iteration parameter
@@ -875,21 +876,24 @@ Do `?unpack` to learn more:
 
   )
 
-  Split any Tables.jl compatible table into smaller tables (or vectors) t1, t2, ..., tk by
-  making selections without replacement from the column names defined by the filters f1,
-  f2, ..., fk. A filter is any object f such that f(name) is true or false for each column
-  name::Symbol of table.
+  Split any Tables.jl compatible table into smaller tables (or
+  vectors) t1, t2, ..., tk by making selections without replacement
+  from the column names defined by the filters f1, f2, ..., fk. A
+  filter is any object f such that f(name) is true or false for each
+  column name::Symbol of table.
 
-  Whenever a returned table contains a single column, it is converted to a vector unless
-  wrap_singles=true.
+  Whenever a returned table contains a single column, it is converted
+  to a vector unless wrap_singles=true.
 
-  Scientific type conversions can be optionally specified (note semicolon):
+  Scientific type conversions can be optionally specified (note
+  semicolon):
 
   unpack(table, t...; wrap_singles=false, col1=>scitype1, col2=>scitype2, ... )
 
-  If shuffle=true then the rows of table are first shuffled, using the global RNG, unless
-  rng is specified; if rng is an integer, it specifies the seed of an automatically
-  generated Mersenne twister. If rng is specified then shuffle=true is implicit.
+  If shuffle=true then the rows of table are first shuffled, using the
+  global RNG, unless rng is specified; if rng is an integer, it
+  specifies the seed of an automatically generated Mersenne twister.
+  If rng is specified then shuffle=true is implicit.
 
   Example
   –––––––––
@@ -1268,7 +1272,7 @@ NeuralNetworkClassifier(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false) @249
+    optimiser_changes_trigger_retraining = false) @258
 ```
 
 ```julia
@@ -1335,10 +1339,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @856 trained 0 times.
+Machine{NeuralNetworkClassifier{Short,…}} @076 trained 0 times.
   args: 
-    1:	Source @403 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @813 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @293 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @806 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1360,10 +1364,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @856 trained 1 time.
+Machine{NeuralNetworkClassifier{Short,…}} @076 trained 1 time.
   args: 
-    1:	Source @403 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @813 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @293 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @806 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1385,7 +1389,7 @@ report(mach)
 ```
 
 ```
-(training_losses = Any[1.2483145f0, 1.2016492f0, 1.1675905f0, 1.1408049f0, 1.1239645f0, 1.1073321f0, 1.0985616f0, 1.0872855f0, 1.0787379f0, 1.073653f0, 1.0671583f0, 1.0562762f0],)
+(training_losses = Any[1.018328f0, 1.0076529f0, 0.9970421f0, 0.98713166f0, 0.9708984f0, 0.9602445f0, 0.9453613f0, 0.9380164f0, 0.93375355f0, 0.92890394f0, 0.9214928f0, 0.91696894f0],)
 ```
 
 You save a machine like this:
@@ -1403,9 +1407,9 @@ predict(mach2, X)[1:3]
 
 ```
 3-element MLJBase.UnivariateFiniteArray{Multiclass{3},String,UInt32,Float32,1}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.302, Iris-versicolor=>0.369, Iris-virginica=>0.329)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.327, Iris-versicolor=>0.369, Iris-virginica=>0.305)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.323, Iris-versicolor=>0.369, Iris-virginica=>0.307)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.245, Iris-versicolor=>0.407, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.281, Iris-versicolor=>0.369, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.243, Iris-versicolor=>0.409, Iris-virginica=>0.348)
 ```
 
 If you want to fit a retrieved model, you will need to bind some data to it:
@@ -1416,10 +1420,10 @@ fit!(mach3)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @458 trained 2 times.
+Machine{NeuralNetworkClassifier{Short,…}} @807 trained 2 times.
   args: 
-    1:	Source @429 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @574 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @662 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @731 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1434,10 +1438,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @856 trained 2 times.
+Machine{NeuralNetworkClassifier{Short,…}} @076 trained 2 times.
   args: 
-    1:	Source @403 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @813 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @293 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @806 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1451,10 +1455,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @856 trained 3 times.
+Machine{NeuralNetworkClassifier{Short,…}} @076 trained 3 times.
   args: 
-    1:	Source @403 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @813 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @293 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @806 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1467,10 +1471,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @856 trained 4 times.
+Machine{NeuralNetworkClassifier{Short,…}} @076 trained 4 times.
   args: 
-    1:	Source @403 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @813 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @293 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @806 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1484,7 +1488,7 @@ yhat[1]
 ```
 
 ```
-UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.0853, Iris-versicolor=>0.694, Iris-virginica=>0.22)
+UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.101, Iris-versicolor=>0.691, Iris-virginica=>0.208)
 ```
 
 What's going on here?
@@ -1498,7 +1502,7 @@ info(model).prediction_type
 ```
 
 **Important**:
-- In MLJ, a model that can predict probabilities (and not just point values) will do so by default. (These models have supertype `Proababilistic`, while point-estimate predictors have supertype `Deterministic`.)
+- In MLJ, a model that can predict probabilities (and not just point values) will do so by default. (These models have supertype `Probabilistic`, while point-estimate predictors have supertype `Deterministic`.)
 - For most probabilistic predictors, the predicted object is a `Distributions.Distribution` object, supporting the `Distributions.jl` [API](https://juliastats.org/Distributions.jl/latest/extends/#Create-a-Distribution-1) for such objects. In particular, the methods `rand`,  `pdf`, `mode`, `median` and `mean` will apply, where appropriate.
 
 So, to obtain the probability of "Iris-virginica" in the first test
@@ -1509,7 +1513,7 @@ pdf(yhat[1], "Iris-virginica")
 ```
 
 ```
-0.22016504f0
+0.20785435f0
 ```
 
 To get the most likely observation, we do
@@ -1530,10 +1534,10 @@ broadcast(pdf, yhat[1:4], "Iris-versicolor")
 
 ```
 4-element Array{Float32,1}:
- 0.6944945
- 0.4175048
- 0.01892811
- 0.33673617
+ 0.6913743
+ 0.4742315
+ 0.06603816
+ 0.31756383
 ```
 
 ```julia
@@ -1572,14 +1576,14 @@ pdf(yhat, L)[1:4, :]
 
 ```
 4×3 Array{Float32,2}:
- 0.0853404  0.694494   0.220165
- 0.0375617  0.417505   0.544934
- 0.981072   0.0189281  6.87113f-15
- 0.027887   0.336736   0.635377
+ 0.100771     0.691374   0.207854
+ 0.00801382   0.474232   0.517755
+ 0.933962     0.0660382  1.61707f-10
+ 0.000101179  0.317564   0.682335
 ```
 
-However, in a typical MLJ workflow, this is not as useful as you
-might imagine. In particular, all probablistic performance measures
+However, in a typical MLJ work-flow, this is not as useful as you
+might imagine. In particular, all probabilistic performance measures
 in MLJ expect distribution objects in their first slot:
 
 ```julia
@@ -1587,7 +1591,7 @@ cross_entropy(yhat, y[test]) |> mean
 ```
 
 ```
-0.33242217f0
+0.31818444f0
 ```
 
 To apply a deterministic measure, we first need to obtain point-estimates:
@@ -1597,7 +1601,7 @@ misclassification_rate(mode.(yhat), y[test])
 ```
 
 ```
-0.06666666666666667
+0.044444444444444446
 ```
 
 We note in passing that there is also a search tool for measures
@@ -1632,10 +1636,10 @@ evaluate!(mach, resampling=Holdout(fraction_train=0.7),
 ┌──────────────────────────────┬───────────────┬─────────────────┐
 │ _.measure                    │ _.measurement │ _.per_fold      │
 ├──────────────────────────────┼───────────────┼─────────────────┤
-│ cross_entropy                │ 0.332         │ Float32[0.332]  │
-│ BrierScore{UnivariateFinite} │ -0.185        │ Float32[-0.185] │
+│ cross_entropy                │ 0.318         │ Float32[0.318]  │
+│ BrierScore{UnivariateFinite} │ -0.168        │ Float32[-0.168] │
 └──────────────────────────────┴───────────────┴─────────────────┘
-_.per_observation = [[[0.365, 0.873, ..., 0.0174]], [[-0.149, -0.638, ..., -0.000594]]]
+_.per_observation = [[[0.369, 0.746, ..., 0.0664]], [[-0.149, -0.545, ..., -0.00825]]]
 
 ```
 
@@ -1647,33 +1651,33 @@ evaluate!(mach, resampling=CV(nfolds=6),
 ```
 
 ```
-┌──────────────────────────────┬───────────────┬─────────────────────────────────────────────────────────┐
-│ _.measure                    │ _.measurement │ _.per_fold                                              │
-├──────────────────────────────┼───────────────┼─────────────────────────────────────────────────────────┤
-│ cross_entropy                │ 0.295         │ Float32[0.282, 0.242, 0.289, 0.339, 0.341, 0.276]       │
-│ BrierScore{UnivariateFinite} │ -0.155        │ Float32[-0.143, -0.129, -0.145, -0.174, -0.191, -0.149] │
-└──────────────────────────────┴───────────────┴─────────────────────────────────────────────────────────┘
-_.per_observation = [[[0.282, 0.433, ..., 0.0142], [0.0149, 0.618, ..., 0.0134], [0.122, 0.386, ..., 0.0105], [0.16, 0.252, ..., 0.164], [0.515, 0.519, ..., 0.524], [0.00842, 0.453, ..., 0.00625]], [[-0.121, -0.195, ..., -0.000398], [-0.000435, -0.372, ..., -0.000355], [-0.0265, -0.194, ..., -0.000209], [-0.0436, -0.0989, ..., -0.0458], [-0.267, -0.261, ..., -0.286], [-0.000141, -0.213, ..., -7.77e-5]]]
+┌──────────────────────────────┬───────────────┬────────────────────────────────────────────────────────┐
+│ _.measure                    │ _.measurement │ _.per_fold                                             │
+├──────────────────────────────┼───────────────┼────────────────────────────────────────────────────────┤
+│ cross_entropy                │ 0.288         │ Float32[0.275, 0.236, 0.298, 0.302, 0.345, 0.269]      │
+│ BrierScore{UnivariateFinite} │ -0.151        │ Float32[-0.134, -0.126, -0.152, -0.164, -0.19, -0.143] │
+└──────────────────────────────┴───────────────┴────────────────────────────────────────────────────────┘
+_.per_observation = [[[0.277, 0.341, ..., 0.0749], [0.00651, 0.575, ..., 0.00518], [0.107, 0.394, ..., 0.0139], [0.00449, 0.284, ..., 0.00643], [0.411, 0.421, ..., 0.596], [0.0161, 0.28, ..., 0.0156]], [[-0.117, -0.149, ..., -0.0104], [-8.42e-5, -0.325, ..., -5.34e-5], [-0.0204, -0.198, ..., -0.000369], [-4.01e-5, -0.122, ..., -8.2e-5], [-0.171, -0.178, ..., -0.344], [-0.000511, -0.0905, ..., -0.000477]]]
 
 ```
 
-Or, Monte-Carlo cross-validation (cross-validation repeated
-on randomized folds)
+Or, Monte Carlo cross-validation (cross-validation repeated
+randomized folds)
 
 ```julia
 e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
-                repeats=3,
+              repeats=3,
               measures=[cross_entropy, brier_score])
 ```
 
 ```
-┌──────────────────────────────┬───────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ _.measure                    │ _.measurement │ _.per_fold                                                                                                                                              │
-├──────────────────────────────┼───────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ cross_entropy                │ 0.306         │ Float32[0.232, 0.31, 0.286, 0.362, 0.385, 0.425, 0.285, 0.287, 0.256, 0.321, 0.302, 0.259, 0.423, 0.268, 0.306, 0.214, 0.286, 0.304]                    │
-│ BrierScore{UnivariateFinite} │ -0.162        │ Float32[-0.138, -0.166, -0.139, -0.188, -0.23, -0.244, -0.144, -0.135, -0.114, -0.186, -0.159, -0.129, -0.254, -0.147, -0.157, -0.0946, -0.123, -0.162] │
-└──────────────────────────────┴───────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-_.per_observation = [[[0.643, 0.00243, ..., 0.0016], [0.659, 0.305, ..., 0.557], [0.333, 0.345, ..., 0.0108], [0.482, 0.548, ..., 0.238], [0.473, 0.0126, ..., 0.00936], [0.0588, 0.341, ..., 0.66], [0.222, 0.00789, ..., 0.23], [0.298, 0.335, ..., 0.157], [0.224, 0.132, ..., 0.587], [0.00282, 0.485, ..., 0.453], [0.434, 0.0111, ..., 0.0165], [0.562, 0.00738, ..., 0.273], [0.683, 0.436, ..., 0.773], [0.36, 0.644, ..., 0.419], [0.119, 0.234, ..., 0.491], [0.312, 0.00352, ..., 0.482], [0.299, 0.298, ..., 0.298], [0.00978, 0.00903, ..., 0.41]], [[-0.407, -1.18e-5, ..., -5.13e-6], [-0.442, -0.111, ..., -0.347], [-0.153, -0.162, ..., -0.00023], [-0.223, -0.291, ..., -0.0895], [-0.23, -0.000308, ..., -0.00017], [-0.00648, -0.167, ..., -0.351], [-0.079, -0.000124, ..., -0.0846], [-0.0998, -0.152, ..., -0.0424], [-0.0624, -0.0307, ..., -0.392], [-1.59e-5, -0.278, ..., -0.249], [-0.186, -0.000244, ..., -0.000536], [-0.368, -0.000108, ..., -0.114], [-0.484, -0.249, ..., -0.573], [-0.148, -0.404, ..., -0.218], [-0.0252, -0.0871, ..., -0.256], [-0.143, -2.48e-5, ..., -0.291], [-0.118, -0.118, ..., -0.118], [-0.000189, -0.000162, ..., -0.208]]]
+┌──────────────────────────────┬───────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ _.measure                    │ _.measurement │ _.per_fold                                                                                                                                            │
+├──────────────────────────────┼───────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ cross_entropy                │ 0.291         │ Float32[0.222, 0.255, 0.301, 0.329, 0.355, 0.296, 0.327, 0.256, 0.299, 0.266, 0.264, 0.43, 0.249, 0.247, 0.356, 0.235, 0.243, 0.304]                  │
+│ BrierScore{UnivariateFinite} │ -0.152        │ Float32[-0.13, -0.124, -0.165, -0.162, -0.205, -0.156, -0.179, -0.129, -0.146, -0.14, -0.137, -0.216, -0.134, -0.129, -0.192, -0.107, -0.118, -0.165] │
+└──────────────────────────────┴───────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+_.per_observation = [[[0.59, 0.00449, ..., 0.0022], [0.51, 0.293, ..., 0.412], [0.564, 0.556, ..., 0.000129], [0.322, 0.339, ..., 0.322], [0.598, 0.00664, ..., 0.0062], [0.00549, 0.228, ..., 0.401], [0.263, 0.0178, ..., 0.269], [0.403, 0.549, ..., 0.0157], [0.471, 0.0769, ..., 0.477], [0.00216, 0.474, ..., 0.291], [0.367, 0.00446, ..., 0.00703], [0.502, 0.476, ..., 0.244], [0.316, 0.249, ..., 0.301], [0.273, 0.542, ..., 0.588], [0.508, 0.531, ..., 0.407], [0.264, 0.00324, ..., 0.433], [0.00711, 0.00625, ..., 0.00606], [0.00596, 0.00365, ..., 0.276]], [[-0.359, -4.01e-5, ..., -9.66e-6], [-0.296, -0.0975, ..., -0.212], [-0.345, -0.338, ..., 0.0], [-0.114, -0.143, ..., -0.152], [-0.35, -8.76e-5, ..., -7.63e-5], [-6.0e-5, -0.0828, ..., -0.166], [-0.107, -0.00062, ..., -0.112], [-0.167, -0.283, ..., -0.000488], [-0.216, -0.0109, ..., -0.273], [-9.3e-6, -0.283, ..., -0.128], [-0.146, -3.96e-5, ..., -9.82e-5], [-0.312, -0.241, ..., -0.0935], [-0.143, -0.0972, ..., -0.13], [-0.112, -0.339, ..., -0.395], [-0.287, -0.307, ..., -0.175], [-0.108, -2.09e-5, ..., -0.244], [-0.0001, -7.77e-5, ..., -7.31e-5], [-7.07e-5, -2.66e-5, ..., -0.116]]]
 
 ```
 
@@ -1685,7 +1689,7 @@ reported).
 We finally note that you can restrict the rows of observations from
 which train and test folds are drawn, by specifying `rows=...`. For
 example, imagining the last 30% of target observations are `missing`
-you might have a workflow like this:
+you might have a work-flow like this:
 
 ```julia
 train, test = partition(eachindex(y), 0.7)
@@ -1701,67 +1705,10 @@ nothing #hide
 ```
 ┌ Info: Creating subsamples from a subset of all rows. 
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/resampling.jl:336
-
-Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[K
-Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[K
-Evaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[K
-Evaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[K
-Evaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[K
-Evaluating over 6 folds: 100%[=========================] Time: 0:00:03[K
-┌ Info: Training [34mMachine{NeuralNetworkClassifier{Short,…}} @563[39m.
+Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:03[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:03[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:01[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:04[K
+┌ Info: Training Machine{NeuralNetworkClassifier{Short,…}} @712.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/machines.jl:317
-
-Optimising neural net:  2%[>                        ]  ETA: 0:00:00[K
-Optimising neural net:  4%[>                        ]  ETA: 0:00:00[K
-Optimising neural net:  6%[=>                       ]  ETA: 0:00:00[K
-Optimising neural net:  8%[=>                       ]  ETA: 0:00:00[K
-Optimising neural net: 10%[==>                      ]  ETA: 0:00:00[K
-Optimising neural net: 12%[==>                      ]  ETA: 0:00:00[K
-Optimising neural net: 14%[===>                     ]  ETA: 0:00:00[K
-Optimising neural net: 16%[===>                     ]  ETA: 0:00:00[K
-Optimising neural net: 18%[====>                    ]  ETA: 0:00:00[K
-Optimising neural net: 20%[====>                    ]  ETA: 0:00:00[K
-Optimising neural net: 22%[=====>                   ]  ETA: 0:00:00[K
-Optimising neural net: 24%[=====>                   ]  ETA: 0:00:00[K
-Optimising neural net: 25%[======>                  ]  ETA: 0:00:00[K
-Optimising neural net: 27%[======>                  ]  ETA: 0:00:00[K
-Optimising neural net: 29%[=======>                 ]  ETA: 0:00:00[K
-Optimising neural net: 31%[=======>                 ]  ETA: 0:00:00[K
-Optimising neural net: 33%[========>                ]  ETA: 0:00:00[K
-Optimising neural net: 35%[========>                ]  ETA: 0:00:00[K
-Optimising neural net: 37%[=========>               ]  ETA: 0:00:00[K
-Optimising neural net: 39%[=========>               ]  ETA: 0:00:00[K
-Optimising neural net: 41%[==========>              ]  ETA: 0:00:00[K
-Optimising neural net: 43%[==========>              ]  ETA: 0:00:00[K
-Optimising neural net: 45%[===========>             ]  ETA: 0:00:00[K
-Optimising neural net: 47%[===========>             ]  ETA: 0:00:00[K
-Optimising neural net: 49%[============>            ]  ETA: 0:00:00[K
-Optimising neural net: 51%[============>            ]  ETA: 0:00:00[K
-Optimising neural net: 53%[=============>           ]  ETA: 0:00:00[K
-Optimising neural net: 55%[=============>           ]  ETA: 0:00:00[K
-Optimising neural net: 57%[==============>          ]  ETA: 0:00:00[K
-Optimising neural net: 59%[==============>          ]  ETA: 0:00:00[K
-Optimising neural net: 61%[===============>         ]  ETA: 0:00:00[K
-Optimising neural net: 63%[===============>         ]  ETA: 0:00:00[K
-Optimising neural net: 65%[================>        ]  ETA: 0:00:00[K
-Optimising neural net: 67%[================>        ]  ETA: 0:00:00[K
-Optimising neural net: 69%[=================>       ]  ETA: 0:00:00[K
-Optimising neural net: 71%[=================>       ]  ETA: 0:00:00[K
-Optimising neural net: 73%[==================>      ]  ETA: 0:00:00[K
-Optimising neural net: 75%[==================>      ]  ETA: 0:00:00[K
-Optimising neural net: 76%[===================>     ]  ETA: 0:00:00[K
-Optimising neural net: 78%[===================>     ]  ETA: 0:00:00[K
-Optimising neural net: 80%[====================>    ]  ETA: 0:00:00[K
-Optimising neural net: 82%[====================>    ]  ETA: 0:00:00[K
-Optimising neural net: 84%[=====================>   ]  ETA: 0:00:00[K
-Optimising neural net: 86%[=====================>   ]  ETA: 0:00:00[K
-Optimising neural net: 88%[======================>  ]  ETA: 0:00:00[K
-Optimising neural net: 90%[======================>  ]  ETA: 0:00:00[K
-Optimising neural net: 92%[=======================> ]  ETA: 0:00:00[K
-Optimising neural net: 94%[=======================> ]  ETA: 0:00:00[K
-Optimising neural net: 96%[========================>]  ETA: 0:00:00[K
-Optimising neural net: 98%[========================>]  ETA: 0:00:00[K
-Optimising neural net:100%[=========================] Time: 0:00:00[K
+Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:01[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:01[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:01[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:01[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:01[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:01[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:01[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:01[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:01[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:01[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:01[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -1828,7 +1775,6 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 ```
 10-element Array{Int64,1}:
  1
- 1
  2
  3
  0
@@ -1837,6 +1783,7 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
  1
  2
  6
+ 1
 ```
 
 (b) What models can be applied if you coerce the salary to a
@@ -1866,10 +1813,10 @@ nothing #hide
 │ Int64 │ Float64            │ Float64             │ CategoricalValue{String,UInt32} │
 │ Count │ Continuous         │ Continuous          │ OrderedFactor{2}                │
 ├───────┼────────────────────┼─────────────────────┼─────────────────────────────────┤
-│ 1     │ 0.4960457584821967 │ 0.0748610334847406  │ male                            │
-│ 2     │ 0.9772407337511515 │ 0.03785686238123942 │ female                          │
-│ 3     │ 0.6201813416100044 │ 0.10656569492966095 │ female                          │
-│ 4     │ 0.851212029593748  │ 0.30652584038402875 │ male                            │
+│ 1     │ 0.9772407337511515 │ 0.03785686238123942 │ male                            │
+│ 2     │ 0.6201813416100044 │ 0.10656569492966095 │ female                          │
+│ 3     │ 0.851212029593748  │ 0.30652584038402875 │ female                          │
+│ 4     │ 0.0748610334847406 │ 0.5281685240721294  │ male                            │
 └───────┴────────────────────┴─────────────────────┴─────────────────────────────────┘
 
 ```
@@ -1898,10 +1845,10 @@ pretty(X)
 │ Float64            │ Float64             │
 │ Continuous         │ Continuous          │
 ├────────────────────┼─────────────────────┤
-│ 0.4960457584821967 │ 0.0748610334847406  │
 │ 0.9772407337511515 │ 0.03785686238123942 │
 │ 0.6201813416100044 │ 0.10656569492966095 │
 │ 0.851212029593748  │ 0.30652584038402875 │
+│ 0.0748610334847406 │ 0.5281685240721294  │
 └────────────────────┴─────────────────────┘
 
 ```
@@ -1918,9 +1865,9 @@ w
  "male"
 ```
 
-#### Exercise 6 (first steps in modelling Horse Colic)
+#### Exercise 6 (first steps in modeling Horse Colic)
 
-(a) Suppose we want to predict the `:outcome` variable in the
+(a) Suppose we want to use predict the `:outcome` variable in the
 Horse Colic study introduced in Part 1, based on the remaining
 variables that are `Continuous` (one-hot encoding categorical
 variables is discussed later in Part 3) *while ignoring the others*.
@@ -1939,14 +1886,14 @@ After training:
   a linear-based model learning a *vector* of coefficients for each
   feature (one coefficient for each target class), use the
   `fitted_params` method to find this vector of coefficients in the
-  case of the `:pulse` feature. (To convert a vector of pairs `v =
-  [x1 => y1, x2 => y2, ...]` into a dictionary, do `Dict(v)`.)
+  case of the `:pulse` feature. (You can convert a vector of pairs `v =
+  [x1 => y1, x2 => y2, ...]` into a dictionary with `Dict(v)`.)
 
 - (ii) Evaluate the `cross_entropy` performance on the `test`
   observations.
 
 - &star;(iii) In how many `test` observations does the predicted
-  probablility of the observed class exceed 50%?
+  probability of the observed class exceed 50%?
 
 - (iv) Find the `misclassification_rate` in the `test`
   set. (*Hint.* As this measure is deterministic, you will either
@@ -1958,7 +1905,7 @@ After training:
 
 - (i) Generate an appropriate learning curve to convince yourself
   that out-of-sample estimates of the `cross_entropy` loss do not
-  substatially improve for `n_trees > 50`. Use default values for
+  substantially improve for `n_trees > 50`. Use default values for
   all other hyper-parameters, and feel free to use all available
   data to generate the curve.
 
@@ -1993,8 +1940,8 @@ nothing #hide
 ```
 
 ```
-mean(x) = 0.4969778532842048
-std(x) = 0.30354475209962467
+mean(x) = 0.5005900913478855
+std(x) = 0.30605858146831916
 
 ```
 
@@ -2008,10 +1955,10 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training Machine{Standardizer} @337.
+┌ Info: Training Machine{Standardizer} @227.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/machines.jl:317
-mean(x̂) = -1.865174681370263e-16
-std(x̂) = 1.0
+mean(x̂) = -2.6201263381153693e-16
+std(x̂) = 0.9999999999999999
 
 ```
 
@@ -2027,10 +1974,10 @@ true
 
 ### Re-encoding the King County House data as continuous
 
-For further illustrations of tranformers, let's re-encode *all* of the
+For further illustrations of transformers, let's re-encode *all* of the
 King County House input features (see [Ex
 3](#ex-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
-features. We do this with the `ContinousEncoder` model, which, by
+features. We do this with the `ContinuousEncoder` model, which, by
 default, will:
 
 - one-hot encode all `Multiclass` features
@@ -2090,7 +2037,7 @@ encoder = ContinuousEncoder() # a built-in model; no need to @load it
 ```
 ContinuousEncoder(
     drop_last = false,
-    one_hot_ordered_factors = false) @655
+    one_hot_ordered_factors = false) @805
 ```
 
 Bind the model to the data and fit!
@@ -2101,7 +2048,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training Machine{ContinuousEncoder} @258.
+┌ Info: Training Machine{ContinuousEncoder} @424.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/machines.jl:317
 
 ```
@@ -2259,7 +2206,7 @@ FillImputer | impute missing values
 OneHotEncoder | one-hot encoder `Multiclass` (and optionally `OrderedFactor`) features
 Standardizer | standardize (whiten) a vector or all `Continuous` features of a table
 UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
-UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
+UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscitypw `OrderedFactor`
 
 In addition to "dynamic" transformers (ones that learn something
 from the data and must be `fit!`) users can wrap ordinary functions
@@ -2291,10 +2238,10 @@ PCA(
     maxoutdim = 0,
     method = :auto,
     pratio = 0.99,
-    mean = nothing) @616
+    mean = nothing) @161
 ```
 
-Now, rather simply repeating the workflow above, applying the new
+Now, rather simply repeating the work-flow above, applying the new
 transformation to `Xcont`, we can combine both the encoding and the
 dimension-reducing models into a single model, known as a
 *pipeline*. While MLJ offers a powerful interface for composing
@@ -2307,7 +2254,7 @@ pipe = @pipeline encoder reducer
 ```
 
 ```
-Pipeline459(
+Pipeline1336(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2315,7 +2262,7 @@ Pipeline459(
             maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
-            mean = nothing)) @992
+            mean = nothing)) @837
 ```
 
 Notice that `pipe` is an *instance* of an automatically generated
@@ -2349,7 +2296,7 @@ pipe2 = @pipeline encoder reducer rgs
 ```
 
 ```
-Pipeline467(
+Pipeline1344(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2362,7 +2309,7 @@ Pipeline467(
             lambda = 1.0,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @097
+            solver = nothing)) @180
 ```
 
 Now our pipeline is a supervised model, instead of a transformer,
@@ -2393,10 +2340,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline467} @731 trained 2 times.
+Machine{Pipeline1344} @808 trained 2 times.
   args: 
-    1:	Source @462 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @981 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @449 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @568 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2406,10 +2353,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline467} @731 trained 3 times.
+Machine{Pipeline1344} @808 trained 3 times.
   args: 
-    1:	Source @462 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @981 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @449 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @568 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2424,10 +2371,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline467} @731 trained 4 times.
+Machine{Pipeline1344} @808 trained 4 times.
   args: 
-    1:	Source @462 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @981 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @449 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @568 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2496,7 +2443,7 @@ _.per_observation = [missing]
 
 MLJ will also allow you to insert *learned* target
 transformations. For example, we might want to apply
-`Standardizer()` to the target, to standarize it, or
+`Standardizer()` to the target, to standardize it, or
 `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
 instead of specifying a *function* for `target`, we specify a
 unsupervised *model* (or model type). One does not specify `inverse`
@@ -2585,7 +2532,7 @@ _.nrows = 366
 
 (a) Define a pipeline that:
 - uses `Standardizer` to ensure that features that are already
-  continuous are centred at zero and have unit variance
+  continuous are centered at zero and have unit variance
 - re-encodes the full set of features as `Continuous`, using
   `ContinuousEncoder`
 - uses the `KMeans` clustering model from `Clustering.jl`
@@ -2608,7 +2555,7 @@ as the tree booster parameter `max_depth` varies from 2 to 10.
 ### Naive tuning of a single parameter
 
 The most naive way to tune a single hyper-parameter is to use
-`learning_curve`, which we alread saw in Part 2. Let's see this in
+`learning_curve`, which we already saw in Part 2. Let's see this in
 the Horse Colic classification problem, in a case where the parameter
 to be tuned is *nested* (because the model is a pipeline):
 
@@ -2621,10 +2568,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-Machine{Pipeline496} @967 trained 0 times.
+Machine{Pipeline1373} @290 trained 0 times.
   args: 
-    1:	Source @223 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}, AbstractArray{Multiclass{6},1}, AbstractArray{Multiclass{3},1}, AbstractArray{OrderedFactor{2},1}, AbstractArray{OrderedFactor{4},1}, AbstractArray{OrderedFactor{5},1}}}`
-    2:	Source @784 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @383 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}, AbstractArray{Multiclass{6},1}, AbstractArray{Multiclass{3},1}, AbstractArray{OrderedFactor{2},1}, AbstractArray{OrderedFactor{4},1}, AbstractArray{OrderedFactor{5},1}}}`
+    2:	Source @259 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -2706,7 +2653,7 @@ RandomSearch(
     bounded = Distributions.Uniform,
     positive_unbounded = Distributions.Gamma,
     other = Distributions.Normal,
-    rng = MersenneTwister(UInt32[0x0000007b]) @ 1002) @877
+    rng = MersenneTwister(UInt32[0x0000007b]) @ 1002) @568
 ```
 
 In this strategy each parameter is sampled according to a
@@ -2804,10 +2751,10 @@ tuned_model = TunedModel(model=model,
 
 ```
 ProbabilisticTunedModel(
-    model = Pipeline496(
-            standardizer = Standardizer @225,
-            continuous_encoder = ContinuousEncoder @462,
-            logistic_classifier = LogisticClassifier @039),
+    model = Pipeline1373(
+            standardizer = Standardizer @909,
+            continuous_encoder = ContinuousEncoder @659,
+            logistic_classifier = LogisticClassifier @235),
     tuning = RandomSearch(
             bounded = Distributions.Uniform,
             positive_unbounded = Distributions.Gamma,
@@ -2821,16 +2768,16 @@ ProbabilisticTunedModel(
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.ParamRange[NumericRange{Float64,…} @186, NominalRange{Bool,…} @943],
+    range = MLJBase.ParamRange[NumericRange{Float64,…} @317, NominalRange{Bool,…} @993],
     train_best = true,
     repeats = 1,
     n = 15,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @820
+    check_measure = true) @127
 ```
 
-We can apply the `fit!/predict` workflow to `tuned_model` just as
+We can apply the `fit!/predict` work-flow to `tuned_model` just as
 for any other model:
 
 ```julia
@@ -2855,7 +2802,7 @@ rep.best_model
 ```
 
 ```
-Pipeline496(
+Pipeline1373(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -2870,7 +2817,7 @@ Pipeline496(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @502
+            solver = nothing)) @356
 ```
 
 By default, sampling of a bounded range is uniform. Lets
@@ -2894,10 +2841,7 @@ nothing #hide
 ```
 
 ```
-
-Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:00[K
-Evaluating over 3 folds:  67%[================>        ]  ETA: 0:00:00[K
-Evaluating over 3 folds: 100%[=========================] Time: 0:00:00[K
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:00[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:00[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -2907,9 +2851,7 @@ nothing #hide
 ```
 
 ```
-Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:04[K
-Evaluating over 3 folds:  67%[================>        ]  ETA: 0:00:02[K
-Evaluating over 3 folds: 100%[=========================] Time: 0:00:06[K
+Evaluating over 3 folds:  33%[========>                ]  ETA: 0:00:05[KEvaluating over 3 folds:  67%[================>        ]  ETA: 0:00:03[KEvaluating over 3 folds: 100%[=========================] Time: 0:00:07[K
 
 ```
 
@@ -2950,7 +2892,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ```
 
 ```
-Pipeline512(
+Pipeline1388(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2967,7 +2909,7 @@ Pipeline512(
             nbins = 64,
             α = 0.5f0,
             metric = :mse,
-            seed = 444)) @930
+            seed = 444)) @561
 ```
 
 (a) Construct a bounded range `r1` for the `evo_tree_booster`
@@ -3020,6 +2962,426 @@ results of your search. Feel free to use all available data.
 cross-validation and compare with that of the self-tuning model
 (which is different!). Setting data hygiene concerns aside, feel
 free to use all available data.
+
+<a id='part-5-advanced-model-composition'>
+
+## Part 5 - Advanced Model Composition
+
+While `@pipeline` is great for composing models in an unbranching
+sequence, for more complicated model composition you'll want to use
+MLJ's generic model composition syntax. There are two main steps:
+
+- **Prototype** the composite model by building a *learning
+  network*, which can be tested on some (dummy) data as you build
+  it.
+
+- **Export** the learning network as a new stand-alone model type.
+
+Like pipeline models, instances of the exported model type behave
+like any other model (and are not bound to any data, until you wrap
+them in a machine).
+
+### Building a pipeline using the generic composition syntax
+
+To warm up, we'll do the equivalent of
+
+```julia
+pipe = @pipeline Standardizer LogisticClassifier;
+nothing #hide
+```
+
+using the generic syntax.
+
+Here's some dummy data we'll be using to test our learning network:
+
+```julia
+X, y = make_blobs(5, 3)
+pretty(X)
+```
+
+```
+┌────────────────────────┬────────────────────┬────────────────────┐
+│ x1                     │ x2                 │ x3                 │
+│ Float64                │ Float64            │ Float64            │
+│ Continuous             │ Continuous         │ Continuous         │
+├────────────────────────┼────────────────────┼────────────────────┤
+│ 3.522846848844879      │ 0.2605311345083736 │ 2.9520273890012723 │
+│ 1.3230821334560094     │ 3.3397112645959    │ -3.75164769071453  │
+│ -0.02669836259952918   │ 1.0875542726598648 │ -3.444971981214349 │
+│ 1.3225447096705638     │ 9.130234512541927  │ -5.547853637240433 │
+│ -0.0045093760735757105 │ 0.9104027912248407 │ -4.787802464220503 │
+└────────────────────────┴────────────────────┴────────────────────┘
+
+```
+
+**Step 0** - Proceed as if you were combining the models "by hand",
+using all the data available for training, transforming and
+prediction:
+
+```julia
+stand = Standardizer();
+linear = LogisticClassifier();
+
+mach1 = machine(stand, X);
+fit!(mach1);
+Xstand = transform(mach1, X);
+
+mach2 = machine(linear, Xstand, y);
+fit!(mach2);
+yhat = predict(mach2, Xstand)
+```
+
+```
+5-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
+ UnivariateFinite{Multiclass{3}}(1=>0.745, 2=>0.0453, 3=>0.21)
+ UnivariateFinite{Multiclass{3}}(1=>0.128, 2=>0.182, 3=>0.69)
+ UnivariateFinite{Multiclass{3}}(1=>0.0589, 2=>0.0633, 3=>0.878)
+ UnivariateFinite{Multiclass{3}}(1=>0.0581, 2=>0.614, 3=>0.328)
+ UnivariateFinite{Multiclass{3}}(1=>0.0436, 2=>0.062, 3=>0.894)
+```
+
+**Step 1** - Edit your code as follows:
+
+- pre-wrap the data in `Source` nodes (wrapping nothing if not
+  testing)
+
+- delete the `fit!` calls
+
+```julia
+X = source(X)  # or X = source() if not testing
+y = source(y)  # or y = source()
+
+stand = Standardizer();
+linear = LogisticClassifier();
+
+mach1 = machine(stand, X);
+Xstand = transform(mach1, X);
+
+mach2 = machine(linear, Xstand, y);
+yhat = predict(mach2, Xstand)
+```
+
+```
+Node{Machine{LogisticClassifier}} @243
+  args:
+    1:	Node{Machine{Standardizer}} @028
+  formula:
+    predict(
+        Machine{LogisticClassifier} @195, 
+        transform(
+            Machine{Standardizer} @469, 
+            Source @073))
+```
+
+Now all training, predicting and transforming is executed lazily,
+whenever we `fit!` any *node* (one of the "variables" `X`, `y`,
+`Xstand`, `yhat` we have created). We *call* a node to
+retrieve results:
+
+```julia
+fit!(Xstand)
+Xstand() |> pretty
+```
+
+```
+┌ Info: Training Machine{Standardizer} @469.
+└ @ MLJBase /Users/anthony/.julia/packages/MLJBase/CcEkh/src/machines.jl:317
+┌─────────────────────┬─────────────────────┬──────────────────────┐
+│ x1                  │ x2                  │ x3                   │
+│ Float64             │ Float64             │ Float64              │
+│ Continuous          │ Continuous          │ Continuous           │
+├─────────────────────┼─────────────────────┼──────────────────────┤
+│ 1.586083834651283   │ -0.7362189285035982 │ 1.733377916510103    │
+│ 0.0660782170209467  │ 0.10803406185671041 │ -0.2468282416886583  │
+│ -0.8666005927714862 │ -0.5094648160503861 │ -0.15623895725872466 │
+│ 0.06570686495442302 │ 1.69568608651769    │ -0.7774115462802373  │
+│ -0.8512683238551667 │ -0.5580364038204159 │ -0.5528991712824827  │
+└─────────────────────┴─────────────────────┴──────────────────────┘
+
+```
+
+```julia
+fit!(yhat);
+yhat()
+```
+
+```
+5-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
+ UnivariateFinite{Multiclass{3}}(1=>0.745, 2=>0.0453, 3=>0.21)
+ UnivariateFinite{Multiclass{3}}(1=>0.128, 2=>0.182, 3=>0.69)
+ UnivariateFinite{Multiclass{3}}(1=>0.0589, 2=>0.0633, 3=>0.878)
+ UnivariateFinite{Multiclass{3}}(1=>0.0581, 2=>0.614, 3=>0.328)
+ UnivariateFinite{Multiclass{3}}(1=>0.0436, 2=>0.062, 3=>0.894)
+```
+
+**Step 2** - Export the learning network as a new stand-alone model type
+
+Now, somewhat paradoxically, we can wrap the whole network in a
+special machine - called a *learning network machine* - before have
+defined the new model type. Indeed doing so is a necessary step in
+the export process, for this machine will tell the export macro:
+
+- what kind of model the composite will be
+
+- which source nodes are input nodes and which are for the target
+
+- which nodes correspond to each operation (`predict`, `transform`,
+  etc) that we might want to define:
+
+```julia
+surrogate = Probabilistic()     # model with no fields!
+mach = machine(surrogate, X, y; predict=yhat)
+```
+
+```
+Machine{ProbabilisticSurrogate} @852 trained 0 times.
+  args: 
+    1:	Source @073 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @611 ⏎ `AbstractArray{Multiclass{3},1}`
+
+```
+
+Although we have no real need to use it, this machine behaves like
+you'd expect it to:
+
+```julia
+Xnew, _ = make_blobs(2, 3)
+fit!(mach)
+predict(mach, Xnew)
+```
+
+```
+2-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
+ UnivariateFinite{Multiclass{3}}(1=>0.896, 2=>0.00141, 3=>0.103)
+ UnivariateFinite{Multiclass{3}}(1=>0.00103, 2=>0.000197, 3=>0.999)
+```
+
+Now we create a new model type using a Julia `struct` definition
+appropriately decorated:
+
+```julia
+@from_network mach begin
+    mutable struct YourPipe
+        standardizer = stand
+        classifier = linear::Probabilistic
+    end
+end
+```
+
+Instantiating and evaluating on some new data:
+
+```julia
+pipe = YourPipe()
+X, y = @load_iris;   # built-in data set
+mach = machine(pipe, X, y)
+evaluate!(mach, measure=misclassification_rate, operation=predict_mode)
+```
+
+```
+┌────────────────────────┬───────────────┬────────────────────────────────────┐
+│ _.measure              │ _.measurement │ _.per_fold                         │
+├────────────────────────┼───────────────┼────────────────────────────────────┤
+│ misclassification_rate │ 0.08          │ [0.0, 0.04, 0.08, 0.08, 0.08, 0.2] │
+└────────────────────────┴───────────────┴────────────────────────────────────┘
+_.per_observation = [missing]
+
+```
+
+### A composite model to average two regressor predictors
+
+The following is condensed version of
+[this](https://github.com/alan-turing-institute/MLJ.jl/blob/master/binder/MLJ_demo.ipynb)
+tutorial. We will define a composite model that:
+
+- standardizes the input data
+
+- learns and applies a Box-Cox transformation to the target variable
+
+- blends the predictions of two supervised learning models - a ridge
+ regressor and a random forest regressor; we'll blend using a simple
+ average (for a more sophisticated stacking example, see
+ [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/))
+
+- applies the *inverse* Box-Cox transformation to this blended prediction
+
+```julia
+@load RandomForestRegressor pkg=DecisionTree
+```
+
+```
+RandomForestRegressor(
+    max_depth = -1,
+    min_samples_leaf = 1,
+    min_samples_split = 2,
+    min_purity_increase = 0.0,
+    n_subfeatures = -1,
+    n_trees = 10,
+    sampling_fraction = 0.7,
+    pdf_smoothing = 0.0) @467
+```
+
+**Input layer**
+
+```julia
+X = source()
+y = source()
+```
+
+```
+Source @570 ⏎ `Unknown`
+```
+
+**First layer and target transformation**
+
+```julia
+std_model = Standardizer()
+stand = machine(std_model, X)
+W = MLJ.transform(stand, X)
+
+box_model = UnivariateBoxCoxTransformer()
+box = machine(box_model, y)
+z = MLJ.transform(box, y)
+```
+
+```
+Node{Machine{UnivariateBoxCoxTransformer}} @547
+  args:
+    1:	Source @570
+  formula:
+    transform(
+        Machine{UnivariateBoxCoxTransformer} @798, 
+        Source @570)
+```
+
+**Second layer**
+
+```julia
+ridge_model = RidgeRegressor(lambda=0.1)
+ridge = machine(ridge_model, W, z)
+
+forest_model = RandomForestRegressor(n_trees=50)
+forest = machine(forest_model, W, z)
+
+ẑ = 0.5*predict(ridge, W) + 0.5*predict(forest, W)
+```
+
+```
+Node{Nothing} @136
+  args:
+    1:	Node{Nothing} @803
+    2:	Node{Nothing} @135
+  formula:
+    +(
+        #118(
+            predict(
+                Machine{RidgeRegressor} @087, 
+                transform(
+                    Machine{Standardizer} @204, 
+                    Source @224))),
+        #118(
+            predict(
+                Machine{RandomForestRegressor} @224, 
+                transform(
+                    Machine{Standardizer} @204, 
+                    Source @224))))
+```
+
+**Output**
+
+```julia
+ŷ = inverse_transform(box, ẑ)
+```
+
+```
+Node{Machine{UnivariateBoxCoxTransformer}} @890
+  args:
+    1:	Node{Nothing} @136
+  formula:
+    inverse_transform(
+        Machine{UnivariateBoxCoxTransformer} @798, 
+        +(
+            #118(
+                predict(
+                    Machine{RidgeRegressor} @087, 
+                    transform(
+                        Machine{Standardizer} @204, 
+                        Source @224))),
+            #118(
+                predict(
+                    Machine{RandomForestRegressor} @224, 
+                    transform(
+                        Machine{Standardizer} @204, 
+                        Source @224)))))
+```
+
+With the learning network defined, we're ready to export:
+
+```julia
+@from_network machine(Deterministic(), X, y, predict=ŷ) begin
+    mutable struct CompositeModel
+        rgs1 = ridge_model
+        rgs2 = forest_model
+    end
+end
+```
+
+Let's instantiate the new model type and try it out on some data:
+
+```julia
+composite = CompositeModel()
+```
+
+```
+CompositeModel(
+    rgs1 = RidgeRegressor(
+            lambda = 0.1,
+            fit_intercept = true,
+            penalize_intercept = false,
+            solver = nothing),
+    rgs2 = RandomForestRegressor(
+            max_depth = -1,
+            min_samples_leaf = 1,
+            min_samples_split = 2,
+            min_purity_increase = 0.0,
+            n_subfeatures = -1,
+            n_trees = 50,
+            sampling_fraction = 0.7,
+            pdf_smoothing = 0.0)) @878
+```
+
+```julia
+X, y = @load_boston;
+mach = machine(composite, X, y);
+evaluate!(mach,
+          resampling=CV(nfolds=6, shuffle=true),
+          measures=[rms, mae])
+```
+
+```
+┌───────────┬───────────────┬─────────────────────────────────────┐
+│ _.measure │ _.measurement │ _.per_fold                          │
+├───────────┼───────────────┼─────────────────────────────────────┤
+│ rms       │ 3.77          │ [3.7, 4.53, 3.05, 3.37, 3.86, 3.94] │
+│ mae       │ 2.45          │ [2.59, 2.94, 2.1, 2.36, 2.26, 2.45] │
+└───────────┴───────────────┴─────────────────────────────────────┘
+_.per_observation = [missing, missing]
+
+```
+
+### Resources for Part 5
+
+- From the MLJ manual:
+   - [Learning Networks](https://alan-turing-institute.github.io/MLJ.jl/stable/composing_models/#Learning-Networks-1)
+- From Data Science Tutorials:
+    - [Learning Networks](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
+    - [Learning Networks 2](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
+    - [Stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/) - an advanced example
+
+<a id='solutions-to-exercises'></a>
+
+## What next?
+
+<a id='solutions-to-exercises'></a>
 
 ## Solutions to exercises
 
@@ -3322,7 +3684,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ```
 
 ```
-1.010202065523228
+0.9731863090123563
 ```
 
 #### Exercise 7
@@ -3339,7 +3701,7 @@ pipe = @pipeline(Standardizer,
 ```
 
 ```
-Pipeline525(
+Pipeline1416(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -3364,7 +3726,7 @@ Pipeline525(
             nbins = 64,
             α = 0.5f0,
             metric = :mlogloss,
-            seed = 444)) @487
+            seed = 444)) @601
 ```
 
 (b)
@@ -3375,12 +3737,12 @@ evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
 ```
 
 ```
-┌───────────────┬───────────────┬──────────────────────────────────────────────────┐
-│ _.measure     │ _.measurement │ _.per_fold                                       │
-├───────────────┼───────────────┼──────────────────────────────────────────────────┤
-│ cross_entropy │ 0.799         │ Float32[0.73, 0.995, 0.699, 0.738, 0.907, 0.724] │
-└───────────────┴───────────────┴──────────────────────────────────────────────────┘
-_.per_observation = [[[2.52, 0.272, ..., 0.11], [0.0498, 0.182, ..., 2.6], [0.0637, 1.45, ..., 0.197], [0.175, 0.567, ..., 1.33], [0.119, 0.756, ..., 0.123], [1.91, 0.11, ..., 0.294]]]
+┌───────────────┬───────────────┬───────────────────────────────────────────────────┐
+│ _.measure     │ _.measurement │ _.per_fold                                        │
+├───────────────┼───────────────┼───────────────────────────────────────────────────┤
+│ cross_entropy │ 0.803         │ Float32[0.756, 0.995, 0.699, 0.738, 0.907, 0.724] │
+└───────────────┴───────────────┴───────────────────────────────────────────────────┘
+_.per_observation = [[[1.71, 0.677, ..., 0.0881], [0.0498, 0.182, ..., 2.6], [0.0637, 1.45, ..., 0.197], [0.175, 0.567, ..., 1.33], [0.119, 0.756, ..., 0.123], [1.91, 0.11, ..., 0.294]]]
 
 ```
 
@@ -3424,7 +3786,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ```
 
 ```
-Pipeline535(
+Pipeline1426(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -3441,7 +3803,7 @@ Pipeline535(
             nbins = 64,
             α = 0.5f0,
             metric = :mse,
-            seed = 444)) @756
+            seed = 444)) @257
 ```
 
 (a)
@@ -3505,4 +3867,3 @@ _.per_observation = [missing]
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
 
-> 

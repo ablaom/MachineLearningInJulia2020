@@ -6,16 +6,18 @@
 
 # ### Environment instantiation
 
-# The following loads a Julia environment and forces pre-compilation
-# of some packages.
+# The following loads a Julia environment and pre-loads some packages
+# to avoid pauses later one. This includes plotting libraries and
+# could take a few minutes.
 
-# If this the **binder** notebook version of the tutorial, we
-# recommend you *skip* evaluation of this first cell.
+# If this the **binder** notebook version of the tutorial,
+# you can *skip* evaluation of this first cell.
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
 
-# Skip this unless colors/boldface causes a problem in your IDE's REPL:
+# **Skip this** unless you're using an IDE that has issues with
+# displaying color/boldface REPL output:
 
 color_off()
 
@@ -27,10 +29,9 @@ color_off()
 # - [Part 1 - Data Representation](#part-1-data-representation)
 # - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 # - [Part 3 - Transformers and Pipelines](#part-3-transformers-and-pipelines)
-
-# ### Advanced
-
 # - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
+# - [Part 5 - Advanced model composition](#advanced-model-composition)
+# - [Solutions to Exercises](#solutions-to-exercises)
 
 
 # <a id='part-1-data-representation'></a>
@@ -96,7 +97,7 @@ levels(exam_mark)
 levels!(exam_mark, ["rotten", "bla", "great"])
 exam_mark[1] < exam_mark[2]
 
-# When subsampling, no levels are lost:
+# When sub-sampling, no levels are lost:
 
 levels(exam_mark[1:2])
 
@@ -180,7 +181,7 @@ schema(matrix_table)
 
 # To show how we can correct the scientific types of data in tables,
 # we introduce a cleaned up version of the UCI Horse Colic Data Set
-# (the cleaning workflow is described
+# (the cleaning work-flow is described
 # [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
 
 using CSV
@@ -193,7 +194,7 @@ first(horse, 4)
 # From [the UCI
 # docs](http://archive.ics.uci.edu/ml/datasets/Horse+Colic) we can
 # surmise how each variable ought to be interpreted (a step in our
-# workflow that cannot reliably be left to the computer):
+# work-flow that cannot reliably be left to the computer):
 
 # variable                    | scientific type (interpretation)
 # ----------------------------|-----------------------------------
@@ -339,7 +340,7 @@ elscitype(v)
 
 scitype(v[1:2])
 
-# Can you guess at the general behaviour of
+# Can you guess at the general behavior of
 # `scitype` with respect to tuples, abstract arrays and missing
 # values? The answers are
 # [here](https://github.com/alan-turing-institute/ScientificTypes.jl#2-the-scitype-and-scitype-methods)
@@ -377,7 +378,7 @@ first(house, 4)
 
 # > **Goals:**
 # > 1. Search MLJ's database of model metadata to identify model candidates for a supervised learning task.
-# > 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` workflow.
+# > 2. Evaluate the performance of a model on a holdout set using basic `fit!`/`predict` work-flow.
 # > 3. Inspect the outcomes of training and save these to a file.
 # > 3. Evaluate performance using other resampling strategies, such as cross-validation, in one line, using `evaluate!`
 # > 4. Plot a "learning curve", to inspect performance as a function of some model hyper-parameter, such as an iteration parameter
@@ -555,7 +556,7 @@ yhat[1]
 info(model).prediction_type
 
 # **Important**:
-# - In MLJ, a model that can predict probabilities (and not just point values) will do so by default. (These models have supertype `Proababilistic`, while point-estimate predictors have supertype `Deterministic`.)
+# - In MLJ, a model that can predict probabilities (and not just point values) will do so by default. (These models have supertype `Probabilistic`, while point-estimate predictors have supertype `Deterministic`.)
 # - For most probabilistic predictors, the predicted object is a `Distributions.Distribution` object, supporting the `Distributions.jl` [API](https://juliastats.org/Distributions.jl/latest/extends/#Create-a-Distribution-1) for such objects. In particular, the methods `rand`,  `pdf`, `mode`, `median` and `mean` will apply, where appropriate.
 
 # So, to obtain the probability of "Iris-virginica" in the first test
@@ -585,8 +586,8 @@ predict_mode(mach, X[test,:])[1:4] # or predict_mode(mach, rows=test)[1:4]
 L = levels(y)
 pdf(yhat, L)[1:4, :]
 
-# However, in a typical MLJ workflow, this is not as useful as you
-# might imagine. In particular, all probablistic performance measures
+# However, in a typical MLJ work-flow, this is not as useful as you
+# might imagine. In particular, all probabilistic performance measures
 # in MLJ expect distribution objects in their first slot:
 
 cross_entropy(yhat, y[test]) |> mean
@@ -615,11 +616,11 @@ evaluate!(mach, resampling=Holdout(fraction_train=0.7),
 evaluate!(mach, resampling=CV(nfolds=6),
           measures=[cross_entropy, brier_score])
 
-# Or, Monte-Carlo cross-validation (cross-validation repeated
-# randomizied folds)
+# Or, Monte Carlo cross-validation (cross-validation repeated
+# randomized folds)
 
 e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
-                repeats=3,
+              repeats=3,
               measures=[cross_entropy, brier_score])
 
 # One can access the following properties of the output `e` of an
@@ -630,7 +631,7 @@ e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
 # We finally note that you can restrict the rows of observations from
 # which train and test folds are drawn, by specifying `rows=...`. For
 # example, imagining the last 30% of target observations are `missing`
-# you might have a workflow like this:
+# you might have a work-flow like this:
 
 train, test = partition(eachindex(y), 0.7)
 mach = machine(model, X, y)
@@ -731,7 +732,7 @@ pretty(X)
 w
 
 
-# #### Exercise 6 (first steps in modelling Horse Colic)
+# #### Exercise 6 (first steps in modeling Horse Colic)
 
 # (a) Suppose we want to use predict the `:outcome` variable in the
 # Horse Colic study introduced in Part 1, based on the remaining
@@ -752,14 +753,14 @@ w
 #   a linear-based model learning a *vector* of coefficients for each
 #   feature (one coefficient for each target class), use the
 #   `fitted_params` method to find this vector of coefficients in the
-#   case of the `:pulse` feature. (To convert a vector of pairs `v =
-#   [x1 => y1, x2 => y2, ...]` into a dictionary, do `Dict(v)`.)
+#   case of the `:pulse` feature. (You can convert a vector of pairs `v =
+#   [x1 => y1, x2 => y2, ...]` into a dictionary with `Dict(v)`.)
 
 # - (ii) Evaluate the `cross_entropy` performance on the `test`
 #   observations.
 
 # - &star;(iii) In how many `test` observations does the predicted
-#   probablility of the observed class exceed 50%?
+#   probability of the observed class exceed 50%?
 
 # - (iv) Find the `misclassification_rate` in the `test`
 #   set. (*Hint.* As this measure is deterministic, you will either
@@ -771,7 +772,7 @@ w
 #
 # - (i) Generate an appropriate learning curve to convince yourself
 #   that out-of-sample estimates of the `cross_entropy` loss do not
-#   substatially improve for `n_trees > 50`. Use default values for
+#   substantially improve for `n_trees > 50`. Use default values for
 #   all other hyper-parameters, and feel free to use all available
 #   data to generate the curve.
 
@@ -818,10 +819,10 @@ inverse_transform(mach, x̂) ≈ x
 
 # ### Re-encoding the King County House data as continuous
 
-# For further illustrations of tranformers, let's re-encode *all* of the
+# For further illustrations of transformers, let's re-encode *all* of the
 # King County House input features (see [Ex
 # 3](#ex-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
-# features. We do this with the `ContinousEncoder` model, which, by
+# features. We do this with the `ContinuousEncoder` model, which, by
 # default, will:
 
 # - one-hot encode all `Multiclass` features
@@ -871,7 +872,7 @@ models(m->!m.is_supervised)
 # OneHotEncoder | one-hot encoder `Multiclass` (and optionally `OrderedFactor`) features
 # Standardizer | standardize (whiten) a vector or all `Continuous` features of a table
 # UnivariateBoxCoxTransformer | apply a learned Box-Cox transformation to a vector
-# UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscityp `OrderedFactor`
+# UnivariateDiscretizer | discretize a `Continuous` vector, and hence render its elscitypw `OrderedFactor`
 
 
 # In addition to "dynamic" transformers (ones that learn something
@@ -892,7 +893,7 @@ length(schema(Xcont).names)
 
 reducer = @load PCA
 
-# Now, rather simply repeating the workflow above, applying the new
+# Now, rather simply repeating the work-flow above, applying the new
 # transformation to `Xcont`, we can combine both the encoding and the
 # dimension-reducing models into a single model, known as a
 # *pipeline*. While MLJ offers a powerful interface for composing
@@ -979,7 +980,7 @@ evaluate!(mach, measure=mae)
 
 # MLJ will also allow you to insert *learned* target
 # transformations. For example, we might want to apply
-# `Standardizer()` to the target, to standarize it, or
+# `Standardizer()` to the target, to standardize it, or
 # `UnivariateBoxCoxTransformer()` to make it look Gaussian. Then
 # instead of specifying a *function* for `target`, we specify a
 # unsupervised *model* (or model type). One does not specify `inverse`
@@ -1022,7 +1023,7 @@ schema(X)
 
 # (a) Define a pipeline that:
 # - uses `Standardizer` to ensure that features that are already
-#   continuous are centred at zero and have unit variance
+#   continuous are centered at zero and have unit variance
 # - re-encodes the full set of features as `Continuous`, using
 #   `ContinuousEncoder`
 # - uses the `KMeans` clustering model from `Clustering.jl`
@@ -1046,7 +1047,7 @@ schema(X)
 # ### Naive tuning of a single parameter
 
 # The most naive way to tune a single hyper-parameter is to use
-# `learning_curve`, which we alread saw in Part 2. Let's see this in
+# `learning_curve`, which we already saw in Part 2. Let's see this in
 # the Horse Colic classification problem, in a case where the parameter
 # to be tuned is *nested* (because the model is a pipeline):
 
@@ -1168,7 +1169,7 @@ tuned_model = TunedModel(model=model,
                          tuning=tuning,
                          n=15)
 
-# We can apply the `fit!/predict` workflow to `tuned_model` just as
+# We can apply the `fit!/predict` work-flow to `tuned_model` just as
 # for any other model:
 
 tuned_mach = machine(tuned_model, X, y);
@@ -1265,9 +1266,219 @@ sort(unique(samples))
 # (which is different!). Setting data hygiene concerns aside, feel
 # free to use all available data.
 
+# <a id='part-5-advanced-model-composition'>
+
+
+# ## Part 5 - Advanced Model Composition
+
+# While `@pipeline` is great for composing models in an unbranching
+# sequence, for more complicated model composition you'll want to use
+# MLJ's generic model composition syntax. There are two main steps:
+
+# - **Prototype** the composite model by building a *learning
+#   network*, which can be tested on some (dummy) data as you build
+#   it.
+
+# - **Export** the learning network as a new stand-alone model type.
+
+# Like pipeline models, instances of the exported model type behave
+# like any other model (and are not bound to any data, until you wrap
+# them in a machine).
+
+
+# ### Building a pipeline using the generic composition syntax
+
+# To warm up, we'll do the equivalent of
+
+pipe = @pipeline Standardizer LogisticClassifier;
+
+# using the generic syntax.
+
+# Here's some dummy data we'll be using to test our learning network:
+
+X, y = make_blobs(5, 3)
+pretty(X)
+
+# **Step 0** - Proceed as if you were combining the models "by hand",
+# using all the data available for training, transforming and
+# prediction:
+
+stand = Standardizer();
+linear = LogisticClassifier();
+
+mach1 = machine(stand, X);
+fit!(mach1);
+Xstand = transform(mach1, X);
+
+mach2 = machine(linear, Xstand, y);
+fit!(mach2);
+yhat = predict(mach2, Xstand)
+
+# **Step 1** - Edit your code as follows:
+
+# - pre-wrap the data in `Source` nodes (wrapping nothing if not
+#   testing)
+
+# - delete the `fit!` calls
+
+X = source(X)  # or X = source() if not testing
+y = source(y)  # or y = source()
+
+stand = Standardizer();
+linear = LogisticClassifier();
+
+mach1 = machine(stand, X);
+Xstand = transform(mach1, X);
+
+mach2 = machine(linear, Xstand, y);
+yhat = predict(mach2, Xstand)
+
+# Now all training, predicting and transforming is executed lazily,
+# whenever we `fit!` any *node* (one of the "variables" `X`, `y`,
+# `Xstand`, `yhat` we have created). We *call* a node to
+# retrieve results:
+
+fit!(Xstand)
+Xstand() |> pretty
+
+#-
+
+fit!(yhat);
+yhat()
+
+#- Everything seems okay, so we proceed to the next step
+
+# **Step 2** - Export the learning network as a new stand-alone model type
+
+# Now, somewhat paradoxically, we can wrap the whole network in a
+# special machine - called a *learning network machine* - before have
+# defined the new model type. Indeed doing so is a necessary step in
+# the export process, for this machine will tell the export macro:
+
+# - what kind of model the composite will be
+
+# - which source nodes are input nodes and which are for the target
+
+# - which nodes correspond to each operation (`predict`, `transform`,
+#   etc) that we might want to define:
+
+surrogate = Probabilistic()     # model with no fields!
+mach = machine(surrogate, X, y; predict=yhat)
+
+# Although we have no real need to use it, this machine behaves like
+# you'd expect it to:
+
+Xnew, _ = make_blobs(2, 3)
+fit!(mach)
+predict(mach, Xnew)
+
+#-
+
+# Now we create a new model type using a Julia `struct` definition
+# appropriately decorated:
+
+@from_network mach begin
+    mutable struct YourPipe
+        standardizer = stand
+        classifier = linear::Probabilistic
+    end
+end
+
+# Instantiating and evaluating on some new data:
+
+pipe = YourPipe()
+X, y = @load_iris;   # built-in data set
+mach = machine(pipe, X, y)
+evaluate!(mach, measure=misclassification_rate, operation=predict_mode)
+
+
+# ### A composite model to average two regressor predictors
+
+# The following is condensed version of
+# [this](https://github.com/alan-turing-institute/MLJ.jl/blob/master/binder/MLJ_demo.ipynb)
+# tutorial. We will define a composite model that:
+
+# - standardizes the input data
+
+# - learns and applies a Box-Cox transformation to the target variable
+
+# - blends the predictions of two supervised learning models - a ridge
+#  regressor and a random forest regressor; we'll blend using a simple
+#  average (for a more sophisticated stacking example, see
+#  [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/))
+
+# - applies the *inverse* Box-Cox transformation to this blended prediction
+
+@load RandomForestRegressor pkg=DecisionTree
+
+# **Input layer**
+
+X = source()
+y = source()
+
+# **First layer and target transformation**
+
+std_model = Standardizer()
+stand = machine(std_model, X)
+W = MLJ.transform(stand, X)
+
+box_model = UnivariateBoxCoxTransformer()
+box = machine(box_model, y)
+z = MLJ.transform(box, y)
+
+# **Second layer**
+
+ridge_model = RidgeRegressor(lambda=0.1)
+ridge = machine(ridge_model, W, z)
+
+forest_model = RandomForestRegressor(n_trees=50)
+forest = machine(forest_model, W, z)
+
+ẑ = 0.5*predict(ridge, W) + 0.5*predict(forest, W)
+
+# **Output**
+
+ŷ = inverse_transform(box, ẑ)
+
+# With the learning network defined, we're ready to export:
+
+@from_network machine(Deterministic(), X, y, predict=ŷ) begin
+    mutable struct CompositeModel
+        rgs1 = ridge_model
+        rgs2 = forest_model
+    end
+end
+
+# Let's instantiate the new model type and try it out on some data:
+
+composite = CompositeModel()
+
+#- 
+
+X, y = @load_boston;
+mach = machine(composite, X, y);
+evaluate!(mach,
+          resampling=CV(nfolds=6, shuffle=true),
+          measures=[rms, mae])
+
+# ### Resources for Part 5
+#
+# - From the MLJ manual:
+#    - [Learning Networks](https://alan-turing-institute.github.io/MLJ.jl/stable/composing_models/#Learning-Networks-1)
+# - From Data Science Tutorials:
+#     - [Learning Networks](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
+#     - [Learning Networks 2](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
+#     - [Stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/) - an advanced example
+
+# <a id='solutions-to-exercises'></a>
+
+
+# ## What next?
+
+# <a id='solutions-to-exercises'></a>
+
 
 # ## Solutions to exercises
-
 
 # #### Exercise 2 solution
 
@@ -1475,4 +1686,3 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=mae)
 using Literate #src
 Literate.markdown(@__FILE__, DIR, execute=true) #src
 Literate.notebook(@__FILE__, DIR, execute=false) #src
-

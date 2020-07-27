@@ -58,7 +58,7 @@ The tutorials include links to external resources and exercises with solutions.
 
 ### 1. Plug-and-play
 
-Recommended for users with little Julia experience or users having
+Only recommended for users with little Julia experience or users having
 problems with the other options.
 
 Use this option if you have neither run Julia/Juptyer notebook on your
@@ -67,16 +67,19 @@ local machine before, nor used a Julia IDE to run a Julia script.
 
 #### Pros
 
-No need to install Julia or any libraries on your local machine
+No need to install Julia or any libraries on your local machine.
 
 
 #### Cons
 
 - The (automatic) setup can take a little while, sometimes over 15
   minutes (but you do get a static version of the notebook while it
-  loads)
+  loads).
 
-- If the online notebook crashes or drops your connection, you will have to start over
+- If the online notebook crashes or drops your connection, you will
+  have to start over.
+
+- If inactive for ten minutes the binder notebook will shutdown!
 
 
 #### Instructions
@@ -116,3 +119,6 @@ You need to meet above requirements
   (corresponding to [this file](tutorials.jl) on GitHub). You cannot
   download these files individually - you need the whole directory.
 
+- **Immediately** evaluate the first two lines of code to activate the
+  package environment and pre-load the packages, as this can take a
+  few minutes.
