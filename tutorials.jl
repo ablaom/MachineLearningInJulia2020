@@ -6,6 +6,9 @@
 
 # ### Set-up
 
+# The following instantiates a package environment and pre-loads some
+# packages, to avoid delays later on.
+
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
 
@@ -13,6 +16,14 @@ include(joinpath(DIR, "setup.jl"))
 # and it has issues displaying color/boldface REPL output:
 
 color_off()
+
+
+# ## General resources
+
+# - [List of methods introduced in this tutorial](methods.md)
+# - [MLJ Cheatsheet](https://alan-turing-institute.github.io/MLJ.jl/dev/mlj_cheatsheet/)
+# - [Common MLJ Workflows](https://alan-turing-institute.github.io/MLJ.jl/dev/common_mlj_workflows/)
+# - [MLJ manual](https://alan-turing-institute.github.io/MLJ.jl/dev/)
 
 
 # ## Contents
@@ -487,9 +498,13 @@ mach = machine(model, X, y)
 
 train, test = partition(eachindex(y), 0.7)
 
-#-
+# Now we can `fit!`...
 
 fit!(mach, rows=train, verbosity=2)
+
+# ... and `predict`:
+
+predict(mach, rows=test)  # or `predict(mach, Xnew)`
 
 # After training, one can inspect the learned parameters:
 
@@ -592,7 +607,11 @@ misclassification_rate(mode.(yhat), y[test])
 # We note in passing that there is also a search tool for measures
 # analogous to `models`:
 
-measures(matching(y))
+measures()
+
+#- 
+
+measures(matching(y)) # experimental
 
 
 # ### Step 4. Evaluate the model performance
@@ -1267,6 +1286,10 @@ sort(unique(samples))
 
 # ## Part 5 - Advanced Model Composition
 
+# > **Goals:**
+# > 1. Learn how to build a prototypes of a composite model, called a *learning network*
+# > 2. Learn how to use the `@from_network` macro to export a learning network as a new stand-alone model type
+
 # While `@pipeline` is great for composing models in an unbranching
 # sequence, for more complicated model composition you'll want to use
 # MLJ's generic model composition syntax. There are two main steps:
@@ -1363,14 +1386,15 @@ yhat(Xnew)
 # defined the new model type. Indeed doing so is a necessary step in
 # the export process, for this machine will tell the export macro:
 
-# - what kind of model the composite will be
+# - what kind of model the composite will be (`Deterministic`,
+#   `Probabilistic` or `Unsupervised`)a
 
 # - which source nodes are input nodes and which are for the target
 
 # - which nodes correspond to each operation (`predict`, `transform`,
-#   etc) that we might want to define:
+#   etc) that we might want to define
 
-surrogate = Probabilistic()     # model with no fields!
+surrogate = Probabilistic()     # a model with no fields!
 mach = machine(surrogate, X, y; predict=yhat)
 
 # Although we have no real need to use it, this machine behaves like
