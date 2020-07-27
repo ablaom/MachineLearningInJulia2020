@@ -16,7 +16,7 @@ learning toolbox to data scientists.
 
 ### [Non-interactive version](tutorials.md)
 
-### Topics
+### Topics covered
 
 #### Basic
 
@@ -37,10 +37,6 @@ solutions.
 
 
 ## Options for running the tutorials
-
-**If all else fails**, a non-interactive version of the tutorials can
-be viewed [here](tutorials.md).
-
 
 ### 1. Plug-and-play
 
@@ -110,7 +106,7 @@ You need to meet above requirements
   few minutes.
 
 
-## More about the tutorials (disclaimers)
+## More about the tutorials 
 
 - The tutorials focus on the *machine learning* part of the data
   science workflow, and less on exploratory data analysis and other
