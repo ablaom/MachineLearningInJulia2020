@@ -1,4 +1,4 @@
-# Machine Learning in Julia, JuliaCon2020
+# Machine Learning in Julia using MLJ, JuliaCon2020
 
 Interactive tutorials for a workshop introducing the machine learning
 toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
@@ -7,9 +7,10 @@ toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
 </div>
 
-&#128679;
-
-Static version of the tutorials: [tutorials.md](tutorials.md)
+**Installation instructions** are
+[below](#options-for-running-the-tutorials). If all else fails, you
+can view non-interactive version of the tutorials
+[here](tutorials.md).
 
 
 ## About the tutorials
@@ -47,19 +48,20 @@ The tutorial topics are as follows:
 
 - Part 5 - **Advanced model composition** (as time permits)
 
-The tutorials include links to external resources and exercises with solutions.
+The tutorials include links to external resources and exercises with
+solutions.
 
 
 ## Options for running the tutorials
 
-**If all else fails**, a static version of the tutorials can be viewed
-[here](tutorials.md).
+**If all else fails**, a non-interactive version of the tutorials can
+be viewed [here](tutorials.md).
 
 
 ### 1. Plug-and-play
 
 Only recommended for users with little Julia experience or users having
-problems with the other options.
+problems with the other options. 
 
 Use this option if you have neither run Julia/Juptyer notebook on your
 local machine before, nor used a Julia IDE to run a Julia script.
@@ -67,7 +69,7 @@ local machine before, nor used a Julia IDE to run a Julia script.
 
 #### Pros
 
-No need to install Julia or any libraries on your local machine.
+One click. No need to install anything on your local machine.
 
 
 #### Cons
@@ -76,10 +78,10 @@ No need to install Julia or any libraries on your local machine.
   minutes (but you do get a static version of the notebook while it
   loads).
 
-- If the online notebook crashes or drops your connection, you will
-  have to start over.
+- **You will have to start over** if:
 
-- If inactive for ten minutes the binder notebook will shutdown!
+    - The notebook drops your connection for some reason.
+    - You are **inactive for ten minutes**.
 
 
 #### Instructions

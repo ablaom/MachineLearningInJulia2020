@@ -1,5 +1,7 @@
 # Setup:
 
+isbinder() = "jovyan" in split(pwd(), "/")
+
 const REPO = "https://github.com/ablaom/MachineLearningInJulia2020"
 using Pkg
 uuid = Pkg.TOML.parsefile(joinpath(DIR,"Project.toml"))["uuid"]
@@ -9,8 +11,12 @@ uuid == "4764ce03-6504-4302-ab9a-b32cdba420f3" ||
           "Project.toml file). "*
           "A complete tutorial can be obtained by cloning the"*
           "MachineLearningInJulia repository from $REPO. ")
-Pkg.activate(DIR)
-Pkg.instantiate()
+if !isbinder()
+    Pkg.activate(DIR)
+    Pkg.instantiate()
+else
+    @info "Skipping package instantiation as binder notebook. "
+end
 using CategoricalArrays
 import MLJLinearModels
 import DataFrames

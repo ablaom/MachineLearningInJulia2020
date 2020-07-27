@@ -4,20 +4,13 @@
 # [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
 
 
-# ### Environment instantiation
-
-# The following loads a Julia environment and pre-loads some packages
-# to avoid pauses later one. This includes plotting libraries and
-# could take a few minutes.
-
-# If this the **binder** notebook version of the tutorial,
-# you can *skip* evaluation of this first cell.
+# ### Set-up
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
 
-# **Skip this** unless you're using an IDE that has issues with
-# displaying color/boldface REPL output:
+# Only evaluate the next cell if you're using an IDE (not a notebook)
+# and it has issues displaying color/boldface REPL output:
 
 color_off()
 
@@ -30,7 +23,7 @@ color_off()
 # - [Part 2 - Selecting, Training and Evaluating Models](#part-2-selecting-training-and-evaluating-models)
 # - [Part 3 - Transformers and Pipelines](#part-3-transformers-and-pipelines)
 # - [Part 4 - Tuning Hyper-parameters](#part-4-tuning-hyper-parameters)
-# - [Part 5 - Advanced model composition](#advanced-model-composition)
+# - [Part 5 - Advanced model composition](#part-5-advanced-model-composition)
 # - [Solutions to Exercises](#solutions-to-exercises)
 
 
@@ -1160,6 +1153,8 @@ s  = range(model, :(continuous_encoder.one_hot_ordered_factors),
            values = [true, false])
 #-
 
+# #### The tuning wrapper
+
 # Now for the wrapper, which is an instance of `TunedModel`:
 
 tuned_model = TunedModel(model=model,
@@ -1200,13 +1195,13 @@ err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy);
 
 tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy);
 
-# <a id='resources-for-part-4></a>
+# <a id='resources-for-part-4'></a>
 
 
 # ### Resources for Part 4
 #
 # - From the MLJ manual:
-#    - [Learning Curves]https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
+#    - [Learning Curves](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
 #    - [Tuning Models](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/)
 # - The [MLJTuning repo](https://github.com/alan-turing-institute/MLJTuning.jl#who-is-this-repo-for) - mostly for developers
 #
@@ -1243,23 +1238,24 @@ r2 = range(model,
            lower = 2.5,
            upper= 7.5, scale=x->2^round(Int, x))
 
-# and try to guess the outcome of evaluating the following two code blocks:
+# and try to guess the outcome of evaluating the following two code
+# blocks (remembering that when `scale` is a function, `lower` and
+# `upper` refer to limits *before* the transformation is applied):
 
 r2_sampler = sampler(r2, Distributions.Uniform)
 samples = rand(r2_sampler, 1000);
 histogram(samples, nbins=50)
 
-#-
-
 sort(unique(samples))
 
 # (c) Optimize `model` over these the parameter ranges `r1` and `r2`
-# using a random search with uniform priors. Use `Holdout()`
-# resampling, and implement your search by first constructing a
-# "self-tuning" wrap of `model`, as described above. Make `mae` (mean
-# absolute error) the loss function that you optimize, and search a
-# total 40 models (combinations of hyper-parameters).  Plot the
-# results of your search. Feel free to use all available data.
+# using a random search with uniform priors (the default). Use
+# `Holdout()` resampling, and implement your search by first
+# constructing a "self-tuning" wrap of `model`, as described
+# above. Make `mae` (mean absolute error) the loss function that you
+# optimize, and search over a total of 40 combinations of
+# hyper-parameters.  If you have time, plot the results of your
+# search. Feel free to use all available data.
 
 # (d) Evaluate the best model found in the search using 3-fold
 # cross-validation and compare with that of the self-tuning model
@@ -1316,8 +1312,7 @@ yhat = predict(mach2, Xstand)
 
 # **Step 1** - Edit your code as follows:
 
-# - pre-wrap the data in `Source` nodes (wrapping nothing if not
-#   testing)
+# - pre-wrap the data in `Source` nodes
 
 # - delete the `fit!` calls
 
@@ -1333,10 +1328,11 @@ Xstand = transform(mach1, X);
 mach2 = machine(linear, Xstand, y);
 yhat = predict(mach2, Xstand)
 
-# Now all training, predicting and transforming is executed lazily,
-# whenever we `fit!` any *node* (one of the "variables" `X`, `y`,
-# `Xstand`, `yhat` we have created). We *call* a node to
-# retrieve results:
+# Now `X`, `y`, `Xstand` and `yhat` are *nodes* ("variables" or
+# "dynammic data") instead of data. All training, predicting and
+# transforming is now executed lazily, whenever we `fit!` one of these
+# nodes. We *call* a node to retrieve the data it represents in the
+# original manual workflow.
 
 fit!(Xstand)
 Xstand() |> pretty
@@ -1346,7 +1342,19 @@ Xstand() |> pretty
 fit!(yhat);
 yhat()
 
-#- Everything seems okay, so we proceed to the next step
+# The node `yhat` is the "descendant" (in an associated DAG we have
+# defined) of a unique source node:
+
+sources(yhat)
+
+#-
+
+# The data at the source node is replaced by `Xnew` to obtain a
+# new prediction when we call `yhat` like this:
+
+Xnew, _ = make_blobs(2, 3);
+yhat(Xnew)
+
 
 # **Step 2** - Export the learning network as a new stand-alone model type
 
@@ -1453,13 +1461,14 @@ end
 
 composite = CompositeModel()
 
-#- 
+#-
 
 X, y = @load_boston;
 mach = machine(composite, X, y);
 evaluate!(mach,
           resampling=CV(nfolds=6, shuffle=true),
           measures=[rms, mae])
+
 
 # ### Resources for Part 5
 #
@@ -1468,12 +1477,12 @@ evaluate!(mach,
 # - From Data Science Tutorials:
 #     - [Learning Networks](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
 #     - [Learning Networks 2](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
-#     - [Stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/) - an advanced example
 
-# <a id='solutions-to-exercises'></a>
+#     - [Stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
+#        an advanced example of model compostion
 
-
-# ## What next?
+#     - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1)
+#       exporting learning networks without a macro for finer control
 
 # <a id='solutions-to-exercises'></a>
 
