@@ -24,6 +24,7 @@ color_off()
 # - [MLJ Cheatsheet](https://alan-turing-institute.github.io/MLJ.jl/dev/mlj_cheatsheet/)
 # - [Common MLJ Workflows](https://alan-turing-institute.github.io/MLJ.jl/dev/common_mlj_workflows/)
 # - [MLJ manual](https://alan-turing-institute.github.io/MLJ.jl/dev/)
+# - [Data Science Tutorials in Julia](https://alan-turing-institute.github.io/DataScienceTutorials.jl/)
 
 
 # ## Contents

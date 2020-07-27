@@ -49,7 +49,9 @@ local machine before, nor used a Julia IDE to run a Julia script.
 
 #### Pros
 
-One click. No need to install anything on your local machine.
+One
+[click](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/master?filepath=tutorials.ipynb). No
+need to install anything on your local machine.
 
 
 #### Cons
