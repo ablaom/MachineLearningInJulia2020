@@ -7,10 +7,9 @@ toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
 </div>
 
-**Installation instructions** are
-[below](#options-for-running-the-tutorials). If all else fails, you
-can view non-interactive version of the tutorials
-[here](tutorials.md).
+- [Options for running the tutorials](#options-for-running-the-tutorials)
+
+- [Non-interactive version](tutorials.md)
 
 These tutorials were prepared for use in a 3 1/2 hour online workshop at
 JuliaCon2020. Their main aim is to introduce the
