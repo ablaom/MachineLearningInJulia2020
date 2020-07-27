@@ -12,27 +12,12 @@ toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 can view non-interactive version of the tutorials
 [here](tutorials.md).
 
-
-## About the tutorials
-
 These tutorials were prepared for use in a 3 1/2 hour online workshop at
 JuliaCon2020. Their main aim is to introduce the
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
-learning toolbox to working data scientists.
-
-- The tutorials focus on the *machine learning* part of the data science
-  workflow, and less on exploratory data analysis and other
-  conventional "data analytics" methodology
-
-- Here "machine learning" is meant in a broad sense, and is not
-  restricted to so-called *deep learning* (neural networks)
-
-- The tutorials are crafted to rapidly familiarize the user with what
-  MLJ can do and how to do it, and are not a substitute for a course
-  on machine learning fundamentals. Examples do not necessarily
-  represent best practice or the best solution to a problem.
+learning toolbox to data scientists.
   
-The tutorial topics are as follows:
+### Contents
 
 #### Basic
 
@@ -124,3 +109,18 @@ You need to meet above requirements
 - **Immediately** evaluate the first two lines of code to activate the
   package environment and pre-load the packages, as this can take a
   few minutes.
+
+
+## More about the tutorials (disclaimers)
+
+- The tutorials focus on the *machine learning* part of the data
+  science workflow, and less on exploratory data analysis and other
+  conventional "data analytics" methodology
+
+- Here "machine learning" is meant in a broad sense, and is not
+  restricted to so-called *deep learning* (neural networks)
+
+- The tutorials are crafted to rapidly familiarize the user with what
+  MLJ can do and how to do it, and are not a substitute for a course
+  on machine learning fundamentals. Examples do not necessarily
+  represent best practice or the best solution to a problem.
