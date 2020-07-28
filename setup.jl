@@ -14,16 +14,17 @@ uuid == "4764ce03-6504-4302-ab9a-b32cdba420f3" ||
 if !isbinder()
     Pkg.activate(DIR)
     Pkg.instantiate()
+    using CategoricalArrays
+    import MLJLinearModels
+    import DataFrames
+    import CSV
+    import DecisionTree
+    using MLJ
+    import MLJLinearModels
+    import MultivariateStats
+    import MLJFlux
+    import Plots
 else
     @info "Skipping package instantiation as binder notebook. "
 end
-using CategoricalArrays
-import MLJLinearModels
-import DataFrames
-import CSV
-import DecisionTree
-import MLJFlux
-import Plots
-import MLJLinearModels
-import MultivariateStats
-using MLJ
+@info "Done loading"
