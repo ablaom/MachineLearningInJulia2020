@@ -610,7 +610,7 @@ misclassification_rate(mode.(yhat), y[test])
 
 measures()
 
-#- 
+#-
 
 measures(matching(y)) # experimental
 
@@ -1087,8 +1087,8 @@ _, _, lambdas, losses = learning_curve(mach,
                                        resolution=30, # default
                                        measure=cross_entropy)
 plt=plot(lambdas, losses, xscale=:log10)
-xlabel!(plt, "epochs")
-ylabel!(plt, "cross entropy on holdout set")
+xlabel!(plt, "lambda")
+ylabel!(plt, "cross entropy using 6-fold CV")
 
 #-
 
@@ -1130,37 +1130,16 @@ tuning = RandomSearch(rng=123)
 # priors automatically.
 
 
-# #### Aside on ranges and sampling (technical bit)
+# #### Unbounded ranges and sampling
 
-# In `RandomSearch` the `scale` attribute of a one-dimensional range
-# only plays a role if we specify a *function*, in which case we need
-# to apply the corresponding inverse transform to our bounds. If
-# instead of the above definition of `r` we use
-
-r = range(model, :(logistic_classifier.lambda), lower = -2, upper=2, scale=x->10^x)
-
-# then, in a grid search, we would get the same values as before:
-
-iterator(r, 5)
-
-# Since a *bounded* range (like this one) is sampled uniformly in a
-# `GridSearch` (before the `scale` function is applied), we'll get
-# sampling with a logarithmic spread. We can see in this way:
-
-import Distributions
-sampler_r = sampler(r, Distributions.Uniform)
-histogram(rand(sampler_r, 10000), nbins=50)
-
-#-
-
-# Alternatively, we can replace `r` with a positive *unbounded* range
-# which, by default, is sampled using a `Gamma` distribution (which
-# has an infinite decaying tail). A positive unbounded range is specified in
-# this way:
+# In MLJ a range does not have to be bounded. Furthermore, in
+# `RandomSearch` a A positive unbounded range is specified will be
+# sampled using a `Gamma` distribution, by default:
 
 r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
 
-# And we then get this kind of distribution:
+# Let's see what sampling using a Gamma distribution is going to mean
+# for this range:
 
 sampler_r = sampler(r, Distributions.Gamma)
 histogram(rand(sampler_r, 10000), nbins=50)
@@ -1209,11 +1188,11 @@ plot(tuned_mach)
 # resampling*](https://mlr3book.mlr-org.com/nested-resampling.html)
 # here):
 
-err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy);
+err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy)
 
 #-
 
-tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy);
+tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy)
 
 # <a id='resources-for-part-4'></a>
 
@@ -1251,20 +1230,24 @@ model = @pipeline ContinuousEncoder tree_booster
 # (a) Construct a bounded range `r1` for the `evo_tree_booster`
 # parameter `max_depth`, varying between 1 and 12.
 
-# &star;(b) Define the one-dimensional range
+# \star&(b) For the `nbins` parameter of the `EvoTreeRegressor`, define the range
 
 r2 = range(model,
            :(evo_tree_regressor.nbins),
            lower = 2.5,
            upper= 7.5, scale=x->2^round(Int, x))
 
-# and try to guess the outcome of evaluating the following two code
-# blocks (remembering that when `scale` is a function, `lower` and
-# `upper` refer to limits *before* the transformation is applied):
+# Notice that in this case we've specified a *function* instead of a
+# canned scale, like `:log10`. In this case the `scale` function is
+# applied after sampling (uniformly) between the limits of `lower` and
+# `upper`. Perhaps you can guess the outputs of the following lines of
+# code?
 
 r2_sampler = sampler(r2, Distributions.Uniform)
 samples = rand(r2_sampler, 1000);
 histogram(samples, nbins=50)
+
+#-
 
 sort(unique(samples))
 
