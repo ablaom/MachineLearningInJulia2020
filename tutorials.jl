@@ -1141,6 +1141,7 @@ r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
 # Let's see what sampling using a Gamma distribution is going to mean
 # for this range:
 
+import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
 histogram(rand(sampler_r, 10000), nbins=50)
 
