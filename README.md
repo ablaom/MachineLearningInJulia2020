@@ -7,8 +7,10 @@ toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 	<img src="MLJLogo2.svg" alt="MLJ" width="200">
 </div>
 
-These tutorials were prepared for use in a 3 1/2 hour online workshop at
-JuliaCon2020. Their main aim is to introduce the
+These tutorials were prepared for use in a 3 1/2 hour online workshop
+at JuliaCon2020, recorded
+[here](https://www.youtube.com/watch?time_continue=27&v=qSWbCn170HU&feature=emb_title). Their
+main aim is to introduce the
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
 learning toolbox to data scientists.
   
