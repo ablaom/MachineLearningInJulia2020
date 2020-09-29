@@ -126,5 +126,5 @@ You need to meet above requirements
 
 ## Binder notebook for stacking demo used in video
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/master?filepath=https%3A%2F%2Fgithub.com%2Fablaom%2FMachineLearningInJulia2020%2Fblob%2Fmaster%2Fwow.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/386ce06766dc1d9d9a0197ec57738b732c1c5d23?filepath=wow.ipynb)
 
