@@ -123,3 +123,8 @@ You need to meet above requirements
   MLJ can do and how to do it, and are not a substitute for a course
   on machine learning fundamentals. Examples do not necessarily
   represent best practice or the best solution to a problem.
+
+## Binder notebook for stacking demo used in video
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ablaom/MachineLearningInJulia2020/master?filepath=https%3A%2F%2Fgithub.com%2Fablaom%2FMachineLearningInJulia2020%2Fblob%2Fmaster%2Fwow.ipynb)
+
