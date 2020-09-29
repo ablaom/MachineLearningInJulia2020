@@ -20,7 +20,7 @@ include(joinpath(DIR, "setup.jl"))
 ```
  Activating environment at `~/Dropbox/Julia7/MLJ/MachineLearningInJulia2020/Project.toml`
 ┌ Info: Done loading
-└ @ Main.##719 /Users/anthony/Dropbox/Julia7/MLJ/MachineLearningInJulia2020/setup.jl:30
+└ @ Main.##909 /Users/anthony/Dropbox/Julia7/MLJ/MachineLearningInJulia2020/setup.jl:24
 
 ```
 
@@ -1276,7 +1276,7 @@ NeuralNetworkClassifier(
     batch_size = 1,
     lambda = 0.0,
     alpha = 0.0,
-    optimiser_changes_trigger_retraining = false) @405
+    optimiser_changes_trigger_retraining = false) @101
 ```
 
 ```julia
@@ -1343,10 +1343,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @595 trained 0 times.
+Machine{NeuralNetworkClassifier{Short,…}} @442 trained 0 times.
   args: 
-    1:	Source @622 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @057 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @664 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @362 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1370,10 +1370,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @595 trained 1 time.
+Machine{NeuralNetworkClassifier{Short,…}} @442 trained 1 time.
   args: 
-    1:	Source @622 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @057 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @664 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @362 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1385,51 +1385,51 @@ predict(mach, rows=test)  # or `predict(mach, Xnew)`
 
 ```
 45-element MLJBase.UnivariateFiniteArray{Multiclass{3},String,UInt32,Float32,1}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.326, Iris-versicolor=>0.369, Iris-virginica=>0.306)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.316, Iris-versicolor=>0.369, Iris-virginica=>0.314)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.354, Iris-versicolor=>0.365, Iris-virginica=>0.282)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.319, Iris-versicolor=>0.37, Iris-virginica=>0.312)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.29, Iris-versicolor=>0.368, Iris-virginica=>0.342)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.344, Iris-versicolor=>0.366, Iris-virginica=>0.29)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.316, Iris-versicolor=>0.369, Iris-virginica=>0.315)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.332, Iris-versicolor=>0.369, Iris-virginica=>0.299)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.329, Iris-versicolor=>0.369, Iris-virginica=>0.301)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.328, Iris-versicolor=>0.369, Iris-virginica=>0.303)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.314, Iris-versicolor=>0.369, Iris-virginica=>0.317)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.323, Iris-versicolor=>0.369, Iris-virginica=>0.307)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.307, Iris-versicolor=>0.369, Iris-virginica=>0.324)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.309, Iris-versicolor=>0.369, Iris-virginica=>0.322)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.305, Iris-versicolor=>0.369, Iris-virginica=>0.326)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.345, Iris-versicolor=>0.366, Iris-virginica=>0.289)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.355, Iris-versicolor=>0.365, Iris-virginica=>0.281)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.352, Iris-versicolor=>0.365, Iris-virginica=>0.283)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.299, Iris-versicolor=>0.369, Iris-virginica=>0.332)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.314, Iris-versicolor=>0.369, Iris-virginica=>0.316)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.352, Iris-versicolor=>0.365, Iris-virginica=>0.283)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.329, Iris-versicolor=>0.369, Iris-virginica=>0.303)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.291, Iris-versicolor=>0.368, Iris-virginica=>0.34)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.328, Iris-versicolor=>0.369, Iris-virginica=>0.303)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.356, Iris-versicolor=>0.363, Iris-virginica=>0.282)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.36, Iris-versicolor=>0.364, Iris-virginica=>0.276)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.339, Iris-versicolor=>0.368, Iris-virginica=>0.292)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.355, Iris-versicolor=>0.366, Iris-virginica=>0.28)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.354, Iris-versicolor=>0.365, Iris-virginica=>0.281)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.32, Iris-versicolor=>0.369, Iris-virginica=>0.311)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.346, Iris-versicolor=>0.366, Iris-virginica=>0.288)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.291, Iris-versicolor=>0.368, Iris-virginica=>0.341)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.331, Iris-versicolor=>0.369, Iris-virginica=>0.3)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.31, Iris-versicolor=>0.369, Iris-virginica=>0.321)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.356, Iris-versicolor=>0.366, Iris-virginica=>0.278)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.312, Iris-versicolor=>0.369, Iris-virginica=>0.319)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.297, Iris-versicolor=>0.369, Iris-virginica=>0.334)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.304, Iris-versicolor=>0.369, Iris-virginica=>0.327)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.329, Iris-versicolor=>0.369, Iris-virginica=>0.303)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.319, Iris-versicolor=>0.369, Iris-virginica=>0.311)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.347, Iris-versicolor=>0.365, Iris-virginica=>0.287)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.309, Iris-versicolor=>0.369, Iris-virginica=>0.321)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.313, Iris-versicolor=>0.369, Iris-virginica=>0.318)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.349, Iris-versicolor=>0.366, Iris-virginica=>0.286)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.35, Iris-versicolor=>0.365, Iris-virginica=>0.285)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.281, Iris-versicolor=>0.37, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.255, Iris-versicolor=>0.396, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.472, Iris-versicolor=>0.211, Iris-virginica=>0.318)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.236, Iris-versicolor=>0.417, Iris-virginica=>0.347)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.239, Iris-versicolor=>0.414, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.46, Iris-versicolor=>0.219, Iris-virginica=>0.321)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.273, Iris-versicolor=>0.377, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.272, Iris-versicolor=>0.379, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.246, Iris-versicolor=>0.405, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.285, Iris-versicolor=>0.365, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.252, Iris-versicolor=>0.399, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.27, Iris-versicolor=>0.381, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.264, Iris-versicolor=>0.387, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.249, Iris-versicolor=>0.402, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.24, Iris-versicolor=>0.412, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.476, Iris-versicolor=>0.208, Iris-virginica=>0.316)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.504, Iris-versicolor=>0.189, Iris-virginica=>0.307)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.476, Iris-versicolor=>0.207, Iris-virginica=>0.316)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.237, Iris-versicolor=>0.416, Iris-virginica=>0.347)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.27, Iris-versicolor=>0.381, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.481, Iris-versicolor=>0.205, Iris-virginica=>0.315)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.278, Iris-versicolor=>0.373, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.245, Iris-versicolor=>0.407, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.276, Iris-versicolor=>0.374, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.505, Iris-versicolor=>0.188, Iris-virginica=>0.307)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.481, Iris-versicolor=>0.204, Iris-virginica=>0.315)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.302, Iris-versicolor=>0.349, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.509, Iris-versicolor=>0.186, Iris-virginica=>0.306)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.489, Iris-versicolor=>0.199, Iris-virginica=>0.312)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.269, Iris-versicolor=>0.382, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.53, Iris-versicolor=>0.172, Iris-virginica=>0.298)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.238, Iris-versicolor=>0.414, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.267, Iris-versicolor=>0.383, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.26, Iris-versicolor=>0.391, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.472, Iris-versicolor=>0.21, Iris-virginica=>0.317)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.245, Iris-versicolor=>0.407, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.239, Iris-versicolor=>0.413, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.245, Iris-versicolor=>0.407, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.283, Iris-versicolor=>0.368, Iris-virginica=>0.35)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.237, Iris-versicolor=>0.415, Iris-virginica=>0.347)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.507, Iris-versicolor=>0.187, Iris-virginica=>0.306)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.231, Iris-versicolor=>0.422, Iris-virginica=>0.347)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.246, Iris-versicolor=>0.405, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.498, Iris-versicolor=>0.193, Iris-virginica=>0.309)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.505, Iris-versicolor=>0.188, Iris-virginica=>0.307)
 ```
 
 After training, one can inspect the learned parameters:
@@ -1450,7 +1450,7 @@ report(mach)
 ```
 
 ```
-(training_losses = Any[1.2483145f0, 1.2016492f0, 1.1675905f0, 1.1408049f0, 1.1239645f0, 1.1073321f0, 1.0985616f0, 1.0872855f0, 1.0787379f0, 1.073653f0, 1.0671583f0, 1.0562762f0],)
+(training_losses = Any[1.018328f0, 1.0076529f0, 0.9970421f0, 0.98713166f0, 0.9708984f0, 0.9602445f0, 0.9453613f0, 0.9380164f0, 0.93375355f0, 0.92890394f0, 0.9214928f0, 0.91696894f0],)
 ```
 
 You save a machine like this:
@@ -1468,9 +1468,9 @@ predict(mach2, X)[1:3]
 
 ```
 3-element MLJBase.UnivariateFiniteArray{Multiclass{3},String,UInt32,Float32,1}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.302, Iris-versicolor=>0.369, Iris-virginica=>0.329)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.327, Iris-versicolor=>0.369, Iris-virginica=>0.305)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.323, Iris-versicolor=>0.369, Iris-virginica=>0.307)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.245, Iris-versicolor=>0.407, Iris-virginica=>0.348)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.281, Iris-versicolor=>0.369, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.243, Iris-versicolor=>0.409, Iris-virginica=>0.348)
 ```
 
 If you want to fit a retrieved model, you will need to bind some data to it:
@@ -1481,10 +1481,10 @@ fit!(mach3)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @729 trained 2 times.
+Machine{NeuralNetworkClassifier{Short,…}} @411 trained 2 times.
   args: 
-    1:	Source @902 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @142 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @999 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @516 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1499,10 +1499,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @595 trained 2 times.
+Machine{NeuralNetworkClassifier{Short,…}} @442 trained 2 times.
   args: 
-    1:	Source @622 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @057 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @664 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @362 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1516,10 +1516,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @595 trained 3 times.
+Machine{NeuralNetworkClassifier{Short,…}} @442 trained 3 times.
   args: 
-    1:	Source @622 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @057 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @664 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @362 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1532,10 +1532,10 @@ fit!(mach, rows=train, verbosity=2)
 ```
 
 ```
-Machine{NeuralNetworkClassifier{Short,…}} @595 trained 4 times.
+Machine{NeuralNetworkClassifier{Short,…}} @442 trained 4 times.
   args: 
-    1:	Source @622 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @057 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @664 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @362 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -1549,7 +1549,7 @@ yhat[1]
 ```
 
 ```
-UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.0853, Iris-versicolor=>0.694, Iris-virginica=>0.22)
+UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.101, Iris-versicolor=>0.691, Iris-virginica=>0.208)
 ```
 
 What's going on here?
@@ -1574,7 +1574,7 @@ pdf(yhat[1], "Iris-virginica")
 ```
 
 ```
-0.22016504f0
+0.20785435f0
 ```
 
 To get the most likely observation, we do
@@ -1595,10 +1595,10 @@ broadcast(pdf, yhat[1:4], "Iris-versicolor")
 
 ```
 4-element Array{Float32,1}:
- 0.6944945
- 0.4175048
- 0.01892811
- 0.33673617
+ 0.6913743
+ 0.4742315
+ 0.06603816
+ 0.31756383
 ```
 
 ```julia
@@ -1637,10 +1637,10 @@ pdf(yhat, L)[1:4, :]
 
 ```
 4×3 Array{Float32,2}:
- 0.0853404  0.694494   0.220165
- 0.0375617  0.417505   0.544934
- 0.981072   0.0189281  6.87113f-15
- 0.027887   0.336736   0.635377
+ 0.100771     0.691374   0.207854
+ 0.00801382   0.474232   0.517755
+ 0.933962     0.0660382  1.61707f-10
+ 0.000101179  0.317564   0.682335
 ```
 
 However, in a typical MLJ work-flow, this is not as useful as you
@@ -1652,7 +1652,7 @@ cross_entropy(yhat, y[test]) |> mean
 ```
 
 ```
-0.33242217f0
+0.31818444f0
 ```
 
 To apply a deterministic measure, we first need to obtain point-estimates:
@@ -1662,7 +1662,7 @@ misclassification_rate(mode.(yhat), y[test])
 ```
 
 ```
-0.06666666666666667
+0.044444444444444446
 ```
 
 We note in passing that there is also a search tool for measures
@@ -1752,10 +1752,10 @@ evaluate!(mach, resampling=Holdout(fraction_train=0.7),
 ┌──────────────────────────────┬───────────────┬─────────────────┐
 │ _.measure                    │ _.measurement │ _.per_fold      │
 ├──────────────────────────────┼───────────────┼─────────────────┤
-│ cross_entropy                │ 0.332         │ Float32[0.332]  │
-│ BrierScore{UnivariateFinite} │ -0.185        │ Float32[-0.185] │
+│ cross_entropy                │ 0.318         │ Float32[0.318]  │
+│ BrierScore{UnivariateFinite} │ -0.168        │ Float32[-0.168] │
 └──────────────────────────────┴───────────────┴─────────────────┘
-_.per_observation = [[[0.365, 0.873, ..., 0.0174]], [[-0.149, -0.638, ..., -0.000594]]]
+_.per_observation = [[[0.369, 0.746, ..., 0.0664]], [[-0.149, -0.545, ..., -0.00825]]]
 _.fitted_params_per_fold = [ … ]
 _.report_per_fold = [ … ]
 
@@ -1769,13 +1769,13 @@ evaluate!(mach, resampling=CV(nfolds=6),
 ```
 
 ```
-┌──────────────────────────────┬───────────────┬─────────────────────────────────────────────────────────┐
-│ _.measure                    │ _.measurement │ _.per_fold                                              │
-├──────────────────────────────┼───────────────┼─────────────────────────────────────────────────────────┤
-│ cross_entropy                │ 0.295         │ Float32[0.282, 0.242, 0.289, 0.339, 0.341, 0.276]       │
-│ BrierScore{UnivariateFinite} │ -0.155        │ Float32[-0.143, -0.129, -0.145, -0.174, -0.191, -0.149] │
-└──────────────────────────────┴───────────────┴─────────────────────────────────────────────────────────┘
-_.per_observation = [[[0.282, 0.433, ..., 0.0142], [0.0149, 0.618, ..., 0.0134], [0.122, 0.386, ..., 0.0105], [0.16, 0.252, ..., 0.164], [0.515, 0.519, ..., 0.524], [0.00842, 0.453, ..., 0.00625]], [[-0.121, -0.195, ..., -0.000398], [-0.000435, -0.372, ..., -0.000355], [-0.0265, -0.194, ..., -0.000209], [-0.0436, -0.0989, ..., -0.0458], [-0.267, -0.261, ..., -0.286], [-0.000141, -0.213, ..., -7.77e-5]]]
+┌──────────────────────────────┬───────────────┬────────────────────────────────────────────────────────┐
+│ _.measure                    │ _.measurement │ _.per_fold                                             │
+├──────────────────────────────┼───────────────┼────────────────────────────────────────────────────────┤
+│ cross_entropy                │ 0.288         │ Float32[0.275, 0.236, 0.298, 0.302, 0.345, 0.269]      │
+│ BrierScore{UnivariateFinite} │ -0.151        │ Float32[-0.134, -0.126, -0.152, -0.164, -0.19, -0.143] │
+└──────────────────────────────┴───────────────┴────────────────────────────────────────────────────────┘
+_.per_observation = [[[0.277, 0.341, ..., 0.0749], [0.00651, 0.575, ..., 0.00518], [0.107, 0.394, ..., 0.0139], [0.00449, 0.284, ..., 0.00643], [0.411, 0.421, ..., 0.596], [0.0161, 0.28, ..., 0.0156]], [[-0.117, -0.149, ..., -0.0104], [-8.42e-5, -0.325, ..., -5.34e-5], [-0.0204, -0.198, ..., -0.000369], [-4.01e-5, -0.122, ..., -8.2e-5], [-0.171, -0.178, ..., -0.344], [-0.000511, -0.0905, ..., -0.000477]]]
 _.fitted_params_per_fold = [ … ]
 _.report_per_fold = [ … ]
 
@@ -1791,13 +1791,13 @@ e = evaluate!(mach, resampling=CV(nfolds=6, rng=123),
 ```
 
 ```
-┌──────────────────────────────┬───────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ _.measure                    │ _.measurement │ _.per_fold                                                                                                                                              │
-├──────────────────────────────┼───────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ cross_entropy                │ 0.306         │ Float32[0.232, 0.31, 0.286, 0.362, 0.385, 0.425, 0.285, 0.287, 0.256, 0.321, 0.302, 0.259, 0.423, 0.268, 0.306, 0.214, 0.286, 0.304]                    │
-│ BrierScore{UnivariateFinite} │ -0.162        │ Float32[-0.138, -0.166, -0.139, -0.188, -0.23, -0.244, -0.144, -0.135, -0.114, -0.186, -0.159, -0.129, -0.254, -0.147, -0.157, -0.0946, -0.123, -0.162] │
-└──────────────────────────────┴───────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-_.per_observation = [[[0.643, 0.00243, ..., 0.0016], [0.659, 0.305, ..., 0.557], [0.333, 0.345, ..., 0.0108], [0.482, 0.548, ..., 0.238], [0.473, 0.0126, ..., 0.00936], [0.0588, 0.341, ..., 0.66], [0.222, 0.00789, ..., 0.23], [0.298, 0.335, ..., 0.157], [0.224, 0.132, ..., 0.587], [0.00282, 0.485, ..., 0.453], [0.434, 0.0111, ..., 0.0165], [0.562, 0.00738, ..., 0.273], [0.683, 0.436, ..., 0.773], [0.36, 0.644, ..., 0.419], [0.119, 0.234, ..., 0.491], [0.312, 0.00352, ..., 0.482], [0.299, 0.298, ..., 0.298], [0.00978, 0.00903, ..., 0.41]], [[-0.407, -1.18e-5, ..., -5.13e-6], [-0.442, -0.111, ..., -0.347], [-0.153, -0.162, ..., -0.00023], [-0.223, -0.291, ..., -0.0895], [-0.23, -0.000308, ..., -0.00017], [-0.00648, -0.167, ..., -0.351], [-0.079, -0.000124, ..., -0.0846], [-0.0998, -0.152, ..., -0.0424], [-0.0624, -0.0307, ..., -0.392], [-1.59e-5, -0.278, ..., -0.249], [-0.186, -0.000244, ..., -0.000536], [-0.368, -0.000108, ..., -0.114], [-0.484, -0.249, ..., -0.573], [-0.148, -0.404, ..., -0.218], [-0.0252, -0.0871, ..., -0.256], [-0.143, -2.48e-5, ..., -0.291], [-0.118, -0.118, ..., -0.118], [-0.000189, -0.000162, ..., -0.208]]]
+┌──────────────────────────────┬───────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ _.measure                    │ _.measurement │ _.per_fold                                                                                                                                            │
+├──────────────────────────────┼───────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ cross_entropy                │ 0.291         │ Float32[0.222, 0.255, 0.301, 0.329, 0.355, 0.296, 0.327, 0.256, 0.299, 0.266, 0.264, 0.43, 0.249, 0.247, 0.356, 0.235, 0.243, 0.304]                  │
+│ BrierScore{UnivariateFinite} │ -0.152        │ Float32[-0.13, -0.124, -0.165, -0.162, -0.205, -0.156, -0.179, -0.129, -0.146, -0.14, -0.137, -0.216, -0.134, -0.129, -0.192, -0.107, -0.118, -0.165] │
+└──────────────────────────────┴───────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+_.per_observation = [[[0.59, 0.00449, ..., 0.0022], [0.51, 0.293, ..., 0.412], [0.564, 0.556, ..., 0.000129], [0.322, 0.339, ..., 0.322], [0.598, 0.00664, ..., 0.0062], [0.00549, 0.228, ..., 0.401], [0.263, 0.0178, ..., 0.269], [0.403, 0.549, ..., 0.0157], [0.471, 0.0769, ..., 0.477], [0.00216, 0.474, ..., 0.291], [0.367, 0.00446, ..., 0.00703], [0.502, 0.476, ..., 0.244], [0.316, 0.249, ..., 0.301], [0.273, 0.542, ..., 0.588], [0.508, 0.531, ..., 0.407], [0.264, 0.00324, ..., 0.433], [0.00711, 0.00625, ..., 0.00606], [0.00596, 0.00365, ..., 0.276]], [[-0.359, -4.01e-5, ..., -9.66e-6], [-0.296, -0.0975, ..., -0.212], [-0.345, -0.338, ..., 0.0], [-0.114, -0.143, ..., -0.152], [-0.35, -8.76e-5, ..., -7.63e-5], [-6.0e-5, -0.0828, ..., -0.166], [-0.107, -0.00062, ..., -0.112], [-0.167, -0.283, ..., -0.000488], [-0.216, -0.0109, ..., -0.273], [-9.3e-6, -0.283, ..., -0.128], [-0.146, -3.96e-5, ..., -9.82e-5], [-0.312, -0.241, ..., -0.0935], [-0.143, -0.0972, ..., -0.13], [-0.112, -0.339, ..., -0.395], [-0.287, -0.307, ..., -0.175], [-0.108, -2.09e-5, ..., -0.244], [-0.0001, -7.77e-5, ..., -7.31e-5], [-7.07e-5, -2.66e-5, ..., -0.116]]]
 _.fitted_params_per_fold = [ … ]
 _.report_per_fold = [ … ]
 
@@ -1828,9 +1828,9 @@ nothing #hide
 ┌ Info: Creating subsamples from a subset of all rows. 
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/uKzAz/src/resampling.jl:343
 Evaluating over 6 folds:  17%[====>                    ]  ETA: 0:00:02[KEvaluating over 6 folds:  33%[========>                ]  ETA: 0:00:02[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:01[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:01[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:02[K
-┌ Info: Training Machine{NeuralNetworkClassifier{Short,…}} @570.
+┌ Info: Training Machine{NeuralNetworkClassifier{Short,…}} @049.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/uKzAz/src/machines.jl:319
-Optimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
+Optimising neural net:  2%[>                        ]  ETA: 0:00:00[KOptimising neural net:  4%[>                        ]  ETA: 0:00:00[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:00[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:00[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:00[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:00[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:00[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:00[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:00[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:00[KOptimising neural net: 33%[========>                ]  ETA: 0:00:00[KOptimising neural net: 35%[========>                ]  ETA: 0:00:00[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:00[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:00[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:00[KOptimising neural net: 49%[============>            ]  ETA: 0:00:00[KOptimising neural net: 51%[============>            ]  ETA: 0:00:00[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:00[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:00[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:00[KOptimising neural net: 65%[================>        ]  ETA: 0:00:00[KOptimising neural net: 67%[================>        ]  ETA: 0:00:00[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:00[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:00[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:00[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:00[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:00[K
 
 ```
 
@@ -1896,16 +1896,16 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 
 ```
 10-element Array{Int64,1}:
- 0
- 2
- 3
+ 1
+ 5
  0
  1
  0
  2
- 3
- 3
  1
+ 6
+ 0
+ 4
 ```
 
 (b) What models can be applied if you coerce the salary to a
@@ -1930,16 +1930,16 @@ nothing #hide
 ```
 
 ```
-┌───────┬──────────────────────┬──────────────────────┬─────────────────────────────────┐
-│ a     │ b                    │ c                    │ d                               │
-│ Int64 │ Float64              │ Float64              │ CategoricalValue{String,UInt32} │
-│ Count │ Continuous           │ Continuous           │ OrderedFactor{2}                │
-├───────┼──────────────────────┼──────────────────────┼─────────────────────────────────┤
-│ 1     │ 0.6995197378324352   │ 0.019689261406159897 │ male                            │
-│ 2     │ 0.17824690751384198  │ 0.6579976415331199   │ female                          │
-│ 3     │ 0.061714069593405974 │ 0.13666832278345664  │ female                          │
-│ 4     │ 0.009344667389545869 │ 0.21344161639695147  │ male                            │
-└───────┴──────────────────────┴──────────────────────┴─────────────────────────────────┘
+┌───────┬──────────────────────┬─────────────────────┬─────────────────────────────────┐
+│ a     │ b                    │ c                   │ d                               │
+│ Int64 │ Float64              │ Float64             │ CategoricalValue{String,UInt32} │
+│ Count │ Continuous           │ Continuous          │ OrderedFactor{2}                │
+├───────┼──────────────────────┼─────────────────────┼─────────────────────────────────┤
+│ 1     │ 0.17824690751384198  │ 0.6579976415331199  │ male                            │
+│ 2     │ 0.061714069593405974 │ 0.13666832278345664 │ female                          │
+│ 3     │ 0.009344667389545869 │ 0.21344161639695147 │ female                          │
+│ 4     │ 0.019689261406159897 │ 0.02714332776661843 │ male                            │
+└───────┴──────────────────────┴─────────────────────┴─────────────────────────────────┘
 
 ```
 
@@ -1962,16 +1962,16 @@ pretty(X)
 ```
 
 ```
-┌──────────────────────┬──────────────────────┐
-│ b                    │ c                    │
-│ Float64              │ Float64              │
-│ Continuous           │ Continuous           │
-├──────────────────────┼──────────────────────┤
-│ 0.6995197378324352   │ 0.019689261406159897 │
-│ 0.17824690751384198  │ 0.6579976415331199   │
-│ 0.061714069593405974 │ 0.13666832278345664  │
-│ 0.009344667389545869 │ 0.21344161639695147  │
-└──────────────────────┴──────────────────────┘
+┌──────────────────────┬─────────────────────┐
+│ b                    │ c                   │
+│ Float64              │ Float64             │
+│ Continuous           │ Continuous          │
+├──────────────────────┼─────────────────────┤
+│ 0.17824690751384198  │ 0.6579976415331199  │
+│ 0.061714069593405974 │ 0.13666832278345664 │
+│ 0.009344667389545869 │ 0.21344161639695147 │
+│ 0.019689261406159897 │ 0.02714332776661843 │
+└──────────────────────┴─────────────────────┘
 
 ```
 
@@ -2062,8 +2062,8 @@ nothing #hide
 ```
 
 ```
-mean(x) = 0.49663507923838773
-std(x) = 0.29821914610616396
+mean(x) = 0.5039056834095867
+std(x) = 0.2955078524593228
 
 ```
 
@@ -2077,10 +2077,10 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training Machine{Standardizer} @251.
+┌ Info: Training Machine{Standardizer} @498.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/uKzAz/src/machines.jl:319
-mean(x̂) = -1.4654943925052067e-16
-std(x̂) = 1.0
+mean(x̂) = -5.2180482157382354e-17
+std(x̂) = 1.0000000000000002
 
 ```
 
@@ -2159,7 +2159,7 @@ encoder = ContinuousEncoder() # a built-in model; no need to @load it
 ```
 ContinuousEncoder(
     drop_last = false,
-    one_hot_ordered_factors = false) @854
+    one_hot_ordered_factors = false) @638
 ```
 
 Bind the model to the data and fit!
@@ -2170,7 +2170,7 @@ nothing #hide
 ```
 
 ```
-┌ Info: Training Machine{ContinuousEncoder} @847.
+┌ Info: Training Machine{ContinuousEncoder} @922.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/uKzAz/src/machines.jl:319
 
 ```
@@ -2362,7 +2362,7 @@ PCA(
     maxoutdim = 0,
     method = :auto,
     pratio = 0.99,
-    mean = nothing) @395
+    mean = nothing) @531
 ```
 
 Now, rather simply repeating the work-flow above, applying the new
@@ -2378,7 +2378,7 @@ pipe = @pipeline encoder reducer
 ```
 
 ```
-Pipeline724(
+Pipeline914(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2386,7 +2386,7 @@ Pipeline724(
             maxoutdim = 0,
             method = :auto,
             pratio = 0.99,
-            mean = nothing)) @887
+            mean = nothing)) @120
 ```
 
 Notice that `pipe` is an *instance* of an automatically generated
@@ -2420,7 +2420,7 @@ pipe2 = @pipeline encoder reducer rgs
 ```
 
 ```
-Pipeline732(
+Pipeline922(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2433,7 +2433,7 @@ Pipeline732(
             lambda = 1.0,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @696
+            solver = nothing)) @086
 ```
 
 Now our pipeline is a supervised model, instead of a transformer,
@@ -2466,10 +2466,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline732} @105 trained 2 times.
+Machine{Pipeline922} @904 trained 2 times.
   args: 
-    1:	Source @532 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @840 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @418 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @989 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2479,10 +2479,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline732} @105 trained 3 times.
+Machine{Pipeline922} @904 trained 3 times.
   args: 
-    1:	Source @532 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @840 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @418 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @989 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2497,10 +2497,10 @@ fit!(mach)
 ```
 
 ```
-Machine{Pipeline732} @105 trained 4 times.
+Machine{Pipeline922} @904 trained 4 times.
   args: 
-    1:	Source @532 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
-    2:	Source @840 ⏎ `AbstractArray{Continuous,1}`
+    1:	Source @418 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{70},1}, AbstractArray{OrderedFactor{6},1}, AbstractArray{OrderedFactor{13},1}, AbstractArray{OrderedFactor{30},1}, AbstractArray{OrderedFactor{5},1}, AbstractArray{OrderedFactor{12},1}, AbstractArray{OrderedFactor{2},1}}}`
+    2:	Source @989 ⏎ `AbstractArray{Continuous,1}`
 
 ```
 
@@ -2700,10 +2700,10 @@ mach = machine(model, X, y)
 ```
 
 ```
-Machine{Pipeline761} @535 trained 0 times.
+Machine{Pipeline951} @942 trained 0 times.
   args: 
-    1:	Source @669 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}, AbstractArray{Multiclass{6},1}, AbstractArray{Multiclass{3},1}, AbstractArray{OrderedFactor{2},1}, AbstractArray{OrderedFactor{4},1}, AbstractArray{OrderedFactor{5},1}}}`
-    2:	Source @297 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @060 ⏎ `Table{Union{AbstractArray{Continuous,1}, AbstractArray{Multiclass{2},1}, AbstractArray{Multiclass{6},1}, AbstractArray{Multiclass{3},1}, AbstractArray{OrderedFactor{2},1}, AbstractArray{OrderedFactor{4},1}, AbstractArray{OrderedFactor{5},1}}}`
+    2:	Source @263 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -2785,7 +2785,7 @@ RandomSearch(
     bounded = Distributions.Uniform,
     positive_unbounded = Distributions.Gamma,
     other = Distributions.Normal,
-    rng = MersenneTwister(UInt32[0x0000007b]) @ 1002) @099
+    rng = MersenneTwister(UInt32[0x0000007b]) @ 1002) @328
 ```
 
 In this strategy each parameter is sampled according to a
@@ -2847,10 +2847,10 @@ tuned_model = TunedModel(model=model,
 
 ```
 ProbabilisticTunedModel(
-    model = Pipeline761(
-            standardizer = Standardizer @918,
-            continuous_encoder = ContinuousEncoder @557,
-            logistic_classifier = LogisticClassifier @268),
+    model = Pipeline951(
+            standardizer = Standardizer @758,
+            continuous_encoder = ContinuousEncoder @961,
+            logistic_classifier = LogisticClassifier @943),
     tuning = RandomSearch(
             bounded = Distributions.Uniform,
             positive_unbounded = Distributions.Gamma,
@@ -2864,14 +2864,14 @@ ProbabilisticTunedModel(
             eps = 2.220446049250313e-16),
     weights = nothing,
     operation = MLJModelInterface.predict,
-    range = MLJBase.ParamRange[NumericRange{Float64,…} @807, NominalRange{Bool,…} @699],
+    range = MLJBase.ParamRange[NumericRange{Float64,…} @691, NominalRange{Bool,…} @439],
     selection_heuristic = MLJTuning.NaiveSelection(nothing),
     train_best = true,
     repeats = 1,
     n = 15,
     acceleration = CPU1{Nothing}(nothing),
     acceleration_resampling = CPU1{Nothing}(nothing),
-    check_measure = true) @040
+    check_measure = true) @615
 ```
 
 We can apply the `fit!/predict` work-flow to `tuned_model` just as
@@ -2899,7 +2899,7 @@ rep.best_model
 ```
 
 ```
-Pipeline761(
+Pipeline951(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -2914,7 +2914,7 @@ Pipeline761(
             penalty = :l2,
             fit_intercept = true,
             penalize_intercept = false,
-            solver = nothing)) @097
+            solver = nothing)) @407
 ```
 
 By default, sampling of a bounded range is uniform. Lets
@@ -3001,7 +3001,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ```
 
 ```
-Pipeline774(
+Pipeline964(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -3018,7 +3018,7 @@ Pipeline774(
             nbins = 64,
             α = 0.5f0,
             metric = :mse,
-            seed = 444)) @651
+            seed = 444)) @980
 ```
 
 (a) Construct a bounded range `r1` for the `evo_tree_booster`
@@ -3118,17 +3118,17 @@ pretty(X)
 ```
 
 ```
-┌──────────────────────┬─────────────────────┬─────────────────────┐
-│ x1                   │ x2                  │ x3                  │
-│ Float64              │ Float64             │ Float64             │
-│ Continuous           │ Continuous          │ Continuous          │
-├──────────────────────┼─────────────────────┼─────────────────────┤
-│ 0.13038845151354694  │ 5.459138754754521   │ 3.550207700486699   │
-│ -1.8344050677849577  │ 5.719867907814647   │ 5.598433723035316   │
-│ -0.43669570669248214 │ 5.438520525010395   │ 6.003381592313966   │
-│ -3.3988981137318395  │ -7.259393588203906  │ -7.427343278650952  │
-│ -2.9809768193424517  │ -0.7679791549572528 │ -3.1073865113817085 │
-└──────────────────────┴─────────────────────┴─────────────────────┘
+┌────────────────────┬────────────────────┬────────────────────┐
+│ x1                 │ x2                 │ x3                 │
+│ Float64            │ Float64            │ Float64            │
+│ Continuous         │ Continuous         │ Continuous         │
+├────────────────────┼────────────────────┼────────────────────┤
+│ 5.459138754754521  │ 3.550207700486699  │ 8.13835314936901   │
+│ -1.550726627120623 │ -3.18993877525517  │ 4.382044008521088  │
+│ 4.999842057144989  │ 5.445745887767     │ 7.7971978940781685 │
+│ -5.86556487237932  │ -7.452931784557338 │ 4.122029294225714  │
+│ 4.220975230249509  │ 5.107434746995672  │ 8.542918922347257  │
+└────────────────────┴────────────────────┴────────────────────┘
 
 ```
 
@@ -3151,11 +3151,11 @@ yhat = predict(mach2, Xstand)
 
 ```
 5-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
- UnivariateFinite{Multiclass{3}}(1=>0.0363, 2=>0.0594, 3=>0.904)
- UnivariateFinite{Multiclass{3}}(1=>0.0542, 2=>0.116, 3=>0.83)
- UnivariateFinite{Multiclass{3}}(1=>0.032, 2=>0.0594, 3=>0.909)
- UnivariateFinite{Multiclass{3}}(1=>0.628, 2=>0.302, 3=>0.07)
- UnivariateFinite{Multiclass{3}}(1=>0.36, 2=>0.353, 3=>0.287)
+ UnivariateFinite{Multiclass{3}}(1=>0.0415, 2=>0.069, 3=>0.889)
+ UnivariateFinite{Multiclass{3}}(1=>0.387, 2=>0.379, 3=>0.235)
+ UnivariateFinite{Multiclass{3}}(1=>0.0379, 2=>0.0698, 3=>0.892)
+ UnivariateFinite{Multiclass{3}}(1=>0.593, 2=>0.33, 3=>0.0772)
+ UnivariateFinite{Multiclass{3}}(1=>0.0367, 2=>0.0571, 3=>0.906)
 ```
 
 **Step 1** - Edit your code as follows:
@@ -3179,15 +3179,15 @@ yhat = predict(mach2, Xstand)
 ```
 
 ```
-Node{Machine{LogisticClassifier}} @100
+Node{Machine{LogisticClassifier}} @332
   args:
-    1:	Node{Machine{Standardizer}} @437
+    1:	Node{Machine{Standardizer}} @432
   formula:
     predict(
-        Machine{LogisticClassifier} @854, 
+        Machine{LogisticClassifier} @155, 
         transform(
-            Machine{Standardizer} @423, 
-            Source @498))
+            Machine{Standardizer} @688, 
+            Source @818))
 ```
 
 Now `X`, `y`, `Xstand` and `yhat` are *nodes* ("variables" or
@@ -3202,19 +3202,19 @@ Xstand() |> pretty
 ```
 
 ```
-┌ Info: Training Machine{Standardizer} @423.
+┌ Info: Training Machine{Standardizer} @688.
 └ @ MLJBase /Users/anthony/.julia/packages/MLJBase/uKzAz/src/machines.jl:319
-┌──────────────────────┬────────────────────┬─────────────────────┐
-│ x1                   │ x2                 │ x3                  │
-│ Float64              │ Float64            │ Float64             │
-│ Continuous           │ Continuous         │ Continuous          │
-├──────────────────────┼────────────────────┼─────────────────────┤
-│ 1.1909240418732212   │ 0.654656832272693  │ 0.4431408318555407  │
-│ -0.08458007941546207 │ 0.7002818523317584 │ 0.7886830075041774  │
-│ 0.8227845026265924   │ 0.651048846228105  │ 0.8569989873981898  │
-│ -1.1002172485288852  │ -1.570960389502012 │ -1.4088065640207905 │
-│ -0.8289112165554668  │ -0.435027141330544 │ -0.6800162627371176 │
-└──────────────────────┴────────────────────┴─────────────────────┘
+┌─────────────────────┬─────────────────────┬─────────────────────┐
+│ x1                  │ x2                  │ x3                  │
+│ Float64             │ Float64             │ Float64             │
+│ Continuous          │ Continuous          │ Continuous          │
+├─────────────────────┼─────────────────────┼─────────────────────┤
+│ 0.8058280357825021  │ 0.4981497102996902  │ 0.7143538700669851  │
+│ -0.604100530765268  │ -0.6766157438119111 │ -1.0259863390036805 │
+│ 0.7134474408348277  │ 0.828530183095146   │ 0.5562928090478179  │
+│ -1.4719650860180709 │ -1.4196288128114576 │ -1.1464540761548654 │
+│ 0.5567901401660096  │ 0.7695646632285323  │ 0.9017937360437409  │
+└─────────────────────┴─────────────────────┴─────────────────────┘
 
 ```
 
@@ -3225,11 +3225,11 @@ yhat()
 
 ```
 5-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
- UnivariateFinite{Multiclass{3}}(1=>0.0363, 2=>0.0594, 3=>0.904)
- UnivariateFinite{Multiclass{3}}(1=>0.0542, 2=>0.116, 3=>0.83)
- UnivariateFinite{Multiclass{3}}(1=>0.032, 2=>0.0594, 3=>0.909)
- UnivariateFinite{Multiclass{3}}(1=>0.628, 2=>0.302, 3=>0.07)
- UnivariateFinite{Multiclass{3}}(1=>0.36, 2=>0.353, 3=>0.287)
+ UnivariateFinite{Multiclass{3}}(1=>0.0415, 2=>0.069, 3=>0.889)
+ UnivariateFinite{Multiclass{3}}(1=>0.387, 2=>0.379, 3=>0.235)
+ UnivariateFinite{Multiclass{3}}(1=>0.0379, 2=>0.0698, 3=>0.892)
+ UnivariateFinite{Multiclass{3}}(1=>0.593, 2=>0.33, 3=>0.0772)
+ UnivariateFinite{Multiclass{3}}(1=>0.0367, 2=>0.0571, 3=>0.906)
 ```
 
 The node `yhat` is the "descendant" (in an associated DAG we have
@@ -3241,8 +3241,8 @@ sources(yhat)
 
 ```
 2-element Array{Any,1}:
- Source @498 ⏎ `Table{AbstractArray{Continuous,1}}`
- Source @592 ⏎ `AbstractArray{Multiclass{3},1}`
+ Source @818 ⏎ `Table{AbstractArray{Continuous,1}}`
+ Source @344 ⏎ `AbstractArray{Multiclass{3},1}`
 ```
 
 The data at the source node is replaced by `Xnew` to obtain a
@@ -3255,8 +3255,8 @@ yhat(Xnew)
 
 ```
 2-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
- UnivariateFinite{Multiclass{3}}(1=>0.107, 2=>0.0966, 3=>0.797)
- UnivariateFinite{Multiclass{3}}(1=>0.00072, 2=>0.000155, 3=>0.999)
+ UnivariateFinite{Multiclass{3}}(1=>0.0798, 2=>0.103, 3=>0.818)
+ UnivariateFinite{Multiclass{3}}(1=>0.0167, 2=>0.0592, 3=>0.924)
 ```
 
 **Step 2** - Export the learning network as a new stand-alone model type
@@ -3280,10 +3280,10 @@ mach = machine(surrogate, X, y; predict=yhat)
 ```
 
 ```
-Machine{ProbabilisticSurrogate} @903 trained 0 times.
+Machine{ProbabilisticSurrogate} @966 trained 0 times.
   args: 
-    1:	Source @498 ⏎ `Table{AbstractArray{Continuous,1}}`
-    2:	Source @592 ⏎ `AbstractArray{Multiclass{3},1}`
+    1:	Source @818 ⏎ `Table{AbstractArray{Continuous,1}}`
+    2:	Source @344 ⏎ `AbstractArray{Multiclass{3},1}`
 
 ```
 
@@ -3298,8 +3298,8 @@ predict(mach, Xnew)
 
 ```
 2-element MLJBase.UnivariateFiniteArray{Multiclass{3},Int64,UInt32,Float64,1}:
- UnivariateFinite{Multiclass{3}}(1=>0.195, 2=>0.772, 3=>0.0321)
- UnivariateFinite{Multiclass{3}}(1=>0.0965, 2=>0.718, 3=>0.185)
+ UnivariateFinite{Multiclass{3}}(1=>0.594, 2=>0.333, 3=>0.073)
+ UnivariateFinite{Multiclass{3}}(1=>0.522, 2=>0.303, 3=>0.175)
 ```
 
 Now we create a new model type using a Julia `struct` definition
@@ -3365,7 +3365,7 @@ RandomForestRegressor(
     n_subfeatures = -1,
     n_trees = 10,
     sampling_fraction = 0.7,
-    pdf_smoothing = 0.0) @881
+    pdf_smoothing = 0.0) @866
 ```
 
 **Input layer**
@@ -3376,7 +3376,7 @@ y = source()
 ```
 
 ```
-Source @159 ⏎ `Nothing`
+Source @720 ⏎ `Nothing`
 ```
 
 **First layer and target transformation**
@@ -3392,13 +3392,13 @@ z = MLJ.transform(box, y)
 ```
 
 ```
-Node{Machine{UnivariateBoxCoxTransformer}} @800
+Node{Machine{UnivariateBoxCoxTransformer}} @544
   args:
-    1:	Source @159
+    1:	Source @720
   formula:
     transform(
-        Machine{UnivariateBoxCoxTransformer} @099, 
-        Source @159)
+        Machine{UnivariateBoxCoxTransformer} @682, 
+        Source @720)
 ```
 
 **Second layer**
@@ -3414,24 +3414,24 @@ forest = machine(forest_model, W, z)
 ```
 
 ```
-Node{Nothing} @825
+Node{Nothing} @358
   args:
-    1:	Node{Nothing} @925
-    2:	Node{Nothing} @830
+    1:	Node{Nothing} @615
+    2:	Node{Nothing} @280
   formula:
     +(
         #119(
             predict(
-                Machine{RidgeRegressor} @633, 
+                Machine{RidgeRegressor} @544, 
                 transform(
-                    Machine{Standardizer} @867, 
-                    Source @648))),
+                    Machine{Standardizer} @335, 
+                    Source @435))),
         #119(
             predict(
-                Machine{RandomForestRegressor} @218, 
+                Machine{RandomForestRegressor} @660, 
                 transform(
-                    Machine{Standardizer} @867, 
-                    Source @648))))
+                    Machine{Standardizer} @335, 
+                    Source @435))))
 ```
 
 **Output**
@@ -3441,25 +3441,25 @@ Node{Nothing} @825
 ```
 
 ```
-Node{Machine{UnivariateBoxCoxTransformer}} @475
+Node{Machine{UnivariateBoxCoxTransformer}} @254
   args:
-    1:	Node{Nothing} @825
+    1:	Node{Nothing} @358
   formula:
     inverse_transform(
-        Machine{UnivariateBoxCoxTransformer} @099, 
+        Machine{UnivariateBoxCoxTransformer} @682, 
         +(
             #119(
                 predict(
-                    Machine{RidgeRegressor} @633, 
+                    Machine{RidgeRegressor} @544, 
                     transform(
-                        Machine{Standardizer} @867, 
-                        Source @648))),
+                        Machine{Standardizer} @335, 
+                        Source @435))),
             #119(
                 predict(
-                    Machine{RandomForestRegressor} @218, 
+                    Machine{RandomForestRegressor} @660, 
                     transform(
-                        Machine{Standardizer} @867, 
-                        Source @648)))))
+                        Machine{Standardizer} @335, 
+                        Source @435)))))
 ```
 
 With the learning network defined, we're ready to export:
@@ -3494,7 +3494,7 @@ CompositeModel(
             n_subfeatures = -1,
             n_trees = 50,
             sampling_fraction = 0.7,
-            pdf_smoothing = 0.0)) @439
+            pdf_smoothing = 0.0)) @161
 ```
 
 ```julia
@@ -3509,8 +3509,8 @@ evaluate!(mach,
 ┌───────────┬───────────────┬──────────────────────────────────────┐
 │ _.measure │ _.measurement │ _.per_fold                           │
 ├───────────┼───────────────┼──────────────────────────────────────┤
-│ rms       │ 3.79          │ [3.13, 3.72, 3.72, 4.08, 4.79, 2.99] │
-│ mae       │ 2.43          │ [2.33, 1.98, 2.4, 2.65, 3.03, 2.16]  │
+│ rms       │ 3.79          │ [3.7, 4.14, 3.54, 3.89, 3.77, 3.71]  │
+│ mae       │ 2.42          │ [2.28, 2.44, 2.41, 2.65, 2.54, 2.18] │
 └───────────┴───────────────┴──────────────────────────────────────┘
 _.per_observation = [missing, missing]
 _.fitted_params_per_fold = [ … ]
@@ -3835,7 +3835,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ```
 
 ```
-0.9779278583816191
+0.9932125285076756
 ```
 
 #### Exercise 7
@@ -3852,7 +3852,7 @@ pipe = @pipeline(Standardizer,
 ```
 
 ```
-Pipeline802(
+Pipeline992(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -3877,7 +3877,7 @@ Pipeline802(
             nbins = 64,
             α = 0.5f0,
             metric = :mlogloss,
-            seed = 444)) @360
+            seed = 444)) @656
 ```
 
 (b)
@@ -3888,12 +3888,12 @@ evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
 ```
 
 ```
-┌───────────────┬───────────────┬────────────────────────────────────────────────┐
-│ _.measure     │ _.measurement │ _.per_fold                                     │
-├───────────────┼───────────────┼────────────────────────────────────────────────┤
-│ cross_entropy │ 0.827         │ Float32[0.89, 1.02, 0.746, 0.799, 0.85, 0.661] │
-└───────────────┴───────────────┴────────────────────────────────────────────────┘
-_.per_observation = [[[4.08, 2.31, ..., 0.0433], [0.588, 0.239, ..., 2.75], [0.0562, 1.92, ..., 0.376], [0.396, 2.04, ..., 1.36], [0.129, 0.404, ..., 0.223], [1.9, 0.242, ..., 0.2]]]
+┌───────────────┬───────────────┬─────────────────────────────────────────────────┐
+│ _.measure     │ _.measurement │ _.per_fold                                      │
+├───────────────┼───────────────┼─────────────────────────────────────────────────┤
+│ cross_entropy │ 0.806         │ Float32[0.762, 1.02, 0.746, 0.799, 0.85, 0.661] │
+└───────────────┴───────────────┴─────────────────────────────────────────────────┘
+_.per_observation = [[[3.02, 0.452, ..., 0.242], [0.588, 0.239, ..., 2.75], [0.0562, 1.92, ..., 0.376], [0.396, 2.04, ..., 1.36], [0.129, 0.404, ..., 0.223], [1.9, 0.242, ..., 0.2]]]
 _.fitted_params_per_fold = [ … ]
 _.report_per_fold = [ … ]
 
@@ -3939,7 +3939,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ```
 
 ```
-Pipeline812(
+Pipeline1002(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -3956,7 +3956,7 @@ Pipeline812(
             nbins = 64,
             α = 0.5f0,
             metric = :mse,
-            seed = 444)) @647
+            seed = 444)) @195
 ```
 
 (a)
