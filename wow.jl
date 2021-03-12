@@ -175,4 +175,4 @@ plot(mach)
 #
 
 using Literate #src
-Literate.notebook(@__FILE__, @__DIR__, execute=false) #src
+Literate.notebook(@__FILE__, @__DIR__, execute=true) #src
