@@ -23,4 +23,4 @@ Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 UnicodePlots = "b8865327-cd53-5732-bb35-84acbb429228"
 
 [compat]
-julia = "^1.3, <1.5.1"
+julia = "^1.3, <=1.5.1"
