@@ -19,7 +19,8 @@ learning toolbox to data scientists.
 Differences from the original resources are minor (main difference:
 `@load` now returns a type instead of an instance). However, if you
 wish to access resources precisely matching those used in the video,
-switch to the `JuliaCon2020` branch by clicking [here].
+switch to the `JuliaCon2020` branch by clicking
+[here](https://github.com/ablaom/MachineLearningInJulia2020/tree/for-MLJ-version-0.16).
 
   
 ### [Options for running the tutorials](#options-for-running-the-tutorials)
