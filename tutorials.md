@@ -1,5 +1,5 @@
 ```@meta
-EditURL = "<unknown>/tutorials.jl"
+EditURL = "tutorials.jl"
 ```
 
 # Machine Learning in Julia, JuliaCon2020
