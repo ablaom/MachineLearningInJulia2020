@@ -9,13 +9,15 @@
 # The following instantiates a package environment and pre-loads some
 # packages, to avoid delays later on.
 
+# The package environment has been created using **Julia 1.6** and may not
+# instantiate properly for other Julia versions.
+
+VERSION
+
+#-
+
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
-
-# Only evaluate the next cell if you're using an IDE (not a notebook)
-# and it has issues displaying color/boldface REPL output:
-
-color_off()
 
 
 # ## General resources
@@ -24,7 +26,7 @@ color_off()
 # - [MLJ Cheatsheet](https://alan-turing-institute.github.io/MLJ.jl/dev/mlj_cheatsheet/)
 # - [Common MLJ Workflows](https://alan-turing-institute.github.io/MLJ.jl/dev/common_mlj_workflows/)
 # - [MLJ manual](https://alan-turing-institute.github.io/MLJ.jl/dev/)
-# - [Data Science Tutorials in Julia](https://alan-turing-institute.github.io/DataScienceTutorials.jl/)
+# - [Data Science Tutorials in Julia](https://juliaai.github.io/DataScienceTutorials.jl/)
 
 
 # ## Contents
@@ -126,7 +128,7 @@ levels(exam_mark[1:2])
 # [list](https://github.com/JuliaData/Tables.jl/blob/master/INTEGRATIONS.md))
 # have a scientific type of `Table` and can be used with such models.
 
-# The simplest example of a table is the julia native *column
+# Probably the simplest example of a table is the julia native *column
 # table*, which is just a named tuple of equal-length vectors:
 
 column_table = (h=height, e=exam_mark, t=time)
@@ -144,7 +146,13 @@ scitype(column_table)
 
 schema(column_table)
 
-# Here are four other examples of tables:
+# Here are five other examples of tables:
+
+dict_table = Dict(:h => height, :e => exam_mark, :t => time)
+schema(dict_table)
+
+# (To control column order here, instead use `LittleDict` from
+# OrderedCollections.jl.)
 
 row_table = [(a=1, b=3.4),
              (a=2, b=4.5),
@@ -158,7 +166,7 @@ df = DataFrames.DataFrame(column_table)
 
 #-
 
-schema(df)
+schema(df) == schema(column_table)
 
 #-
 
@@ -173,21 +181,23 @@ schema(file) # (triggers a file read)
 matrix_table = MLJ.table(rand(2,3))
 schema(matrix_table)
 
-# The matrix is *not* copied, only wrapped.
+# The matrix is *not* copied, only wrapped. Some models may perform
+# better if one wraps the adjoint of the transpose - see
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Observations-correspond-to-rows,-not-columns).
 
 
 # **Manipulating tabular data.** In this workshop we assume
 # familiarity with some kind of tabular data container (although it is
 # possible, in principle, to carry out the exercises without this.)
 # For a quick start introduction to `DataFrames`, see [this
-# tutorial](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/dataframe/)
+# tutorial](https://juliaai.github.io/DataScienceTutorials.jl/data/dataframe/)
 
 # ### Fixing scientific types in tabular data
 
 # To show how we can correct the scientific types of data in tables,
 # we introduce a cleaned up version of the UCI Horse Colic Data Set
 # (the cleaning work-flow is described
-# [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
+# [here](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
 
 using CSV
 file = CSV.File(joinpath(DIR, "data", "horse.csv"));
@@ -262,11 +272,11 @@ schema(horse)
 #   MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#A-preview-of-data-type-specification-in-MLJ-1)
 #    - [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1)
 #    - [Working with Categorical Data](https://alan-turing-institute.github.io/MLJ.jl/dev/working_with_categorical_data/)
-# - [Summary](https://alan-turing-institute.github.io/MLJScientificTypes.jl/dev/#Summary-of-the-MLJ-convention-1) of the MLJ convention for representing scientific types
-# - [MLJScientificTypes.jl](https://alan-turing-institute.github.io/MLJScientificTypes.jl/dev/)
+# - [Summary](https://juliaai.github.io/ScientificTypes.jl/dev/#Summary-of-the-MLJ-convention-1) of the MLJ convention for representing scientific types
+# - [ScientificTypes.jl](https://juliaai.github.io/ScientificTypes.jl/dev/)
 # - From Data Science Tutorials:
-#     - [Data interpretation: Scientific Types](https://alan-turing-institute.github.io/DataScienceTutorials.jl/data/scitype/)
-#     - [Horse colic data](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/horse/)
+#     - [Data interpretation: Scientific Types](https://juliaai.github.io/DataScienceTutorials.jl/data/scitype/)
+#     - [Horse colic data](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/)
 # - [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 
@@ -348,7 +358,7 @@ scitype(v[1:2])
 # Can you guess at the general behavior of
 # `scitype` with respect to tuples, abstract arrays and missing
 # values? The answers are
-# [here](https://github.com/alan-turing-institute/ScientificTypes.jl#2-the-scitype-and-scitype-methods)
+# [here](https://github.com/juliaai/ScientificTypesBase.jl#2-the-scitype-and-scitype-methods)
 # (ignore "Property 1").
 
 
@@ -392,10 +402,13 @@ first(house, 4)
 # famous iris data set. This time, we'll grab the data from
 # [OpenML](https://www.openml.org):
 
+OpenML.describe_dataset(61)
+
+#-
+
 iris = OpenML.load(61); # a row table
 iris = DataFrames.DataFrame(iris);
 first(iris, 4)
-
 
 # **Main goal.** To build and evaluate models for predicting the
 # `:class` variable, given the four remaining measurement variables.
@@ -405,9 +418,18 @@ first(iris, 4)
 
 schema(iris)
 
+# Unfortunately, `Missing` is appearing in the element type, despite
+# the fact there are no missing values (see this
+# [issue](https://github.com/JuliaAI/OpenML.jl/issues/10)). To do this
+# we have to explicilty tighten the types:
+
 #-
 
-coerce!(iris, :class => Multiclass);
+# FIX ME!!!!!!
+iris = coerce(iris,
+              Union{Missing,Continuous}=>Continuous,
+              Union{Missing,Multiclass}=>Multiclass,
+              tight=true)
 schema(iris)
 
 
@@ -420,7 +442,8 @@ schema(iris)
 y, X = unpack(iris, ==(:class), name->true; rng=123);
 scitype(y)
 
-# Do `?unpack` to learn more:
+# Here's one way to access the documentation (at the REPL, `?unpack`
+# also works):
 
 @doc unpack
 
@@ -463,11 +486,17 @@ models(matching(X, y))
 
 # ### Step 3. Select and instantiate a model
 
-# To load the code defining a new model type we use the `@load` macro,
-# which returns an *instance* of the type, with default
+# To load the code defining a new model type we use the `@load` macro:
+
+NeuralNetworkClassifier = @load NeuralNetworkClassifier
+
+# Other ways to load model code are described
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/loading_model_code/#Loading-Model-Code).
+
+# We'll instantiate this type with default values for the
 # hyperparameters:
 
-model = @load NeuralNetworkClassifier
+model = NeuralNetworkClassifier()
 
 #-
 
@@ -505,7 +534,10 @@ fit!(mach, rows=train, verbosity=2)
 
 # ... and `predict`:
 
-predict(mach, rows=test)  # or `predict(mach, Xnew)`
+yhat = predict(mach, rows=test);  # or `predict(mach, Xnew)`
+yhat[1:3]
+
+# We'll have more to say on the form of this prediction shortly.
 
 # After training, one can inspect the learned parameters:
 
@@ -525,7 +557,8 @@ MLJ.save("neural_net.jlso", mach)
 # And retrieve it like this:
 
 mach2 = machine("neural_net.jlso")
-predict(mach2, X)[1:3]
+yhat = predict(mach2, X);
+yhat[1:3]
 
 # If you want to fit a retrieved model, you will need to bind some data to it:
 
@@ -540,8 +573,8 @@ fit!(mach3)
 model.epochs = model.epochs + 4
 fit!(mach, rows=train, verbosity=2)
 
-# By default (for this particular model) we can also increase
-# `:learning_rate` without triggering a cold restart:
+# For this particular model we can also increase `:learning_rate`
+# without triggering a cold restart:
 
 model.epochs = model.epochs + 4
 model.optimiser.eta = 10*model.optimiser.eta
@@ -553,7 +586,15 @@ fit!(mach, rows=train, verbosity=2)
 model.lambda = 0.001
 fit!(mach, rows=train, verbosity=2)
 
-# Let's train silently for a total of 50 epochs, and look at a prediction:
+# Iterative models that implement warm-restart for training can be
+# controlled externally (eg, using an out-of-sample stopping
+# criterion). See
+# [here](https://alan-turing-institute.github.io/MLJ.jl/dev/controlling_iterative_models/)
+# for details.
+
+
+# Let's train silently for a total of 50 epochs, and look at a
+# prediction:
 
 model.epochs = 50
 fit!(mach, rows=train)
@@ -565,8 +606,8 @@ yhat[1]
 info(model).prediction_type
 
 # **Important**:
-# - In MLJ, a model that can predict probabilities (and not just point values) will do so by default. (These models have supertype `Probabilistic`, while point-estimate predictors have supertype `Deterministic`.)
-# - For most probabilistic predictors, the predicted object is a `Distributions.Distribution` object, supporting the `Distributions.jl` [API](https://juliastats.org/Distributions.jl/latest/extends/#Create-a-Distribution-1) for such objects. In particular, the methods `rand`,  `pdf`, `mode`, `median` and `mean` will apply, where appropriate.
+# - In MLJ, a model that can predict probabilities (and not just point values) will do so by default.
+# - For most probabilistic predictors, the predicted object is a `Distributions.Distribution` object, supporting the `Distributions.jl` [API](https://juliastats.org/Distributions.jl/latest/extends/#Create-a-Distribution-1) for such objects. In particular, the methods `rand`,  `pdf`, `logpdf`, `mode`, `median` and `mean` will apply, where appropriate.
 
 # So, to obtain the probability of "Iris-virginica" in the first test
 # prediction, we do
@@ -609,10 +650,6 @@ misclassification_rate(mode.(yhat), y[test])
 # analogous to `models`:
 
 measures()
-
-#-
-
-measures(matching(y)) # experimental
 
 
 # ### Step 4. Evaluate the model performance
@@ -665,13 +702,16 @@ predict(mach, rows=test); # and predict missing targets
 # (more on this when we discuss tuning in Part 4):
 
 r = range(model, :epochs, lower=1, upper=50, scale=:log)
+
+#-
+
 curve = learning_curve(mach,
                        range=r,
                        resampling=Holdout(fraction_train=0.7), # (default)
                        measure=cross_entropy)
 
 using Plots
-pyplot(size=(490,300))
+plotly(size=(490,300))
 plt=plot(curve.parameter_values, curve.measurements)
 xlabel!(plt, "epochs")
 ylabel!(plt, "cross entropy on holdout set")
@@ -689,8 +729,8 @@ plt
 #     - [Learning Curves](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
 #     - [Performance Measures](https://alan-turing-institute.github.io/MLJ.jl/dev/performance_measures/) (loss functions, scores, etc)
 # - From Data Science Tutorials:
-#     - [Choosing and evaluating a model](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/)
-#     - [Fit, predict, transform](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/)
+#     - [Choosing and evaluating a model](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/choosing-a-model/)
+#     - [Fit, predict, transform](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/fit-and-predict/)
 
 
 # ### Exercises for Part 2
@@ -706,11 +746,15 @@ import Distributions
 poisson = Distributions.Poisson
 
 age = 18 .+ 60*rand(10);
-salary = coerce(rand([:small, :big, :huge], 10), OrderedFactor);
-levels!(salary, [:small, :big, :huge]);
+salary = coerce(rand(["small", "big", "huge"], 10), OrderedFactor);
+levels!(salary, ["small", "big", "huge"]);
+small = CategoricalValue("small", salary)
+
+#-
+
 X4 = DataFrames.DataFrame(age=age, salary=salary)
 
-n_devices(salary) = salary > :small ? rand(poisson(1.3)) : rand(poisson(2.9))
+n_devices(salary) = salary > small ? rand(poisson(1.3)) : rand(poisson(2.9))
 y4 = [n_devices(row.salary) for row in eachrow(X4)]
 
 # (b) What models can be applied if you coerce the salary to a
@@ -722,13 +766,16 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 # After evaluating the following ...
 
 data = (a = [1, 2, 3, 4],
-     b = rand(4),
-     c = rand(4),
-     d = coerce(["male", "female", "female", "male"], OrderedFactor));
+        b = rand(4),
+        c = rand(4),
+        d = coerce(["male", "female", "female", "male"], OrderedFactor));
 pretty(data)
 
+#-
+
 using Tables
-y, X, w = unpack(data, ==(:a),
+y, X, w = unpack(data,
+                 ==(:a),
                  name -> elscitype(Tables.getcolumn(data, name)) == Continuous,
                  name -> true);
 
@@ -743,7 +790,6 @@ pretty(X)
 #-
 
 w
-
 
 # #### Exercise 6 (first steps in modeling Horse Colic)
 
@@ -822,12 +868,12 @@ x = rand(100);
 model = Standardizer() # a built-in model
 mach = machine(model, x)
 fit!(mach)
-x̂ = transform(mach, x);
-@show mean(x̂) std(x̂);
+xhat = transform(mach, x);
+@show mean(xhat) std(xhat);
 
 # This particular model has an `inverse_transform`:
 
-inverse_transform(mach, x̂) ≈ x
+inverse_transform(mach, xhat) ≈ x
 
 
 # ### Re-encoding the King County House data as continuous
@@ -846,8 +892,8 @@ inverse_transform(mach, x̂) ≈ x
 # First, we reload the data and fix the scitypes (Exercise 3):
 
 file = CSV.File(joinpath(DIR, "data", "house.csv"));
-house = DataFrames.DataFrame(file)
-coerce!(house, autotype(file))
+house = DataFrames.DataFrame(file);
+coerce!(house, autotype(file));
 coerce!(house, Count => Continuous, :zipcode => Multiclass);
 schema(house)
 
@@ -904,7 +950,8 @@ length(schema(Xcont).names)
 # our data.  A model that will do this is `PCA` from
 # `MultivariateStats`:
 
-reducer = @load PCA
+PCA = @load PCA
+reducer = PCA()
 
 # Now, rather simply repeating the work-flow above, applying the new
 # transformation to `Xcont`, we can combine both the encoding and the
@@ -928,7 +975,8 @@ schema(Xsmall)
 
 # Want to combine this pre-processing with ridge regression?
 
-rgs = @load RidgeRegressor pkg=MLJLinearModels
+RidgeRegressor = @load RidgeRegressor pkg=MLJLinearModels
+rgs = RidgeRegressor()
 pipe2 = @pipeline encoder reducer rgs
 
 # Now our pipeline is a supervised model, instead of a transformer,
@@ -1021,7 +1069,7 @@ evaluate!(mach, measure=mae)
 #     - [Transformers and other unsupervised models](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/)
 #     - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Linear-pipelines-1)
 # - From Data Science Tutorials:
-#     - [Composing models](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/composing-models/)
+#     - [Composing models](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/composing-models/)
 
 
 # ### Exercises for Part 3
@@ -1066,7 +1114,7 @@ schema(X)
 
 y, X = unpack(horse, ==(:outcome), name -> true);
 
-@load LogisticClassifier pkg=MLJLinearModels
+LogisticClassifier = @load LogisticClassifier pkg=MLJLinearModels
 model = @pipeline Standardizer ContinuousEncoder LogisticClassifier
 mach = machine(model, X, y)
 
@@ -1113,7 +1161,7 @@ best_lambda = lambdas[argmin(losses)]
 # optimized.
 
 # First, let's choose a tuning strategy (from [these
-# options](https://github.com/alan-turing-institute/MLJTuning.jl#what-is-provided-here)). MLJ
+# options](https://github.com/juliaai/MLJTuning.jl#what-is-provided-here)). MLJ
 # supports ordinary `Grid` search (query `?Grid` for
 # details). However, as the utility of `Grid` search is limited to a
 # small number of parameters, and as `Grid` searches are demonstrated
@@ -1132,11 +1180,20 @@ tuning = RandomSearch(rng=123)
 
 # #### Unbounded ranges and sampling
 
-# In MLJ a range does not have to be bounded. Furthermore, in
-# `RandomSearch` a A positive unbounded range is specified will be
-# sampled using a `Gamma` distribution, by default:
+# In MLJ a range does not have to be bounded. In a `RandomSearch` a
+# positive unbounded range is sampled using a `Gamma` distribution, by
+# default:
 
-r = range(model, :(logistic_classifier.lambda), lower=0, origin=6, unit=5)
+r = range(model,
+          :(logistic_classifier.lambda),
+          lower=0,
+          origin=6,
+          unit=5,
+          scale=:log10)
+
+# The `scale` in a range makes no in a `RandomSearch` (unless it is a
+# function) but this will effect later plots but it does effect the
+# later plots.
 
 # Let's see what sampling using a Gamma distribution is going to mean
 # for this range:
@@ -1145,13 +1202,13 @@ import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
 histogram(rand(sampler_r, 10000), nbins=50)
 
-# The second parameter we'll add to this is *nominal* (finite) and, by
+# The second parameter that we'll add to this is *nominal* (finite) and, by
 # default, will be sampled uniformly. Since it is nominal, we specify
 # `values` instead of `upper` and `lower` bounds:
 
 s  = range(model, :(continuous_encoder.one_hot_ordered_factors),
            values = [true, false])
-#-
+
 
 # #### The tuning wrapper
 
@@ -1203,13 +1260,13 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy
 # - From the MLJ manual:
 #    - [Learning Curves](https://alan-turing-institute.github.io/MLJ.jl/dev/learning_curves/)
 #    - [Tuning Models](https://alan-turing-institute.github.io/MLJ.jl/dev/tuning_models/)
-# - The [MLJTuning repo](https://github.com/alan-turing-institute/MLJTuning.jl#who-is-this-repo-for) - mostly for developers
+# - The [MLJTuning repo](https://github.com/juliaai/MLJTuning.jl#who-is-this-repo-for) - mostly for developers
 #
 # - From Data Science Tutorials:
-#     - [Tuning a model](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
-#     - [Crabs with XGBoost](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/) `Grid` tuning in stages for a tree-boosting model with many parameters
-#     - [Boston with LightGBM](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/) -  `Grid` tuning for another popular tree-booster
-#     - [Boston with Flux](https://alan-turing-institute.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/) - optimizing batch size in a simple neural network regressor
+#     - [Tuning a model](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/model-tuning/)
+#     - [Crabs with XGBoost](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/crabs-xgb/) `Grid` tuning in stages for a tree-boosting model with many parameters
+#     - [Boston with LightGBM](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/boston-lgbm/) -  `Grid` tuning for another popular tree-booster
+#     - [Boston with Flux](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/boston-flux/) - optimizing batch size in a simple neural network regressor
 # - [UCI Horse Colic Data Set](http://archive.ics.uci.edu/ml/datasets/Horse+Colic)
 
 
@@ -1222,9 +1279,10 @@ tuned_err = evaluate!(tuned_mach, resampling=CV(nfolds=3), measure=cross_entropy
 
 y, X = unpack(house, ==(:price), name -> true, rng=123);
 
-# Your task will be to tune the following pipeline regression model:
+# Your task will be to tune the following pipeline regression model,
+# which includes a gradient tree boosting component:
 
-@load(EvoTreeRegressor)
+EvoTreeRegressor = @load EvoTreeRegressor
 tree_booster = EvoTreeRegressor(nrounds = 70)
 model = @pipeline ContinuousEncoder tree_booster
 
@@ -1422,11 +1480,11 @@ evaluate!(mach, measure=misclassification_rate, operation=predict_mode)
 # - blends the predictions of two supervised learning models - a ridge
 #  regressor and a random forest regressor; we'll blend using a simple
 #  average (for a more sophisticated stacking example, see
-#  [here](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/))
+#  [here](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/stacking/))
 
 # - applies the *inverse* Box-Cox transformation to this blended prediction
 
-@load RandomForestRegressor pkg=DecisionTree
+RandomForestRegressor = @load RandomForestRegressor pkg=DecisionTree
 
 # **Input layer**
 
@@ -1484,10 +1542,10 @@ evaluate!(mach,
 # - From the MLJ manual:
 #    - [Learning Networks](https://alan-turing-institute.github.io/MLJ.jl/stable/composing_models/#Learning-Networks-1)
 # - From Data Science Tutorials:
-#     - [Learning Networks](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
-#     - [Learning Networks 2](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
+#     - [Learning Networks](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
+#     - [Learning Networks 2](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
 
-#     - [Stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
+#     - [Stacking](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
 #        an advanced example of model compostion
 
 #     - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1)
@@ -1556,7 +1614,7 @@ y, X = unpack(horse,
 
 # 6(b)(i)
 
-model = @load LogisticClassifier pkg=MLJLinearModels;
+model = (@load LogisticClassifier pkg=MLJLinearModels)();
 model.lambda = 100
 mach = machine(model, X, y)
 fit!(mach, rows=train)
@@ -1592,26 +1650,27 @@ misclassification_rate(mode.(yhat), y[test])
 
 # 6(c)(i)
 
-model = @load RandomForestClassifier pkg=DecisionTree
+model = (@load RandomForestClassifier pkg=DecisionTree)()
 mach = machine(model, X, y)
 evaluate!(mach, resampling=CV(nfolds=6), measure=cross_entropy)
 
-r = range(model, :n_trees, lower=10, upper=70, scale=:log)
+r = range(model, :n_trees, lower=10, upper=70, scale=:log10)
 
 # Since random forests are inherently randomized, we generate multiple
 # curves:
 
 plt = plot()
 for i in 1:4
-    curve = learning_curve(mach,
+    one_curve = learning_curve(mach,
                            range=r,
                            resampling=Holdout(),
                            measure=cross_entropy)
-    plt=plot!(curve.parameter_values, curve.measurements)
+    plt=plot!(one_curve.parameter_values, one_curve.measurements)
 end
 xlabel!(plt, "n_trees")
 ylabel!(plt, "cross entropy")
 plt
+
 
 # 6(c)(ii)
 
@@ -1630,8 +1689,8 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 
 # (a)
 
-@load KMeans pkg=Clustering
-@load EvoTreeClassifier
+KMeans = @load KMeans pkg=Clustering
+EvoTreeClassifier = @load EvoTreeClassifier
 pipe = @pipeline(Standardizer,
                  ContinuousEncoder,
                  KMeans(k=10),
@@ -1658,19 +1717,33 @@ plt
 
 # Here's a second curve using a different random seed for the booster:
 
-pipe.evo_tree_classifier.seed = 123
+using Random
+pipe.evo_tree_classifier.rng = MersenneTwister(123)
 curve = learning_curve(mach,
                        range=r,
                        resampling=CV(nfolds=6),
                        measure=cross_entropy)
 plot!(curve.parameter_values, curve.measurements)
 
+# One can automatic the production of multiple curves with different
+# seeds in the following way:
+curves = learning_curve(mach,
+                        range=r,
+                        resampling=CV(nfolds=6),
+                        measure=cross_entropy,
+                        rng_name=:(evo_tree_classifier.rng),
+                        rngs=6) # list of RNGs, or num to auto generate
+plot(curves.parameter_values, curves.measurements)
+
+# If you have multiple threads available in your julia session, you
+# can add the option `acceleration=CPUThreads()` to speed up this
+# computation.
 
 # #### Exercise 8
 
 y, X = unpack(house, ==(:price), name -> true, rng=123);
 
-@load(EvoTreeRegressor)
+EvoTreeRegressor = @load EvoTreeRegressor
 tree_booster = EvoTreeRegressor(nrounds = 70)
 model = @pipeline ContinuousEncoder tree_booster
 

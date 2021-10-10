@@ -12,10 +12,14 @@ if !isbinder()
     import MLJLinearModels
     import DataFrames
     import CSV
-    import DecisionTree
+    import MLJDecisionTreeInterface
     using MLJ
+    import MLJClusteringInterface
+    import MLJMultivariateStatsInterface
+    import MLJScikitLearnInterface
+    import PlotlyBase
     import MLJLinearModels
-    import MultivariateStats
+    import MLJMultivariateStatsInterface
     import MLJFlux
     import Plots
 else

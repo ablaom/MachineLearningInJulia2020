@@ -1,5 +1,7 @@
 # Machine Learning in Julia using MLJ, JuliaCon2020
 
+**Now updated for MLJ version 0.16 and Julia 1.6**
+
 Interactive tutorials for a workshop introducing the machine learning
 toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 
@@ -13,6 +15,12 @@ at JuliaCon2020, recorded
 main aim is to introduce the
 [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) machine
 learning toolbox to data scientists.
+
+Differences from the original resources are minor (main difference:
+`@load` now returns a type instead of an instance). However, if you
+wish to access resources precisely matching those used in the video,
+switch to the `JuliaCon2020` branch by clicking [here].
+
   
 ### [Options for running the tutorials](#options-for-running-the-tutorials)
 
