@@ -1,7 +1,7 @@
 # # Machine Learning in Julia, JuliaCon2020
 
 # A workshop introducing the machine learning toolbox
-# [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
+# [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/).
 
 
 # ### Set-up
@@ -18,7 +18,7 @@ VERSION
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
-
+color_off()
 
 # ## General resources
 
@@ -190,14 +190,14 @@ schema(matrix_table)
 # familiarity with some kind of tabular data container (although it is
 # possible, in principle, to carry out the exercises without this.)
 # For a quick start introduction to `DataFrames`, see [this
-# tutorial](https://juliaai.github.io/DataScienceTutorials.jl/data/dataframe/)
+# tutorial](https://juliaai.github.io/DataScienceTutorials.jl/data/dataframe/).
 
 # ### Fixing scientific types in tabular data
 
 # To show how we can correct the scientific types of data in tables,
 # we introduce a cleaned up version of the UCI Horse Colic Data Set
 # (the cleaning work-flow is described
-# [here](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
+# [here](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values)).
 
 using CSV
 file = CSV.File(joinpath(DIR, "data", "horse.csv"));
@@ -272,7 +272,7 @@ schema(horse)
 #   MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#A-preview-of-data-type-specification-in-MLJ-1)
 #    - [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1)
 #    - [Working with Categorical Data](https://alan-turing-institute.github.io/MLJ.jl/dev/working_with_categorical_data/)
-# - [Summary](https://juliaai.github.io/ScientificTypes.jl/dev/#Summary-of-the-MLJ-convention-1) of the MLJ convention for representing scientific types
+# - [Summary](https://juliaai.github.io/ScientificTypes.jl/dev/#Summary-of-the-default-convention) of the MLJ convention for representing scientific types
 # - [ScientificTypes.jl](https://juliaai.github.io/ScientificTypes.jl/dev/)
 # - From Data Science Tutorials:
 #     - [Data interpretation: Scientific Types](https://juliaai.github.io/DataScienceTutorials.jl/data/scitype/)
@@ -425,11 +425,10 @@ schema(iris)
 
 #-
 
-# FIX ME!!!!!!
-iris = coerce(iris,
-              Union{Missing,Continuous}=>Continuous,
-              Union{Missing,Multiclass}=>Multiclass,
-              tight=true)
+coerce!(iris,
+        Union{Missing,Continuous}=>Continuous,
+        Union{Missing,Multiclass}=>Multiclass,
+        tight=true)
 schema(iris)
 
 
@@ -711,11 +710,13 @@ curve = learning_curve(mach,
                        measure=cross_entropy)
 
 using Plots
-plotly(size=(490,300))
+gr(size=(490,300))
 plt=plot(curve.parameter_values, curve.measurements)
 xlabel!(plt, "epochs")
 ylabel!(plt, "cross entropy on holdout set")
-plt
+savefig("learning_curve.png")
+plt #!md
+# ![](learning_curve.png) #md
 
 # We will return to learning curves when we look at tuning in Part 4.
 
@@ -880,7 +881,7 @@ inverse_transform(mach, xhat) ≈ x
 
 # For further illustrations of transformers, let's re-encode *all* of the
 # King County House input features (see [Ex
-# 3](#ex-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
+# 3](#exercise-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
 # features. We do this with the `ContinuousEncoder` model, which, by
 # default, will:
 
@@ -1067,7 +1068,7 @@ evaluate!(mach, measure=mae)
 
 # - From the MLJ manual:
 #     - [Transformers and other unsupervised models](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/)
-#     - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Linear-pipelines-1)
+#     - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/linear_pipelines/#Linear-Pipelines)
 # - From Data Science Tutorials:
 #     - [Composing models](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/composing-models/)
 
@@ -1137,8 +1138,10 @@ _, _, lambdas, losses = learning_curve(mach,
 plt=plot(lambdas, losses, xscale=:log10)
 xlabel!(plt, "lambda")
 ylabel!(plt, "cross entropy using 6-fold CV")
+savefig("learning_curve2.png")
+plt #!md
 
-#-
+# ![](learning_curve2.png) #md
 
 best_lambda = lambdas[argmin(losses)]
 
@@ -1200,7 +1203,11 @@ r = range(model,
 
 import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
-histogram(rand(sampler_r, 10000), nbins=50)
+plt = histogram(rand(sampler_r, 10000), nbins=50)
+savefig("gamma_sampler.png")
+plt #md
+
+# ![](gamma_sampler.png)
 
 # The second parameter that we'll add to this is *nominal* (finite) and, by
 # default, will be sampled uniformly. Since it is nominal, we specify
@@ -1238,12 +1245,16 @@ rep.best_model
 
 # In the special case of two-parameters, you can also plot the results:
 
-plot(tuned_mach)
+plt = plot(tuned_mach)
+savefig("tuning.png")
+plt #!md
+
+# ![](tuning.png) #md
 
 # Finally, let's compare cross-validation estimate of the performance
 # of the self-tuning model with that of the original model (an example
 # of [*nested
-# resampling*](https://mlr3book.mlr-org.com/nested-resampling.html)
+# resampling*]((https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html)
 # here):
 
 err = evaluate!(mach, resampling=CV(nfolds=3), measure=cross_entropy)
@@ -1545,10 +1556,9 @@ evaluate!(mach,
 #     - [Learning Networks](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
 #     - [Learning Networks 2](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
 
-#     - [Stacking](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
-#        an advanced example of model compostion
+#     - [Stacking](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/stacking/): an advanced example of model composition
 
-#     - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1)
+#     - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1):
 #       exporting learning networks without a macro for finer control
 
 # <a id='solutions-to-exercises'></a>
@@ -1665,11 +1675,14 @@ for i in 1:4
                            range=r,
                            resampling=Holdout(),
                            measure=cross_entropy)
-    plt=plot!(one_curve.parameter_values, one_curve.measurements)
+    plot!(one_curve.parameter_values, one_curve.measurements)
 end
 xlabel!(plt, "n_trees")
 ylabel!(plt, "cross entropy")
-plt
+savefig("exercise_6ci.png")
+plt #!md
+
+# ![](exercise_6ci.png) #md
 
 
 # 6(c)(ii)
@@ -1713,7 +1726,10 @@ curve = learning_curve(mach,
 plt = plot(curve.parameter_values, curve.measurements)
 xlabel!(plt, "max_depth")
 ylabel!(plt, "CV estimate of cross entropy")
-plt
+savefig("exercise_7c.png")
+plt #!md
+
+# ![](exercise_7c.png) #md
 
 # Here's a second curve using a different random seed for the booster:
 
@@ -1724,6 +1740,10 @@ curve = learning_curve(mach,
                        resampling=CV(nfolds=6),
                        measure=cross_entropy)
 plot!(curve.parameter_values, curve.measurements)
+savefig("exercise_7c_2.png")
+plt #!md
+
+# ![](exercise_7c_2.png) #md
 
 # One can automatic the production of multiple curves with different
 # seeds in the following way:
@@ -1733,7 +1753,11 @@ curves = learning_curve(mach,
                         measure=cross_entropy,
                         rng_name=:(evo_tree_classifier.rng),
                         rngs=6) # list of RNGs, or num to auto generate
-plot(curves.parameter_values, curves.measurements)
+plt = plot(curves.parameter_values, curves.measurements)
+savefig("exercise_7c_3.png")
+plt #!md
+
+# ![](exercise_7c_3.png) #md
 
 # If you have multiple threads available in your julia session, you
 # can add the option `acceleration=CPUThreads()` to speed up this
@@ -1761,7 +1785,11 @@ tuned_model = TunedModel(model=model,
                          n=40)
 
 tuned_mach = machine(tuned_model, X, y) |> fit!
-plot(tuned_mach)
+plt = plot(tuned_mach)
+savefig("exercise_8c.png")
+plt #!md
+
+# ![](exercise_8c.png) #md
 
 # (d)
 

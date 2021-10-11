@@ -17,7 +17,6 @@ if !isbinder()
     import MLJClusteringInterface
     import MLJMultivariateStatsInterface
     import MLJScikitLearnInterface
-    import PlotlyBase
     import MLJLinearModels
     import MLJMultivariateStatsInterface
     import MLJFlux

@@ -1,11 +1,11 @@
 ```@meta
-EditURL = "tutorials.jl"
+EditURL = "<unknown>/tutorials.jl"
 ```
 
 # Machine Learning in Julia, JuliaCon2020
 
 A workshop introducing the machine learning toolbox
-[MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/)
+[MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/).
 
 ### Set-up
 
@@ -26,12 +26,11 @@ v"1.6.3"
 ````julia
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
+color_off()
 ````
 
 ````
-  Activating environment at `~/Google Drive/Julia/MLJ/MachineLearningInJulia2020/Project.toml`
-[ Info: Done loading
-
+false
 ````
 
 ## General resources
@@ -357,14 +356,14 @@ better if one wraps the adjoint of the transpose - see
 familiarity with some kind of tabular data container (although it is
 possible, in principle, to carry out the exercises without this.)
 For a quick start introduction to `DataFrames`, see [this
-tutorial](https://juliaai.github.io/DataScienceTutorials.jl/data/dataframe/)
+tutorial](https://juliaai.github.io/DataScienceTutorials.jl/data/dataframe/).
 
 ### Fixing scientific types in tabular data
 
 To show how we can correct the scientific types of data in tables,
 we introduce a cleaned up version of the UCI Horse Colic Data Set
 (the cleaning work-flow is described
-[here](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values))
+[here](https://juliaai.github.io/DataScienceTutorials.jl/end-to-end/horse/#dealing_with_missing_values)).
 
 ````julia
 using CSV
@@ -565,7 +564,7 @@ _.nrows = 366
   MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#A-preview-of-data-type-specification-in-MLJ-1)
    - [Data containers and scientific types](https://alan-turing-institute.github.io/MLJ.jl/dev/getting_started/#Data-containers-and-scientific-types-1)
    - [Working with Categorical Data](https://alan-turing-institute.github.io/MLJ.jl/dev/working_with_categorical_data/)
-- [Summary](https://juliaai.github.io/ScientificTypes.jl/dev/#Summary-of-the-MLJ-convention-1) of the MLJ convention for representing scientific types
+- [Summary](https://juliaai.github.io/ScientificTypes.jl/dev/#Summary-of-the-default-convention) of the MLJ convention for representing scientific types
 - [ScientificTypes.jl](https://juliaai.github.io/ScientificTypes.jl/dev/)
 - From Data Science Tutorials:
     - [Data interpretation: Scientific Types](https://juliaai.github.io/DataScienceTutorials.jl/data/scitype/)
@@ -618,8 +617,8 @@ A = rand(2, 3)
 
 ````
 2×3 Matrix{Float64}:
- 0.307453  0.598374  0.301268
- 0.749687  0.288024  0.000220251
+ 0.586902  0.635427  0.433316
+ 0.583547  0.473668  0.61271
 ````
 
 -
@@ -647,8 +646,8 @@ Asparse = sparse(A)
 
 ````
 2×3 SparseMatrixCSC{Float64, Int64} with 6 stored entries:
- 0.307453  0.598374  0.301268
- 0.749687  0.288024  0.000220251
+ 0.586902  0.635427  0.433316
+ 0.583547  0.473668  0.61271
 ````
 
 ````julia
@@ -666,8 +665,8 @@ C1 = categorical(A)
 
 ````
 2×3 CategoricalArray{Float64,2,UInt32}:
- 0.307453  0.598374  0.301268
- 0.749687  0.288024  0.000220251
+ 0.586902  0.635427  0.433316
+ 0.583547  0.473668  0.61271
 ````
 
 ````julia
@@ -839,13 +838,11 @@ the fact there are no missing values (see this
 [issue](https://github.com/JuliaAI/OpenML.jl/issues/10)). To do this
 we have to explicilty tighten the types:
 
-FIX ME!!!!!!
-
 ````julia
-iris = coerce(iris,
-              Union{Missing,Continuous}=>Continuous,
-              Union{Missing,Multiclass}=>Multiclass,
-              tight=true)
+coerce!(iris,
+        Union{Missing,Continuous}=>Continuous,
+        Union{Missing,Multiclass}=>Multiclass,
+        tight=true)
 schema(iris)
 ````
 
@@ -1118,8 +1115,8 @@ meta = all_models[3]
 ````
 
 ````
-[35mAEDetector from OutlierDetectionNetworks.jl.[39m
-[35m[Documentation](https://github.com/OutlierDetectionJL/OutlierDetectionNetworks.jl).[39m
+AEDetector from OutlierDetectionNetworks.jl.
+[Documentation](https://github.com/OutlierDetectionJL/OutlierDetectionNetworks.jl).
 (name = "AEDetector",
  package_name = "OutlierDetectionNetworks",
  is_supervised = false,
@@ -1359,10 +1356,10 @@ info(model)
 ````
 
 ````
-[35mA neural network model for making probabilistic predictions of a `Multiclass` or `OrderedFactor` target, given a table of `Continuous` features. [39m
-[35m→ based on [MLJFlux](https://github.com/alan-turing-institute/MLJFlux.jl).[39m
-[35m→ do `@load NeuralNetworkClassifier pkg="MLJFlux"` to use the model.[39m
-[35m→ do `?NeuralNetworkClassifier` for documentation.[39m
+A neural network model for making probabilistic predictions of a `Multiclass` or `OrderedFactor` target, given a table of `Continuous` features. 
+→ based on [MLJFlux](https://github.com/alan-turing-institute/MLJFlux.jl).
+→ do `@load NeuralNetworkClassifier pkg="MLJFlux"` to use the model.
+→ do `?NeuralNetworkClassifier` for documentation.
 (name = "NeuralNetworkClassifier",
  package_name = "MLJFlux",
  is_supervised = true,
@@ -1429,8 +1426,8 @@ mach = machine(model, X, y)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 0 times; caches data
   args: 
-    1:	Source @902 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @305 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1456,8 +1453,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 1 time; caches data
   args: 
-    1:	Source @902 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @305 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1470,9 +1467,9 @@ yhat[1:3]
 
 ````
 3-element MLJBase.UnivariateFiniteVector{Multiclass{3}, String, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.308, Iris-versicolor=>0.358, Iris-virginica=>0.334)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.289, Iris-versicolor=>0.368, Iris-virginica=>0.343)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.412, Iris-versicolor=>0.302, Iris-virginica=>0.287)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.247, Iris-versicolor=>0.394, Iris-virginica=>0.359)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.207, Iris-versicolor=>0.393, Iris-virginica=>0.401)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.483, Iris-versicolor=>0.333, Iris-virginica=>0.185)
 ````
 
 We'll have more to say on the form of this prediction shortly.
@@ -1495,7 +1492,7 @@ report(mach)
 ````
 
 ````
-(training_losses = [1.2559176769988762, 1.3170392208064197, 1.2810116884925107, 1.2562834872760997, 1.1201985415208149, 1.101753341902836, 1.1226891488962834, 1.1124477674171902, 1.0381021980346619, 1.0523111166616987, 1.0648892577341496, 1.0271606808156204, 1.086799948938903],)
+(training_losses = [1.5156192707126666, 1.6780407939092195, 1.5478420559388637, 1.4199297061792355, 1.3360638062270704, 1.1756546101084517, 1.037690913759279, 0.9965093701804687, 0.9474401185836681, 0.9775993501790641, 0.9158615923796721, 0.9730838334665759, 0.9010222126994627],)
 ````
 
 You save a machine like this:
@@ -1514,9 +1511,9 @@ yhat[1:3]
 
 ````
 3-element MLJBase.UnivariateFiniteVector{Multiclass{3}, String, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.285, Iris-versicolor=>0.369, Iris-virginica=>0.346)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.306, Iris-versicolor=>0.359, Iris-virginica=>0.335)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.284, Iris-versicolor=>0.367, Iris-virginica=>0.349)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.195, Iris-versicolor=>0.397, Iris-virginica=>0.409)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.246, Iris-versicolor=>0.393, Iris-virginica=>0.361)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.18, Iris-versicolor=>0.394, Iris-virginica=>0.426)
 ````
 
 If you want to fit a retrieved model, you will need to bind some data to it:
@@ -1529,8 +1526,8 @@ fit!(mach3)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 2 times; caches data
   args: 
-    1:	Source @848 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @236 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @019 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @680 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1547,8 +1544,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 2 times; caches data
   args: 
-    1:	Source @902 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @305 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1564,8 +1561,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 3 times; caches data
   args: 
-    1:	Source @902 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @305 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1580,8 +1577,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 4 times; caches data
   args: 
-    1:	Source @902 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @305 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1602,7 +1599,7 @@ yhat[1]
 ````
 
 ````
-UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.118, Iris-versicolor=>0.524, Iris-virginica=>0.358)
+UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.108, Iris-versicolor=>0.553, Iris-virginica=>0.339)
 ````
 
 What's going on here?
@@ -1627,7 +1624,7 @@ pdf(yhat[1], "Iris-virginica")
 ````
 
 ````
-0.35804834874791513
+0.33900670784011633
 ````
 
 To get the most likely observation, we do
@@ -1648,10 +1645,10 @@ broadcast(pdf, yhat[1:4], "Iris-versicolor")
 
 ````
 4-element Vector{Float64}:
- 0.5239484952144228
- 0.4731109844693249
- 0.056882068083702046
- 0.3486877328180898
+ 0.5533409672785429
+ 0.5180722923338932
+ 0.07102889246903585
+ 0.3696441445728432
 ````
 
 ````julia
@@ -1690,10 +1687,10 @@ pdf(yhat, L)[1:4, :]
 
 ````
 4×3 Matrix{Float64}:
- 0.118003   0.523948   0.358048
- 0.0597223  0.473111   0.467167
- 0.941423   0.0568821  0.0016948
- 0.0150815  0.348688   0.636231
+ 0.107652   0.553341   0.339007
+ 0.074373   0.518072   0.407555
+ 0.925246   0.0710289  0.00372534
+ 0.0215614  0.369644   0.608794
 ````
 
 However, in a typical MLJ work-flow, this is not as useful as you
@@ -1705,7 +1702,7 @@ cross_entropy(yhat, y[test]) |> mean
 ````
 
 ````
-0.38563146383967883
+0.38633478435313934
 ````
 
 To apply a deterministic measure, we first need to obtain point-estimates:
@@ -1715,7 +1712,7 @@ misclassification_rate(mode.(yhat), y[test])
 ````
 
 ````
-0.044444444444444446
+0.0
 ````
 
 We note in passing that there is also a search tool for measures
@@ -1811,7 +1808,7 @@ Extract:
 │ measure                    │ measurement │ operation │ per_fold │
 ├────────────────────────────┼─────────────┼───────────┼──────────┤
 │ LogLoss(tol = 2.22045e-16) │ 0.386       │ predict   │ [0.386]  │
-│ BrierScore()               │ -0.217      │ predict   │ [-0.217] │
+│ BrierScore()               │ -0.214      │ predict   │ [-0.214] │
 └────────────────────────────┴─────────────┴───────────┴──────────┘
 
 ````
@@ -1832,8 +1829,8 @@ Extract:
 ┌────────────────────────────┬─────────────┬───────────┬──────────────────────────────────────────────────┐
 │ measure                    │ measurement │ operation │ per_fold                                         │
 ├────────────────────────────┼─────────────┼───────────┼──────────────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.402       │ predict   │ [0.355, 0.326, 0.516, 0.435, 0.444, 0.337]       │
-│ BrierScore()               │ -0.229      │ predict   │ [-0.179, -0.185, -0.314, -0.259, -0.251, -0.183] │
+│ LogLoss(tol = 2.22045e-16) │ 0.406       │ predict   │ [0.431, 0.325, 0.436, 0.438, 0.424, 0.38]        │
+│ BrierScore()               │ -0.227      │ predict   │ [-0.248, -0.169, -0.241, -0.236, -0.239, -0.232] │
 └────────────────────────────┴─────────────┴───────────┴──────────────────────────────────────────────────┘
 
 ````
@@ -1853,12 +1850,12 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────────┬─────────────┬───────────┬─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ measure                    │ measurement │ operation │ per_fold                                                                                                                                        │
-├────────────────────────────┼─────────────┼───────────┼─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.406       │ predict   │ [0.408, 0.358, 0.383, 0.476, 0.509, 0.428, 0.385, 0.406, 0.417, 0.36, 0.385, 0.361, 0.437, 0.368, 0.436, 0.388, 0.373, 0.432]                   │
-│ BrierScore()               │ -0.227      │ predict   │ [-0.221, -0.186, -0.21, -0.267, -0.298, -0.248, -0.207, -0.248, -0.223, -0.196, -0.209, -0.191, -0.246, -0.206, -0.245, -0.222, -0.204, -0.263] │
-└────────────────────────────┴─────────────┴───────────┴─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────┬─────────────┬───────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ measure                    │ measurement │ operation │ per_fold                                                                                                                                       │
+├────────────────────────────┼─────────────┼───────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ LogLoss(tol = 2.22045e-16) │ 0.404       │ predict   │ [0.308, 0.387, 0.392, 0.482, 0.473, 0.384, 0.444, 0.409, 0.416, 0.379, 0.411, 0.429, 0.425, 0.337, 0.397, 0.376, 0.412, 0.408]                 │
+│ BrierScore()               │ -0.224      │ predict   │ [-0.166, -0.221, -0.226, -0.267, -0.271, -0.2, -0.253, -0.213, -0.238, -0.196, -0.231, -0.246, -0.228, -0.195, -0.216, -0.187, -0.238, -0.232] │
+└────────────────────────────┴─────────────┴───────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ````
 
@@ -1885,9 +1882,9 @@ nothing #hide
 
 ````
 [ Info: Creating subsamples from a subset of all rows. 
-Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:10[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:08[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:15[K
+Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:11[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:08[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:16[K
 [ Info: Training Machine{NeuralNetworkClassifier{Short,…},…}.
-Optimising neural net:  4%[>                        ]  ETA: 0:00:01[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:02[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:02[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 33%[========>                ]  ETA: 0:00:02[KOptimising neural net: 35%[========>                ]  ETA: 0:00:02[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 49%[============>            ]  ETA: 0:00:02[KOptimising neural net: 51%[============>            ]  ETA: 0:00:02[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 65%[================>        ]  ETA: 0:00:01[KOptimising neural net: 67%[================>        ]  ETA: 0:00:01[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:03[K
+Optimising neural net:  4%[>                        ]  ETA: 0:00:01[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:02[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:02[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 33%[========>                ]  ETA: 0:00:02[KOptimising neural net: 35%[========>                ]  ETA: 0:00:02[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 49%[============>            ]  ETA: 0:00:02[KOptimising neural net: 51%[============>            ]  ETA: 0:00:02[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 65%[================>        ]  ETA: 0:00:01[KOptimising neural net: 67%[================>        ]  ETA: 0:00:01[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:01[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:03[K
 
 ````
 
@@ -1915,240 +1912,21 @@ curve = learning_curve(mach,
                        measure=cross_entropy)
 
 using Plots
-plotly(size=(490,300))
+gr(size=(490,300))
 plt=plot(curve.parameter_values, curve.measurements)
 xlabel!(plt, "epochs")
 ylabel!(plt, "cross entropy on holdout set")
-plt
+savefig("learning_curve.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="e5683faa-45fb-4948-ba54-ee096cf8e5b1" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('e5683faa-45fb-4948-ba54-ee096cf8e5b1');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0,
-            11.0,
-            13.0,
-            15.0,
-            17.0,
-            19.0,
-            22.0,
-            25.0,
-            29.0,
-            33.0,
-            38.0,
-            44.0,
-            50.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.014482835586597,
-            0.8906537188852359,
-            0.80018892536832,
-            0.7213789861219907,
-            0.6560466894803221,
-            0.6211108673666452,
-            0.6027467415004643,
-            0.5641339316414179,
-            0.5695412837060354,
-            0.5368794093704342,
-            0.5321354713239868,
-            0.506893812880953,
-            0.4815506013025007,
-            0.46761503880050437,
-            0.43944016265777447,
-            0.4371013523323308,
-            0.4325800979592121,
-            0.4102093175525475,
-            0.3912220593381234,
-            0.3862430222928144,
-            0.37213387852132523,
-            0.37284775983378593
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            10.0,
-            20.0,
-            30.0,
-            40.0,
-            50.0
-        ],
-        "range": [
-            -0.47,
-            51.47
-        ],
-        "domain": [
-            0.09363561697644936,
-            0.9919652900530291
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0",
-            "10",
-            "20",
-            "30",
-            "40",
-            "50"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "epochs",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.4,
-            0.5,
-            0.6000000000000001,
-            0.7000000000000001,
-            0.8,
-            0.9,
-            1.0
-        ],
-        "range": [
-            0.3528634098093671,
-            1.0337533042985552
-        ],
-        "domain": [
-            0.10108632254301551,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.4",
-            "0.5",
-            "0.6",
-            "0.7",
-            "0.8",
-            "0.9",
-            "1.0"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "cross entropy on holdout set",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 22 models.
+Evaluating over 22 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 22 metamodels:   5%[=>                       ]  ETA: 0:00:01[KEvaluating over 22 metamodels:   9%[==>                      ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  14%[===>                     ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  18%[====>                    ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  23%[=====>                   ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  27%[======>                  ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  32%[=======>                 ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  36%[=========>               ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  41%[==========>              ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  45%[===========>             ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  50%[============>            ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  55%[=============>           ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  59%[==============>          ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  64%[===============>         ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  68%[=================>       ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  73%[==================>      ]  ETA: 0:00:01[KEvaluating over 22 metamodels:  77%[===================>     ]  ETA: 0:00:00[KEvaluating over 22 metamodels:  82%[====================>    ]  ETA: 0:00:00[KEvaluating over 22 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 22 metamodels:  91%[======================>  ]  ETA: 0:00:00[KEvaluating over 22 metamodels:  95%[=======================> ]  ETA: 0:00:00[KEvaluating over 22 metamodels: 100%[=========================] Time: 0:00:03[K
 
-    
-    </script>
+````
 
-```
+![](learning_curve.png)
 
 We will return to learning curves when we look at tuning in Part 4.
 
@@ -2195,16 +1973,16 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 
 ````
 10-element Vector{Int64}:
+ 4
+ 4
  1
- 0
- 2
- 0
+ 4
  3
- 3
+ 6
  1
  2
- 0
- 0
+ 5
+ 3
 ````
 
 (b) What models can be applied if you coerce the salary to a
@@ -2228,10 +2006,10 @@ pretty(data)
 │ Int64 │ Float64    │ Float64    │ CategoricalValue{String, UInt32} │
 │ Count │ Continuous │ Continuous │ OrderedFactor{2}                 │
 ├───────┼────────────┼────────────┼──────────────────────────────────┤
-│ 1     │ 0.402444   │ 0.603449   │ male                             │
-│ 2     │ 0.0351777  │ 0.910565   │ female                           │
-│ 3     │ 0.970689   │ 0.682197   │ female                           │
-│ 4     │ 0.966209   │ 0.949514   │ male                             │
+│ 1     │ 0.243236   │ 0.0290742  │ male                             │
+│ 2     │ 0.480514   │ 0.575621   │ female                           │
+│ 3     │ 0.944733   │ 0.21603    │ female                           │
+│ 4     │ 0.230733   │ 0.129638   │ male                             │
 └───────┴────────────┴────────────┴──────────────────────────────────┘
 
 ````
@@ -2269,10 +2047,10 @@ pretty(X)
 │ Float64    │ Float64    │
 │ Continuous │ Continuous │
 ├────────────┼────────────┤
-│ 0.402444   │ 0.603449   │
-│ 0.0351777  │ 0.910565   │
-│ 0.970689   │ 0.682197   │
-│ 0.966209   │ 0.949514   │
+│ 0.243236   │ 0.0290742  │
+│ 0.480514   │ 0.575621   │
+│ 0.944733   │ 0.21603    │
+│ 0.230733   │ 0.129638   │
 └────────────┴────────────┘
 
 ````
@@ -2364,8 +2142,8 @@ nothing #hide
 ````
 
 ````
-mean(x) = 0.49113868534293464
-std(x) = 0.2869983282501564
+mean(x) = 0.5000214909621086
+std(x) = 0.26384039583977714
 
 ````
 
@@ -2380,8 +2158,8 @@ nothing #hide
 
 ````
 [ Info: Training Machine{Standardizer,…}.
-mean(xhat) = -1.021405182655144e-16
-std(xhat) = 0.9999999999999999
+mean(xhat) = 1.7819079545233762e-16
+std(xhat) = 1.0
 
 ````
 
@@ -2399,7 +2177,7 @@ true
 
 For further illustrations of transformers, let's re-encode *all* of the
 King County House input features (see [Ex
-3](#ex-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
+3](#exercise-3-fixing-scitypes-in-a-table)) into a set of `Continuous`
 features. We do this with the `ContinuousEncoder` model, which, by
 default, will:
 
@@ -2706,7 +2484,7 @@ pipe = @pipeline encoder reducer
 ````
 
 ````
-Pipeline589(
+Pipeline499(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2749,7 +2527,7 @@ pipe2 = @pipeline encoder reducer rgs
 ````
 
 ````
-Pipeline597(
+Pipeline507(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2797,10 +2575,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline597,…} trained 2 times; caches data
+Machine{Pipeline507,…} trained 2 times; caches data
   args: 
-    1:	Source @822 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @258 ⏎ `AbstractVector{Continuous}`
+    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @995 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2810,10 +2588,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline597,…} trained 3 times; caches data
+Machine{Pipeline507,…} trained 3 times; caches data
   args: 
-    1:	Source @822 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @258 ⏎ `AbstractVector{Continuous}`
+    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @995 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2828,10 +2606,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline597,…} trained 4 times; caches data
+Machine{Pipeline507,…} trained 4 times; caches data
   args: 
-    1:	Source @822 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @258 ⏎ `AbstractVector{Continuous}`
+    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @995 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2959,7 +2737,7 @@ Extract:
 
 - From the MLJ manual:
     - [Transformers and other unsupervised models](https://alan-turing-institute.github.io/MLJ.jl/dev/transformers/)
-    - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Linear-pipelines-1)
+    - [Linear pipelines](https://alan-turing-institute.github.io/MLJ.jl/dev/linear_pipelines/#Linear-Pipelines)
 - From Data Science Tutorials:
     - [Composing models](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/composing-models/)
 
@@ -3037,10 +2815,10 @@ mach = machine(model, X, y)
 ````
 
 ````
-Machine{Pipeline626,…} trained 0 times; caches data
+Machine{Pipeline536,…} trained 0 times; caches data
   args: 
-    1:	Source @657 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}, AbstractVector{Multiclass{6}}, AbstractVector{Multiclass{3}}, AbstractVector{OrderedFactor{2}}, AbstractVector{OrderedFactor{4}}, AbstractVector{OrderedFactor{5}}}}`
-    2:	Source @219 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @042 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}, AbstractVector{Multiclass{6}}, AbstractVector{Multiclass{3}}, AbstractVector{OrderedFactor{2}}, AbstractVector{OrderedFactor{4}}, AbstractVector{OrderedFactor{5}}}}`
+    2:	Source @768 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -3077,245 +2855,17 @@ _, _, lambdas, losses = learning_curve(mach,
 plt=plot(lambdas, losses, xscale=:log10)
 xlabel!(plt, "lambda")
 ylabel!(plt, "cross entropy using 6-fold CV")
+savefig("learning_curve2.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="f5ac8668-f4e3-49ea-b6d7-e666fe370ef2" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('f5ac8668-f4e3-49ea-b6d7-e666fe370ef2');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            0.01,
-            0.01373823795883263,
-            0.018873918221350976,
-            0.02592943797404667,
-            0.035622478902624426,
-            0.04893900918477494,
-            0.06723357536499339,
-            0.09236708571873861,
-            0.12689610031679222,
-            0.17433288221999882,
-            0.23950266199874853,
-            0.3290344562312668,
-            0.4520353656360243,
-            0.6210169418915615,
-            0.8531678524172809,
-            1.1721022975334803,
-            1.6102620275609394,
-            2.2122162910704493,
-            3.0391953823131974,
-            4.1753189365604015,
-            5.736152510448679,
-            7.880462815669913,
-            10.826367338740546,
-            14.87352107293511,
-            20.433597178569418,
-            28.072162039411772,
-            38.56620421163472,
-            52.98316906283707,
-            72.7895384398315,
-            100.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.7891923451796305,
-            0.7844863696840602,
-            0.778999822562365,
-            0.7727600314717838,
-            0.7658754262369921,
-            0.7585525943150301,
-            0.7511401783949944,
-            0.7441599776341977,
-            0.7382939645858905,
-            0.7332915072986833,
-            0.7287462716265534,
-            0.7243206491772539,
-            0.7198473573335842,
-            0.7152827815676913,
-            0.7106774825457429,
-            0.7061590906270783,
-            0.701916755401511,
-            0.6981827458551044,
-            0.6952109463634933,
-            0.6932536230665008,
-            0.6925391259976147,
-            0.693254492941192,
-            0.6955375670021003,
-            0.6994813973604733,
-            0.7051485338137056,
-            0.7125868336911289,
-            0.7218359389293543,
-            0.7329175692154145,
-            0.7458121582971914,
-            0.760433698653428
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.01,
-            0.1,
-            1.0,
-            10.0,
-            100.0
-        ],
-        "range": [
-            -2.12,
-            2.12
-        ],
-        "domain": [
-            0.11177620654561035,
-            0.9919652900530291
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "10<sup>−2</sup>",
-            "10<sup>−1</sup>",
-            "10<sup>0</sup>",
-            "10<sup>1</sup>",
-            "10<sup>2</sup>"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "lambda",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "log"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.7000000000000001,
-            0.72,
-            0.74,
-            0.76,
-            0.78
-        ],
-        "range": [
-            0.6896395294221542,
-            0.792091941755091
-        ],
-        "domain": [
-            0.10108632254301551,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.70",
-            "0.72",
-            "0.74",
-            "0.76",
-            "0.78"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "cross entropy using 6-fold CV",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 30 models.
+Evaluating over 30 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 30 metamodels:   3%[>                        ]  ETA: 0:01:59[KEvaluating over 30 metamodels:   7%[=>                       ]  ETA: 0:01:09[KEvaluating over 30 metamodels:  10%[==>                      ]  ETA: 0:00:51[KEvaluating over 30 metamodels:  13%[===>                     ]  ETA: 0:00:41[KEvaluating over 30 metamodels:  17%[====>                    ]  ETA: 0:00:34[KEvaluating over 30 metamodels:  20%[=====>                   ]  ETA: 0:00:30[KEvaluating over 30 metamodels:  23%[=====>                   ]  ETA: 0:00:26[KEvaluating over 30 metamodels:  27%[======>                  ]  ETA: 0:00:24[KEvaluating over 30 metamodels:  30%[=======>                 ]  ETA: 0:00:21[KEvaluating over 30 metamodels:  33%[========>                ]  ETA: 0:00:19[KEvaluating over 30 metamodels:  37%[=========>               ]  ETA: 0:00:17[KEvaluating over 30 metamodels:  40%[==========>              ]  ETA: 0:00:15[KEvaluating over 30 metamodels:  43%[==========>              ]  ETA: 0:00:14[KEvaluating over 30 metamodels:  47%[===========>             ]  ETA: 0:00:12[KEvaluating over 30 metamodels:  50%[============>            ]  ETA: 0:00:11[KEvaluating over 30 metamodels:  53%[=============>           ]  ETA: 0:00:10[KEvaluating over 30 metamodels:  57%[==============>          ]  ETA: 0:00:09[KEvaluating over 30 metamodels:  60%[===============>         ]  ETA: 0:00:08[KEvaluating over 30 metamodels:  63%[===============>         ]  ETA: 0:00:07[KEvaluating over 30 metamodels:  67%[================>        ]  ETA: 0:00:06[KEvaluating over 30 metamodels:  70%[=================>       ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  73%[==================>      ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  77%[===================>     ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  87%[=====================>   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  90%[======================>  ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  93%[=======================> ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:12[K
 
-    
-    </script>
+````
 
-```
+![](learning_curve2.png)
 
 ````julia
 best_lambda = lambdas[argmin(losses)]
@@ -3398,1729 +2948,493 @@ for this range:
 ````julia
 import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
-histogram(rand(sampler_r, 10000), nbins=50)
+plt = histogram(rand(sampler_r, 10000), nbins=50)
+savefig("gamma_sampler.png")
+plt
 ````
 
 ```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="1422bacc-5d8b-41d7-9ee1-5bd3f22214ff" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('1422bacc-5d8b-41d7-9ee1-5bd3f22214ff');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            0.0,
-            0.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            856.0,
-            0.0,
-            0.0,
-            856.0,
-            856.0,
-            856.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            1.0,
-            1.0,
-            2.0,
-            2.0,
-            1.0,
-            1.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1167.0,
-            0.0,
-            0.0,
-            1167.0,
-            1167.0,
-            1167.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            2.0,
-            2.0,
-            3.0,
-            3.0,
-            2.0,
-            2.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1198.0,
-            0.0,
-            0.0,
-            1198.0,
-            1198.0,
-            1198.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            3.0,
-            3.0,
-            4.0,
-            4.0,
-            3.0,
-            3.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1107.0,
-            0.0,
-            0.0,
-            1107.0,
-            1107.0,
-            1107.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            4.0,
-            4.0,
-            5.0,
-            5.0,
-            4.0,
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            966.0,
-            0.0,
-            0.0,
-            966.0,
-            966.0,
-            966.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            5.0,
-            5.0,
-            6.0,
-            6.0,
-            5.0,
-            5.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            843.0,
-            0.0,
-            0.0,
-            843.0,
-            843.0,
-            843.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            6.0,
-            6.0,
-            7.0,
-            7.0,
-            6.0,
-            6.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            674.0,
-            0.0,
-            0.0,
-            674.0,
-            674.0,
-            674.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            7.0,
-            7.0,
-            8.0,
-            8.0,
-            7.0,
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            591.0,
-            0.0,
-            0.0,
-            591.0,
-            591.0,
-            591.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            8.0,
-            8.0,
-            9.0,
-            9.0,
-            8.0,
-            8.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            476.0,
-            0.0,
-            0.0,
-            476.0,
-            476.0,
-            476.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            9.0,
-            9.0,
-            10.0,
-            10.0,
-            9.0,
-            9.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            381.0,
-            0.0,
-            0.0,
-            381.0,
-            381.0,
-            381.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            10.0,
-            10.0,
-            11.0,
-            11.0,
-            10.0,
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            326.0,
-            0.0,
-            0.0,
-            326.0,
-            326.0,
-            326.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            11.0,
-            11.0,
-            12.0,
-            12.0,
-            11.0,
-            11.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            261.0,
-            0.0,
-            0.0,
-            261.0,
-            261.0,
-            261.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            12.0,
-            12.0,
-            13.0,
-            13.0,
-            12.0,
-            12.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            221.0,
-            0.0,
-            0.0,
-            221.0,
-            221.0,
-            221.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            13.0,
-            13.0,
-            14.0,
-            14.0,
-            13.0,
-            13.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            183.0,
-            0.0,
-            0.0,
-            183.0,
-            183.0,
-            183.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            14.0,
-            14.0,
-            15.0,
-            15.0,
-            14.0,
-            14.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            138.0,
-            0.0,
-            0.0,
-            138.0,
-            138.0,
-            138.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            15.0,
-            15.0,
-            16.0,
-            16.0,
-            15.0,
-            15.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            124.0,
-            0.0,
-            0.0,
-            124.0,
-            124.0,
-            124.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            16.0,
-            16.0,
-            17.0,
-            17.0,
-            16.0,
-            16.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            108.0,
-            0.0,
-            0.0,
-            108.0,
-            108.0,
-            108.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            17.0,
-            17.0,
-            18.0,
-            18.0,
-            17.0,
-            17.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            74.0,
-            0.0,
-            0.0,
-            74.0,
-            74.0,
-            74.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            18.0,
-            18.0,
-            19.0,
-            19.0,
-            18.0,
-            18.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            62.0,
-            0.0,
-            0.0,
-            62.0,
-            62.0,
-            62.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            19.0,
-            19.0,
-            20.0,
-            20.0,
-            19.0,
-            19.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            54.0,
-            0.0,
-            0.0,
-            54.0,
-            54.0,
-            54.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            20.0,
-            20.0,
-            21.0,
-            21.0,
-            20.0,
-            20.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            25.0,
-            0.0,
-            0.0,
-            25.0,
-            25.0,
-            25.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            21.0,
-            21.0,
-            22.0,
-            22.0,
-            21.0,
-            21.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            29.0,
-            0.0,
-            0.0,
-            29.0,
-            29.0,
-            29.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            22.0,
-            22.0,
-            23.0,
-            23.0,
-            22.0,
-            22.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            31.0,
-            0.0,
-            0.0,
-            31.0,
-            31.0,
-            31.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            23.0,
-            23.0,
-            24.0,
-            24.0,
-            23.0,
-            23.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            21.0,
-            0.0,
-            0.0,
-            21.0,
-            21.0,
-            21.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            24.0,
-            24.0,
-            25.0,
-            25.0,
-            24.0,
-            24.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            16.0,
-            0.0,
-            0.0,
-            16.0,
-            16.0,
-            16.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            25.0,
-            25.0,
-            26.0,
-            26.0,
-            25.0,
-            25.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            16.0,
-            0.0,
-            0.0,
-            16.0,
-            16.0,
-            16.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            26.0,
-            26.0,
-            27.0,
-            27.0,
-            26.0,
-            26.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            11.0,
-            0.0,
-            0.0,
-            11.0,
-            11.0,
-            11.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            27.0,
-            27.0,
-            28.0,
-            28.0,
-            27.0,
-            27.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            9.0,
-            0.0,
-            0.0,
-            9.0,
-            9.0,
-            9.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            28.0,
-            28.0,
-            29.0,
-            29.0,
-            28.0,
-            28.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            6.0,
-            0.0,
-            0.0,
-            6.0,
-            6.0,
-            6.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            29.0,
-            29.0,
-            30.0,
-            30.0,
-            29.0,
-            29.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            7.0,
-            0.0,
-            0.0,
-            7.0,
-            7.0,
-            7.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            30.0,
-            30.0,
-            31.0,
-            31.0,
-            30.0,
-            30.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            6.0,
-            0.0,
-            0.0,
-            6.0,
-            6.0,
-            6.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            31.0,
-            31.0,
-            32.0,
-            32.0,
-            31.0,
-            31.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            32.0,
-            32.0,
-            33.0,
-            33.0,
-            32.0,
-            32.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.0,
-            0.0,
-            0.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            33.0,
-            33.0,
-            34.0,
-            34.0,
-            33.0,
-            33.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            34.0,
-            34.0,
-            35.0,
-            35.0,
-            34.0,
-            34.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.0,
-            0.0,
-            0.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            35.0,
-            35.0,
-            36.0,
-            36.0,
-            35.0,
-            35.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.0,
-            0.0,
-            0.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            36.0,
-            36.0,
-            37.0,
-            37.0,
-            36.0,
-            36.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            37.0,
-            37.0,
-            38.0,
-            38.0,
-            37.0,
-            37.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            38.0,
-            38.0,
-            39.0,
-            39.0,
-            38.0,
-            38.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            39.0,
-            39.0,
-            40.0,
-            40.0,
-            39.0,
-            39.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            40.0,
-            40.0,
-            41.0,
-            41.0,
-            40.0,
-            40.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.0,
-            0.0,
-            0.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            41.0,
-            41.0,
-            42.0,
-            42.0,
-            41.0,
-            41.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            42.0,
-            42.0,
-            43.0,
-            43.0,
-            42.0,
-            42.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            43.0,
-            43.0,
-            44.0,
-            44.0,
-            43.0,
-            43.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.0,
-            0.0,
-            0.0,
-            1.0,
-            1.0,
-            1.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            0.5,
-            1.5,
-            2.5,
-            3.5,
-            4.5,
-            5.5,
-            6.5,
-            7.5,
-            8.5,
-            9.5,
-            10.5,
-            11.5,
-            12.5,
-            13.5,
-            14.5,
-            15.5,
-            16.5,
-            17.5,
-            18.5,
-            19.5,
-            20.5,
-            21.5,
-            22.5,
-            23.5,
-            24.5,
-            25.5,
-            26.5,
-            27.5,
-            28.5,
-            29.5,
-            30.5,
-            31.5,
-            32.5,
-            33.5,
-            34.5,
-            35.5,
-            36.5,
-            37.5,
-            38.5,
-            39.5,
-            40.5,
-            41.5,
-            42.5,
-            43.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 0.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 0.000)",
-                "width": 1
-            },
-            "size": 0
-        },
-        "zmax": null,
-        "y": [
-            856.0,
-            1167.0,
-            1198.0,
-            1107.0,
-            966.0,
-            843.0,
-            674.0,
-            591.0,
-            476.0,
-            381.0,
-            326.0,
-            261.0,
-            221.0,
-            183.0,
-            138.0,
-            124.0,
-            108.0,
-            74.0,
-            62.0,
-            54.0,
-            25.0,
-            29.0,
-            31.0,
-            21.0,
-            16.0,
-            16.0,
-            11.0,
-            9.0,
-            6.0,
-            7.0,
-            6.0,
-            0.0,
-            2.0,
-            1.0,
-            2.0,
-            2.0,
-            1.0,
-            0.0,
-            1.0,
-            1.0,
-            2.0,
-            0.0,
-            0.0,
-            1.0
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            10.0,
-            20.0,
-            30.0,
-            40.0
-        ],
-        "range": [
-            -2.7192,
-            46.7192
-        ],
-        "domain": [
-            0.0805970682236149,
-            0.991965290053029
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0",
-            "10",
-            "20",
-            "30",
-            "40"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            250.0,
-            500.0,
-            750.0,
-            1000.0
-        ],
-        "range": [
-            -35.94,
-            1233.94
-        ],
-        "domain": [
-            0.050160396617089535,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0",
-            "250",
-            "500",
-            "750",
-            "1000"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
-
-    
-    </script>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="490" height="300" viewBox="0 0 1960 1200">
+<defs>
+  <clipPath id="clip250">
+    <rect x="0" y="0" width="1960" height="1200"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip250)" d="
+M0 1200 L1960 1200 L1960 0 L0 0  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip251">
+    <rect x="392" y="0" width="1373" height="1200"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip250)" d="
+M194.883 1093.27 L1912.76 1093.27 L1912.76 47.2441 L194.883 47.2441  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip252">
+    <rect x="194" y="47" width="1719" height="1047"/>
+  </clipPath>
+</defs>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  289.369,1093.27 289.369,47.2441 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  589.154,1093.27 589.154,47.2441 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  888.938,1093.27 888.938,47.2441 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1188.72,1093.27 1188.72,47.2441 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1488.51,1093.27 1488.51,47.2441 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1788.29,1093.27 1788.29,47.2441 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,1093.27 1912.76,1093.27 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  289.369,1093.27 289.369,1074.37 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  589.154,1093.27 589.154,1074.37 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  888.938,1093.27 888.938,1074.37 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1188.72,1093.27 1188.72,1074.37 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1488.51,1093.27 1488.51,1074.37 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1788.29,1093.27 1788.29,1074.37 
+  "/>
+<path clip-path="url(#clip250)" d="M289.369 1120.67 Q285.758 1120.67 283.929 1124.23 Q282.124 1127.77 282.124 1134.9 Q282.124 1142.01 283.929 1145.58 Q285.758 1149.12 289.369 1149.12 Q293.003 1149.12 294.809 1145.58 Q296.638 1142.01 296.638 1134.9 Q296.638 1127.77 294.809 1124.23 Q293.003 1120.67 289.369 1120.67 M289.369 1116.96 Q295.179 1116.96 298.235 1121.57 Q301.314 1126.15 301.314 1134.9 Q301.314 1143.63 298.235 1148.24 Q295.179 1152.82 289.369 1152.82 Q283.559 1152.82 280.48 1148.24 Q277.425 1143.63 277.425 1134.9 Q277.425 1126.15 280.48 1121.57 Q283.559 1116.96 289.369 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M563.841 1148.21 L571.48 1148.21 L571.48 1121.85 L563.17 1123.51 L563.17 1119.26 L571.434 1117.59 L576.11 1117.59 L576.11 1148.21 L583.749 1148.21 L583.749 1152.15 L563.841 1152.15 L563.841 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M603.193 1120.67 Q599.582 1120.67 597.753 1124.23 Q595.948 1127.77 595.948 1134.9 Q595.948 1142.01 597.753 1145.58 Q599.582 1149.12 603.193 1149.12 Q606.827 1149.12 608.633 1145.58 Q610.461 1142.01 610.461 1134.9 Q610.461 1127.77 608.633 1124.23 Q606.827 1120.67 603.193 1120.67 M603.193 1116.96 Q609.003 1116.96 612.059 1121.57 Q615.137 1126.15 615.137 1134.9 Q615.137 1143.63 612.059 1148.24 Q609.003 1152.82 603.193 1152.82 Q597.383 1152.82 594.304 1148.24 Q591.249 1143.63 591.249 1134.9 Q591.249 1126.15 594.304 1121.57 Q597.383 1116.96 603.193 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M867.711 1148.21 L884.031 1148.21 L884.031 1152.15 L862.086 1152.15 L862.086 1148.21 Q864.748 1145.46 869.332 1140.83 Q873.938 1136.18 875.119 1134.83 Q877.364 1132.31 878.244 1130.58 Q879.146 1128.82 879.146 1127.13 Q879.146 1124.37 877.202 1122.64 Q875.281 1120.9 872.179 1120.9 Q869.98 1120.9 867.526 1121.66 Q865.096 1122.43 862.318 1123.98 L862.318 1119.26 Q865.142 1118.12 867.596 1117.54 Q870.049 1116.96 872.086 1116.96 Q877.457 1116.96 880.651 1119.65 Q883.846 1122.33 883.846 1126.83 Q883.846 1128.95 883.035 1130.88 Q882.248 1132.77 880.142 1135.37 Q879.563 1136.04 876.461 1139.26 Q873.359 1142.45 867.711 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M903.845 1120.67 Q900.234 1120.67 898.406 1124.23 Q896.6 1127.77 896.6 1134.9 Q896.6 1142.01 898.406 1145.58 Q900.234 1149.12 903.845 1149.12 Q907.48 1149.12 909.285 1145.58 Q911.114 1142.01 911.114 1134.9 Q911.114 1127.77 909.285 1124.23 Q907.48 1120.67 903.845 1120.67 M903.845 1116.96 Q909.656 1116.96 912.711 1121.57 Q915.79 1126.15 915.79 1134.9 Q915.79 1143.63 912.711 1148.24 Q909.656 1152.82 903.845 1152.82 Q898.035 1152.82 894.957 1148.24 Q891.901 1143.63 891.901 1134.9 Q891.901 1126.15 894.957 1121.57 Q898.035 1116.96 903.845 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1177.57 1133.51 Q1180.92 1134.23 1182.8 1136.5 Q1184.69 1138.77 1184.69 1142.1 Q1184.69 1147.22 1181.18 1150.02 Q1177.66 1152.82 1171.18 1152.82 Q1169 1152.82 1166.69 1152.38 Q1164.39 1151.96 1161.94 1151.11 L1161.94 1146.59 Q1163.88 1147.73 1166.2 1148.31 Q1168.51 1148.89 1171.04 1148.89 Q1175.44 1148.89 1177.73 1147.15 Q1180.04 1145.41 1180.04 1142.1 Q1180.04 1139.05 1177.89 1137.33 Q1175.76 1135.6 1171.94 1135.6 L1167.91 1135.6 L1167.91 1131.76 L1172.13 1131.76 Q1175.57 1131.76 1177.4 1130.39 Q1179.23 1129 1179.23 1126.41 Q1179.23 1123.75 1177.33 1122.33 Q1175.46 1120.9 1171.94 1120.9 Q1170.02 1120.9 1167.82 1121.32 Q1165.62 1121.73 1162.98 1122.61 L1162.98 1118.45 Q1165.64 1117.7 1167.96 1117.33 Q1170.3 1116.96 1172.36 1116.96 Q1177.68 1116.96 1180.78 1119.39 Q1183.88 1121.8 1183.88 1125.92 Q1183.88 1128.79 1182.24 1130.78 Q1180.6 1132.75 1177.57 1133.51 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1203.56 1120.67 Q1199.95 1120.67 1198.12 1124.23 Q1196.32 1127.77 1196.32 1134.9 Q1196.32 1142.01 1198.12 1145.58 Q1199.95 1149.12 1203.56 1149.12 Q1207.19 1149.12 1209 1145.58 Q1210.83 1142.01 1210.83 1134.9 Q1210.83 1127.77 1209 1124.23 Q1207.19 1120.67 1203.56 1120.67 M1203.56 1116.96 Q1209.37 1116.96 1212.43 1121.57 Q1215.5 1126.15 1215.5 1134.9 Q1215.5 1143.63 1212.43 1148.24 Q1209.37 1152.82 1203.56 1152.82 Q1197.75 1152.82 1194.67 1148.24 Q1191.62 1143.63 1191.62 1134.9 Q1191.62 1126.15 1194.67 1121.57 Q1197.75 1116.96 1203.56 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1476.68 1121.66 L1464.87 1140.11 L1476.68 1140.11 L1476.68 1121.66 M1475.45 1117.59 L1481.33 1117.59 L1481.33 1140.11 L1486.26 1140.11 L1486.26 1144 L1481.33 1144 L1481.33 1152.15 L1476.68 1152.15 L1476.68 1144 L1461.08 1144 L1461.08 1139.49 L1475.45 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1503.99 1120.67 Q1500.38 1120.67 1498.55 1124.23 Q1496.75 1127.77 1496.75 1134.9 Q1496.75 1142.01 1498.55 1145.58 Q1500.38 1149.12 1503.99 1149.12 Q1507.63 1149.12 1509.43 1145.58 Q1511.26 1142.01 1511.26 1134.9 Q1511.26 1127.77 1509.43 1124.23 Q1507.63 1120.67 1503.99 1120.67 M1503.99 1116.96 Q1509.8 1116.96 1512.86 1121.57 Q1515.94 1126.15 1515.94 1134.9 Q1515.94 1143.63 1512.86 1148.24 Q1509.8 1152.82 1503.99 1152.82 Q1498.18 1152.82 1495.1 1148.24 Q1492.05 1143.63 1492.05 1134.9 Q1492.05 1126.15 1495.1 1121.57 Q1498.18 1116.96 1503.99 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1762.99 1117.59 L1781.35 1117.59 L1781.35 1121.52 L1767.27 1121.52 L1767.27 1130 Q1768.29 1129.65 1769.31 1129.49 Q1770.33 1129.3 1771.35 1129.3 Q1777.13 1129.3 1780.51 1132.47 Q1783.89 1135.64 1783.89 1141.06 Q1783.89 1146.64 1780.42 1149.74 Q1776.95 1152.82 1770.63 1152.82 Q1768.45 1152.82 1766.19 1152.45 Q1763.94 1152.08 1761.53 1151.34 L1761.53 1146.64 Q1763.62 1147.77 1765.84 1148.33 Q1768.06 1148.89 1770.54 1148.89 Q1774.54 1148.89 1776.88 1146.78 Q1779.22 1144.67 1779.22 1141.06 Q1779.22 1137.45 1776.88 1135.34 Q1774.54 1133.24 1770.54 1133.24 Q1768.66 1133.24 1766.79 1133.65 Q1764.94 1134.07 1762.99 1134.95 L1762.99 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1803.11 1120.67 Q1799.5 1120.67 1797.67 1124.23 Q1795.86 1127.77 1795.86 1134.9 Q1795.86 1142.01 1797.67 1145.58 Q1799.5 1149.12 1803.11 1149.12 Q1806.74 1149.12 1808.55 1145.58 Q1810.37 1142.01 1810.37 1134.9 Q1810.37 1127.77 1808.55 1124.23 Q1806.74 1120.67 1803.11 1120.67 M1803.11 1116.96 Q1808.92 1116.96 1811.97 1121.57 Q1815.05 1126.15 1815.05 1134.9 Q1815.05 1143.63 1811.97 1148.24 Q1808.92 1152.82 1803.11 1152.82 Q1797.3 1152.82 1794.22 1148.24 Q1791.16 1143.63 1791.16 1134.9 Q1791.16 1126.15 1794.22 1121.57 Q1797.3 1116.96 1803.11 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,1063.66 1912.76,1063.66 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,905.521 1912.76,905.521 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,747.377 1912.76,747.377 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,589.234 1912.76,589.234 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,431.09 1912.76,431.09 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,272.947 1912.76,272.947 
+  "/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  194.883,114.803 1912.76,114.803 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,1093.27 194.883,47.2441 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,1063.66 213.781,1063.66 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,905.521 213.781,905.521 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,747.377 213.781,747.377 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,589.234 213.781,589.234 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,431.09 213.781,431.09 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,272.947 213.781,272.947 
+  "/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  194.883,114.803 213.781,114.803 
+  "/>
+<path clip-path="url(#clip250)" d="M153.539 1049.46 Q149.928 1049.46 148.099 1053.03 Q146.293 1056.57 146.293 1063.7 Q146.293 1070.81 148.099 1074.37 Q149.928 1077.91 153.539 1077.91 Q157.173 1077.91 158.979 1074.37 Q160.807 1070.81 160.807 1063.7 Q160.807 1056.57 158.979 1053.03 Q157.173 1049.46 153.539 1049.46 M153.539 1045.76 Q159.349 1045.76 162.405 1050.37 Q165.483 1054.95 165.483 1063.7 Q165.483 1072.43 162.405 1077.03 Q159.349 1081.62 153.539 1081.62 Q147.729 1081.62 144.65 1077.03 Q141.594 1072.43 141.594 1063.7 Q141.594 1054.95 144.65 1050.37 Q147.729 1045.76 153.539 1045.76 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M87.2429 918.866 L103.562 918.866 L103.562 922.801 L81.6179 922.801 L81.6179 918.866 Q84.2799 916.111 88.8632 911.482 Q93.4697 906.829 94.6502 905.486 Q96.8956 902.963 97.7752 901.227 Q98.678 899.468 98.678 897.778 Q98.678 895.023 96.7336 893.287 Q94.8123 891.551 91.7104 891.551 Q89.5114 891.551 87.0577 892.315 Q84.6271 893.079 81.8494 894.63 L81.8494 889.908 Q84.6734 888.773 87.1271 888.195 Q89.5808 887.616 91.6178 887.616 Q96.9882 887.616 100.183 890.301 Q103.377 892.986 103.377 897.477 Q103.377 899.607 102.567 901.528 Q101.78 903.426 99.6734 906.019 Q99.0947 906.69 95.9928 909.908 Q92.891 913.102 87.2429 918.866 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 891.32 Q119.766 891.32 117.937 894.885 Q116.132 898.426 116.132 905.556 Q116.132 912.662 117.937 916.227 Q119.766 919.769 123.377 919.769 Q127.011 919.769 128.817 916.227 Q130.645 912.662 130.645 905.556 Q130.645 898.426 128.817 894.885 Q127.011 891.32 123.377 891.32 M123.377 887.616 Q129.187 887.616 132.243 892.222 Q135.321 896.806 135.321 905.556 Q135.321 914.283 132.243 918.889 Q129.187 923.472 123.377 923.472 Q117.567 923.472 114.488 918.889 Q111.433 914.283 111.433 905.556 Q111.433 896.806 114.488 892.222 Q117.567 887.616 123.377 887.616 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 891.32 Q149.928 891.32 148.099 894.885 Q146.293 898.426 146.293 905.556 Q146.293 912.662 148.099 916.227 Q149.928 919.769 153.539 919.769 Q157.173 919.769 158.979 916.227 Q160.807 912.662 160.807 905.556 Q160.807 898.426 158.979 894.885 Q157.173 891.32 153.539 891.32 M153.539 887.616 Q159.349 887.616 162.405 892.222 Q165.483 896.806 165.483 905.556 Q165.483 914.283 162.405 918.889 Q159.349 923.472 153.539 923.472 Q147.729 923.472 144.65 918.889 Q141.594 914.283 141.594 905.556 Q141.594 896.806 144.65 892.222 Q147.729 887.616 153.539 887.616 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M96.0623 734.171 L84.2568 752.62 L96.0623 752.62 L96.0623 734.171 M94.8354 730.097 L100.715 730.097 L100.715 752.62 L105.646 752.62 L105.646 756.509 L100.715 756.509 L100.715 764.657 L96.0623 764.657 L96.0623 756.509 L80.4605 756.509 L80.4605 751.995 L94.8354 730.097 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 733.176 Q119.766 733.176 117.937 736.741 Q116.132 740.283 116.132 747.412 Q116.132 754.519 117.937 758.083 Q119.766 761.625 123.377 761.625 Q127.011 761.625 128.817 758.083 Q130.645 754.519 130.645 747.412 Q130.645 740.283 128.817 736.741 Q127.011 733.176 123.377 733.176 M123.377 729.472 Q129.187 729.472 132.243 734.079 Q135.321 738.662 135.321 747.412 Q135.321 756.139 132.243 760.745 Q129.187 765.329 123.377 765.329 Q117.567 765.329 114.488 760.745 Q111.433 756.139 111.433 747.412 Q111.433 738.662 114.488 734.079 Q117.567 729.472 123.377 729.472 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 733.176 Q149.928 733.176 148.099 736.741 Q146.293 740.283 146.293 747.412 Q146.293 754.519 148.099 758.083 Q149.928 761.625 153.539 761.625 Q157.173 761.625 158.979 758.083 Q160.807 754.519 160.807 747.412 Q160.807 740.283 158.979 736.741 Q157.173 733.176 153.539 733.176 M153.539 729.472 Q159.349 729.472 162.405 734.079 Q165.483 738.662 165.483 747.412 Q165.483 756.139 162.405 760.745 Q159.349 765.329 153.539 765.329 Q147.729 765.329 144.65 760.745 Q141.594 756.139 141.594 747.412 Q141.594 738.662 144.65 734.079 Q147.729 729.472 153.539 729.472 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.7938 587.37 Q90.6456 587.37 88.7938 589.523 Q86.9651 591.676 86.9651 595.426 Q86.9651 599.153 88.7938 601.329 Q90.6456 603.481 93.7938 603.481 Q96.9419 603.481 98.7706 601.329 Q100.622 599.153 100.622 595.426 Q100.622 591.676 98.7706 589.523 Q96.9419 587.37 93.7938 587.37 M103.076 572.718 L103.076 576.977 Q101.317 576.144 99.5113 575.704 Q97.7289 575.264 95.9697 575.264 Q91.3401 575.264 88.8864 578.389 Q86.4558 581.514 86.1086 587.833 Q87.4743 585.819 89.5345 584.755 Q91.5947 583.667 94.0715 583.667 Q99.2798 583.667 102.289 586.838 Q105.321 589.986 105.321 595.426 Q105.321 600.75 102.173 603.968 Q99.0252 607.185 93.7938 607.185 Q87.7984 607.185 84.6271 602.602 Q81.4559 597.995 81.4559 589.269 Q81.4559 581.074 85.3447 576.213 Q89.2336 571.329 95.7845 571.329 Q97.5437 571.329 99.3261 571.676 Q101.132 572.023 103.076 572.718 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 575.033 Q119.766 575.033 117.937 578.597 Q116.132 582.139 116.132 589.269 Q116.132 596.375 117.937 599.94 Q119.766 603.481 123.377 603.481 Q127.011 603.481 128.817 599.94 Q130.645 596.375 130.645 589.269 Q130.645 582.139 128.817 578.597 Q127.011 575.033 123.377 575.033 M123.377 571.329 Q129.187 571.329 132.243 575.935 Q135.321 580.519 135.321 589.269 Q135.321 597.995 132.243 602.602 Q129.187 607.185 123.377 607.185 Q117.567 607.185 114.488 602.602 Q111.433 597.995 111.433 589.269 Q111.433 580.519 114.488 575.935 Q117.567 571.329 123.377 571.329 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 575.033 Q149.928 575.033 148.099 578.597 Q146.293 582.139 146.293 589.269 Q146.293 596.375 148.099 599.94 Q149.928 603.481 153.539 603.481 Q157.173 603.481 158.979 599.94 Q160.807 596.375 160.807 589.269 Q160.807 582.139 158.979 578.597 Q157.173 575.033 153.539 575.033 M153.539 571.329 Q159.349 571.329 162.405 575.935 Q165.483 580.519 165.483 589.269 Q165.483 597.995 162.405 602.602 Q159.349 607.185 153.539 607.185 Q147.729 607.185 144.65 602.602 Q141.594 597.995 141.594 589.269 Q141.594 580.519 144.65 575.935 Q147.729 571.329 153.539 571.329 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.2151 431.958 Q89.8817 431.958 87.9605 433.741 Q86.0623 435.523 86.0623 438.648 Q86.0623 441.773 87.9605 443.555 Q89.8817 445.338 93.2151 445.338 Q96.5484 445.338 98.4697 443.555 Q100.391 441.75 100.391 438.648 Q100.391 435.523 98.4697 433.741 Q96.5715 431.958 93.2151 431.958 M88.5392 429.968 Q85.5299 429.227 83.8401 427.167 Q82.1735 425.106 82.1735 422.144 Q82.1735 418 85.1133 415.593 Q88.0762 413.185 93.2151 413.185 Q98.3771 413.185 101.317 415.593 Q104.257 418 104.257 422.144 Q104.257 425.106 102.567 427.167 Q100.9 429.227 97.9141 429.968 Q101.294 430.755 103.169 433.046 Q105.067 435.338 105.067 438.648 Q105.067 443.671 101.988 446.356 Q98.9326 449.042 93.2151 449.042 Q87.4975 449.042 84.4188 446.356 Q81.3633 443.671 81.3633 438.648 Q81.3633 435.338 83.2614 433.046 Q85.1595 430.755 88.5392 429.968 M86.8262 422.583 Q86.8262 425.269 88.4929 426.773 Q90.1827 428.278 93.2151 428.278 Q96.2243 428.278 97.9141 426.773 Q99.6271 425.269 99.6271 422.583 Q99.6271 419.898 97.9141 418.394 Q96.2243 416.889 93.2151 416.889 Q90.1827 416.889 88.4929 418.394 Q86.8262 419.898 86.8262 422.583 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 416.889 Q119.766 416.889 117.937 420.454 Q116.132 423.995 116.132 431.125 Q116.132 438.231 117.937 441.796 Q119.766 445.338 123.377 445.338 Q127.011 445.338 128.817 441.796 Q130.645 438.231 130.645 431.125 Q130.645 423.995 128.817 420.454 Q127.011 416.889 123.377 416.889 M123.377 413.185 Q129.187 413.185 132.243 417.792 Q135.321 422.375 135.321 431.125 Q135.321 439.852 132.243 444.458 Q129.187 449.042 123.377 449.042 Q117.567 449.042 114.488 444.458 Q111.433 439.852 111.433 431.125 Q111.433 422.375 114.488 417.792 Q117.567 413.185 123.377 413.185 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 416.889 Q149.928 416.889 148.099 420.454 Q146.293 423.995 146.293 431.125 Q146.293 438.231 148.099 441.796 Q149.928 445.338 153.539 445.338 Q157.173 445.338 158.979 441.796 Q160.807 438.231 160.807 431.125 Q160.807 423.995 158.979 420.454 Q157.173 416.889 153.539 416.889 M153.539 413.185 Q159.349 413.185 162.405 417.792 Q165.483 422.375 165.483 431.125 Q165.483 439.852 162.405 444.458 Q159.349 449.042 153.539 449.042 Q147.729 449.042 144.65 444.458 Q141.594 439.852 141.594 431.125 Q141.594 422.375 144.65 417.792 Q147.729 413.185 153.539 413.185 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M53.8634 286.291 L61.5023 286.291 L61.5023 259.926 L53.1921 261.593 L53.1921 257.333 L61.456 255.667 L66.1319 255.667 L66.1319 286.291 L73.7707 286.291 L73.7707 290.227 L53.8634 290.227 L53.8634 286.291 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.2151 258.745 Q89.604 258.745 87.7753 262.31 Q85.9697 265.852 85.9697 272.981 Q85.9697 280.088 87.7753 283.653 Q89.604 287.194 93.2151 287.194 Q96.8493 287.194 98.6548 283.653 Q100.484 280.088 100.484 272.981 Q100.484 265.852 98.6548 262.31 Q96.8493 258.745 93.2151 258.745 M93.2151 255.042 Q99.0252 255.042 102.081 259.648 Q105.159 264.231 105.159 272.981 Q105.159 281.708 102.081 286.315 Q99.0252 290.898 93.2151 290.898 Q87.4049 290.898 84.3262 286.315 Q81.2707 281.708 81.2707 272.981 Q81.2707 264.231 84.3262 259.648 Q87.4049 255.042 93.2151 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 258.745 Q119.766 258.745 117.937 262.31 Q116.132 265.852 116.132 272.981 Q116.132 280.088 117.937 283.653 Q119.766 287.194 123.377 287.194 Q127.011 287.194 128.817 283.653 Q130.645 280.088 130.645 272.981 Q130.645 265.852 128.817 262.31 Q127.011 258.745 123.377 258.745 M123.377 255.042 Q129.187 255.042 132.243 259.648 Q135.321 264.231 135.321 272.981 Q135.321 281.708 132.243 286.315 Q129.187 290.898 123.377 290.898 Q117.567 290.898 114.488 286.315 Q111.433 281.708 111.433 272.981 Q111.433 264.231 114.488 259.648 Q117.567 255.042 123.377 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 258.745 Q149.928 258.745 148.099 262.31 Q146.293 265.852 146.293 272.981 Q146.293 280.088 148.099 283.653 Q149.928 287.194 153.539 287.194 Q157.173 287.194 158.979 283.653 Q160.807 280.088 160.807 272.981 Q160.807 265.852 158.979 262.31 Q157.173 258.745 153.539 258.745 M153.539 255.042 Q159.349 255.042 162.405 259.648 Q165.483 264.231 165.483 272.981 Q165.483 281.708 162.405 286.315 Q159.349 290.898 153.539 290.898 Q147.729 290.898 144.65 286.315 Q141.594 281.708 141.594 272.981 Q141.594 264.231 144.65 259.648 Q147.729 255.042 153.539 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M53.8634 128.148 L61.5023 128.148 L61.5023 101.782 L53.1921 103.449 L53.1921 99.1897 L61.456 97.523 L66.1319 97.523 L66.1319 128.148 L73.7707 128.148 L73.7707 132.083 L53.8634 132.083 L53.8634 128.148 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M87.2429 128.148 L103.562 128.148 L103.562 132.083 L81.6179 132.083 L81.6179 128.148 Q84.2799 125.393 88.8632 120.764 Q93.4697 116.111 94.6502 114.768 Q96.8956 112.245 97.7752 110.509 Q98.678 108.75 98.678 107.06 Q98.678 104.305 96.7336 102.569 Q94.8123 100.833 91.7104 100.833 Q89.5114 100.833 87.0577 101.597 Q84.6271 102.361 81.8494 103.912 L81.8494 99.1897 Q84.6734 98.0554 87.1271 97.4767 Q89.5808 96.898 91.6178 96.898 Q96.9882 96.898 100.183 99.5832 Q103.377 102.268 103.377 106.759 Q103.377 108.889 102.567 110.81 Q101.78 112.708 99.6734 115.301 Q99.0947 115.972 95.9928 119.19 Q92.891 122.384 87.2429 128.148 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 100.602 Q119.766 100.602 117.937 104.167 Q116.132 107.708 116.132 114.838 Q116.132 121.944 117.937 125.509 Q119.766 129.051 123.377 129.051 Q127.011 129.051 128.817 125.509 Q130.645 121.944 130.645 114.838 Q130.645 107.708 128.817 104.167 Q127.011 100.602 123.377 100.602 M123.377 96.898 Q129.187 96.898 132.243 101.504 Q135.321 106.088 135.321 114.838 Q135.321 123.565 132.243 128.171 Q129.187 132.754 123.377 132.754 Q117.567 132.754 114.488 128.171 Q111.433 123.565 111.433 114.838 Q111.433 106.088 114.488 101.504 Q117.567 96.898 123.377 96.898 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 100.602 Q149.928 100.602 148.099 104.167 Q146.293 107.708 146.293 114.838 Q146.293 121.944 148.099 125.509 Q149.928 129.051 153.539 129.051 Q157.173 129.051 158.979 125.509 Q160.807 121.944 160.807 114.838 Q160.807 107.708 158.979 104.167 Q157.173 100.602 153.539 100.602 M153.539 96.898 Q159.349 96.898 162.405 101.504 Q165.483 106.088 165.483 114.838 Q165.483 123.565 162.405 128.171 Q159.349 132.754 153.539 132.754 Q147.729 132.754 144.65 128.171 Q141.594 123.565 141.594 114.838 Q141.594 106.088 144.65 101.504 Q147.729 96.898 153.539 96.898 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip252)" d="
+M289.369 376.531 L289.369 1063.66 L319.348 1063.66 L319.348 376.531 L289.369 376.531 L289.369 376.531  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  289.369,376.531 289.369,1063.66 319.348,1063.66 319.348,376.531 289.369,376.531 
+  "/>
+<path clip-path="url(#clip252)" d="
+M319.348 76.8486 L319.348 1063.66 L349.326 1063.66 L349.326 76.8486 L319.348 76.8486 L319.348 76.8486  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  319.348,76.8486 319.348,1063.66 349.326,1063.66 349.326,76.8486 319.348,76.8486 
+  "/>
+<path clip-path="url(#clip252)" d="
+M349.326 112.431 L349.326 1063.66 L379.305 1063.66 L379.305 112.431 L349.326 112.431 L349.326 112.431  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  349.326,112.431 349.326,1063.66 379.305,1063.66 379.305,112.431 349.326,112.431 
+  "/>
+<path clip-path="url(#clip252)" d="
+M379.305 185.968 L379.305 1063.66 L409.283 1063.66 L409.283 185.968 L379.305 185.968 L379.305 185.968  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  379.305,185.968 379.305,1063.66 409.283,1063.66 409.283,185.968 379.305,185.968 
+  "/>
+<path clip-path="url(#clip252)" d="
+M409.283 294.296 L409.283 1063.66 L439.261 1063.66 L439.261 294.296 L409.283 294.296 L409.283 294.296  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  409.283,294.296 409.283,1063.66 439.261,1063.66 439.261,294.296 409.283,294.296 
+  "/>
+<path clip-path="url(#clip252)" d="
+M439.261 455.602 L439.261 1063.66 L469.24 1063.66 L469.24 455.602 L439.261 455.602 L439.261 455.602  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  439.261,455.602 439.261,1063.66 469.24,1063.66 469.24,455.602 439.261,455.602 
+  "/>
+<path clip-path="url(#clip252)" d="
+M469.24 550.489 L469.24 1063.66 L499.218 1063.66 L499.218 550.489 L469.24 550.489 L469.24 550.489  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  469.24,550.489 469.24,1063.66 499.218,1063.66 499.218,550.489 469.24,550.489 
+  "/>
+<path clip-path="url(#clip252)" d="
+M499.218 599.513 L499.218 1063.66 L529.197 1063.66 L529.197 599.513 L499.218 599.513 L499.218 599.513  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  499.218,599.513 499.218,1063.66 529.197,1063.66 529.197,599.513 499.218,599.513 
+  "/>
+<path clip-path="url(#clip252)" d="
+M529.197 675.422 L529.197 1063.66 L559.175 1063.66 L559.175 675.422 L529.197 675.422 L529.197 675.422  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  529.197,675.422 529.197,1063.66 559.175,1063.66 559.175,675.422 529.197,675.422 
+  "/>
+<path clip-path="url(#clip252)" d="
+M559.175 748.168 L559.175 1063.66 L589.154 1063.66 L589.154 748.168 L559.175 748.168 L559.175 748.168  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  559.175,748.168 559.175,1063.66 589.154,1063.66 589.154,748.168 559.175,748.168 
+  "/>
+<path clip-path="url(#clip252)" d="
+M589.154 812.216 L589.154 1063.66 L619.132 1063.66 L619.132 812.216 L589.154 812.216 L589.154 812.216  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  589.154,812.216 589.154,1063.66 619.132,1063.66 619.132,812.216 589.154,812.216 
+  "/>
+<path clip-path="url(#clip252)" d="
+M619.132 854.124 L619.132 1063.66 L649.111 1063.66 L649.111 854.124 L619.132 854.124 L619.132 854.124  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  619.132,854.124 619.132,1063.66 649.111,1063.66 649.111,854.124 619.132,854.124 
+  "/>
+<path clip-path="url(#clip252)" d="
+M649.111 885.753 L649.111 1063.66 L679.089 1063.66 L679.089 885.753 L649.111 885.753 L649.111 885.753  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  649.111,885.753 649.111,1063.66 679.089,1063.66 679.089,885.753 649.111,885.753 
+  "/>
+<path clip-path="url(#clip252)" d="
+M679.089 934.778 L679.089 1063.66 L709.067 1063.66 L709.067 934.778 L679.089 934.778 L679.089 934.778  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  679.089,934.778 679.089,1063.66 709.067,1063.66 709.067,934.778 679.089,934.778 
+  "/>
+<path clip-path="url(#clip252)" d="
+M709.067 955.336 L709.067 1063.66 L739.046 1063.66 L739.046 955.336 L709.067 955.336 L709.067 955.336  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  709.067,955.336 709.067,1063.66 739.046,1063.66 739.046,955.336 709.067,955.336 
+  "/>
+<path clip-path="url(#clip252)" d="
+M739.046 967.988 L739.046 1063.66 L769.024 1063.66 L769.024 967.988 L739.046 967.988 L739.046 967.988  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  739.046,967.988 739.046,1063.66 769.024,1063.66 769.024,967.988 739.046,967.988 
+  "/>
+<path clip-path="url(#clip252)" d="
+M769.024 980.639 L769.024 1063.66 L799.003 1063.66 L799.003 980.639 L769.024 980.639 L769.024 980.639  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  769.024,980.639 769.024,1063.66 799.003,1063.66 799.003,980.639 769.024,980.639 
+  "/>
+<path clip-path="url(#clip252)" d="
+M799.003 1013.06 L799.003 1063.66 L828.981 1063.66 L828.981 1013.06 L799.003 1013.06 L799.003 1013.06  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  799.003,1013.06 799.003,1063.66 828.981,1063.66 828.981,1013.06 799.003,1013.06 
+  "/>
+<path clip-path="url(#clip252)" d="
+M828.981 1019.38 L828.981 1063.66 L858.96 1063.66 L858.96 1019.38 L828.981 1019.38 L828.981 1019.38  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  828.981,1019.38 828.981,1063.66 858.96,1063.66 858.96,1019.38 828.981,1019.38 
+  "/>
+<path clip-path="url(#clip252)" d="
+M858.96 1024.13 L858.96 1063.66 L888.938 1063.66 L888.938 1024.13 L858.96 1024.13 L858.96 1024.13  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  858.96,1024.13 858.96,1063.66 888.938,1063.66 888.938,1024.13 858.96,1024.13 
+  "/>
+<path clip-path="url(#clip252)" d="
+M888.938 1032.04 L888.938 1063.66 L918.917 1063.66 L918.917 1032.04 L888.938 1032.04 L888.938 1032.04  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  888.938,1032.04 888.938,1063.66 918.917,1063.66 918.917,1032.04 888.938,1032.04 
+  "/>
+<path clip-path="url(#clip252)" d="
+M918.917 1047.06 L918.917 1063.66 L948.895 1063.66 L948.895 1047.06 L918.917 1047.06 L918.917 1047.06  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  918.917,1047.06 918.917,1063.66 948.895,1063.66 948.895,1047.06 918.917,1047.06 
+  "/>
+<path clip-path="url(#clip252)" d="
+M948.895 1049.43 L948.895 1063.66 L978.873 1063.66 L978.873 1049.43 L948.895 1049.43 L948.895 1049.43  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  948.895,1049.43 948.895,1063.66 978.873,1063.66 978.873,1049.43 948.895,1049.43 
+  "/>
+<path clip-path="url(#clip252)" d="
+M978.873 1044.69 L978.873 1063.66 L1008.85 1063.66 L1008.85 1044.69 L978.873 1044.69 L978.873 1044.69  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  978.873,1044.69 978.873,1063.66 1008.85,1063.66 1008.85,1044.69 978.873,1044.69 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1008.85 1047.85 L1008.85 1063.66 L1038.83 1063.66 L1038.83 1047.85 L1008.85 1047.85 L1008.85 1047.85  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1008.85,1047.85 1008.85,1063.66 1038.83,1063.66 1038.83,1047.85 1008.85,1047.85 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1038.83 1051.8 L1038.83 1063.66 L1068.81 1063.66 L1068.81 1051.8 L1038.83 1051.8 L1038.83 1051.8  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1038.83,1051.8 1038.83,1063.66 1068.81,1063.66 1068.81,1051.8 1038.83,1051.8 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1068.81 1053.39 L1068.81 1063.66 L1098.79 1063.66 L1098.79 1053.39 L1068.81 1053.39 L1068.81 1053.39  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1068.81,1053.39 1068.81,1063.66 1098.79,1063.66 1098.79,1053.39 1068.81,1053.39 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1098.79 1057.34 L1098.79 1063.66 L1128.77 1063.66 L1128.77 1057.34 L1098.79 1057.34 L1098.79 1057.34  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1098.79,1057.34 1098.79,1063.66 1128.77,1063.66 1128.77,1057.34 1098.79,1057.34 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1128.77 1057.34 L1128.77 1063.66 L1158.74 1063.66 L1158.74 1057.34 L1128.77 1057.34 L1128.77 1057.34  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1128.77,1057.34 1128.77,1063.66 1158.74,1063.66 1158.74,1057.34 1128.77,1057.34 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1158.74 1058.13 L1158.74 1063.66 L1188.72 1063.66 L1188.72 1058.13 L1158.74 1058.13 L1158.74 1058.13  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1158.74,1058.13 1158.74,1063.66 1188.72,1063.66 1188.72,1058.13 1158.74,1058.13 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1188.72 1061.29 L1188.72 1063.66 L1218.7 1063.66 L1218.7 1061.29 L1188.72 1061.29 L1188.72 1061.29  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1188.72,1061.29 1188.72,1063.66 1218.7,1063.66 1218.7,1061.29 1188.72,1061.29 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1218.7 1061.29 L1218.7 1063.66 L1248.68 1063.66 L1248.68 1061.29 L1218.7 1061.29 L1218.7 1061.29  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1218.7,1061.29 1218.7,1063.66 1248.68,1063.66 1248.68,1061.29 1218.7,1061.29 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1248.68 1061.29 L1248.68 1063.66 L1278.66 1063.66 L1278.66 1061.29 L1248.68 1061.29 L1248.68 1061.29  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1248.68,1061.29 1248.68,1063.66 1278.66,1063.66 1278.66,1061.29 1248.68,1061.29 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1278.66 1062.08 L1278.66 1063.66 L1308.64 1063.66 L1308.64 1062.08 L1278.66 1062.08 L1278.66 1062.08  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1278.66,1062.08 1278.66,1063.66 1308.64,1063.66 1308.64,1062.08 1278.66,1062.08 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1308.64 1063.66 L1308.64 1063.66 L1338.61 1063.66 L1338.61 1063.66 L1308.64 1063.66 L1308.64 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1308.64,1063.66 1308.64,1063.66 1338.61,1063.66 1308.64,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1338.61 1062.87 L1338.61 1063.66 L1368.59 1063.66 L1368.59 1062.87 L1338.61 1062.87 L1338.61 1062.87  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1338.61,1062.87 1338.61,1063.66 1368.59,1063.66 1368.59,1062.87 1338.61,1062.87 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1368.59 1063.66 L1368.59 1063.66 L1398.57 1063.66 L1398.57 1063.66 L1368.59 1063.66 L1368.59 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1368.59,1063.66 1368.59,1063.66 1398.57,1063.66 1368.59,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1398.57 1060.5 L1398.57 1063.66 L1428.55 1063.66 L1428.55 1060.5 L1398.57 1060.5 L1398.57 1060.5  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1398.57,1060.5 1398.57,1063.66 1428.55,1063.66 1428.55,1060.5 1398.57,1060.5 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1428.55 1061.29 L1428.55 1063.66 L1458.53 1063.66 L1458.53 1061.29 L1428.55 1061.29 L1428.55 1061.29  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1428.55,1061.29 1428.55,1063.66 1458.53,1063.66 1458.53,1061.29 1428.55,1061.29 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1458.53 1063.66 L1458.53 1063.66 L1488.51 1063.66 L1488.51 1063.66 L1458.53 1063.66 L1458.53 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1458.53,1063.66 1458.53,1063.66 1488.51,1063.66 1458.53,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1488.51 1062.08 L1488.51 1063.66 L1518.49 1063.66 L1518.49 1062.08 L1488.51 1062.08 L1488.51 1062.08  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1488.51,1062.08 1488.51,1063.66 1518.49,1063.66 1518.49,1062.08 1488.51,1062.08 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1518.49 1063.66 L1518.49 1063.66 L1548.46 1063.66 L1548.46 1063.66 L1518.49 1063.66 L1518.49 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1518.49,1063.66 1518.49,1063.66 1548.46,1063.66 1518.49,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1548.46 1063.66 L1548.46 1063.66 L1578.44 1063.66 L1578.44 1063.66 L1548.46 1063.66 L1548.46 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1548.46,1063.66 1548.46,1063.66 1578.44,1063.66 1548.46,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1578.44 1063.66 L1578.44 1063.66 L1608.42 1063.66 L1608.42 1063.66 L1578.44 1063.66 L1578.44 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1578.44,1063.66 1578.44,1063.66 1608.42,1063.66 1578.44,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1608.42 1062.87 L1608.42 1063.66 L1638.4 1063.66 L1638.4 1062.87 L1608.42 1062.87 L1608.42 1062.87  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1608.42,1062.87 1608.42,1063.66 1638.4,1063.66 1638.4,1062.87 1608.42,1062.87 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1638.4 1063.66 L1638.4 1063.66 L1668.38 1063.66 L1668.38 1063.66 L1638.4 1063.66 L1638.4 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1638.4,1063.66 1638.4,1063.66 1668.38,1063.66 1638.4,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1668.38 1063.66 L1668.38 1063.66 L1698.36 1063.66 L1698.36 1063.66 L1668.38 1063.66 L1668.38 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1668.38,1063.66 1668.38,1063.66 1698.36,1063.66 1668.38,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1698.36 1063.66 L1698.36 1063.66 L1728.33 1063.66 L1728.33 1063.66 L1698.36 1063.66 L1698.36 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1698.36,1063.66 1698.36,1063.66 1728.33,1063.66 1698.36,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1728.33 1063.66 L1728.33 1063.66 L1758.31 1063.66 L1758.31 1063.66 L1728.33 1063.66 L1728.33 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1728.33,1063.66 1728.33,1063.66 1758.31,1063.66 1728.33,1063.66 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1758.31 1062.87 L1758.31 1063.66 L1788.29 1063.66 L1788.29 1062.87 L1758.31 1062.87 L1758.31 1062.87  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1758.31,1062.87 1758.31,1063.66 1788.29,1063.66 1788.29,1062.87 1758.31,1062.87 
+  "/>
+<path clip-path="url(#clip252)" d="
+M1788.29 1062.87 L1788.29 1063.66 L1818.27 1063.66 L1818.27 1062.87 L1788.29 1062.87 L1788.29 1062.87  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1788.29,1062.87 1788.29,1063.66 1818.27,1063.66 1818.27,1062.87 1788.29,1062.87 
+  "/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="304.358" cy="376.531" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="334.337" cy="76.8486" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="364.315" cy="112.431" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="394.294" cy="185.968" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="424.272" cy="294.296" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="454.251" cy="455.602" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="484.229" cy="550.489" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="514.208" cy="599.513" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="544.186" cy="675.422" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="574.164" cy="748.168" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="604.143" cy="812.216" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="634.121" cy="854.124" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="664.1" cy="885.753" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="694.078" cy="934.778" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="724.057" cy="955.336" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="754.035" cy="967.988" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="784.014" cy="980.639" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="813.992" cy="1013.06" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="843.97" cy="1019.38" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="873.949" cy="1024.13" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="903.927" cy="1032.04" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="933.906" cy="1047.06" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="963.884" cy="1049.43" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="993.863" cy="1044.69" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1023.84" cy="1047.85" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1053.82" cy="1051.8" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1083.8" cy="1053.39" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1113.78" cy="1057.34" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1143.75" cy="1057.34" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1173.73" cy="1058.13" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1203.71" cy="1061.29" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1233.69" cy="1061.29" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1263.67" cy="1061.29" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1293.65" cy="1062.08" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1323.63" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1353.6" cy="1062.87" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1383.58" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1413.56" cy="1060.5" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1443.54" cy="1061.29" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1473.52" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1503.5" cy="1062.08" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1533.47" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1563.45" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1593.43" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1623.41" cy="1062.87" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1653.39" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1683.37" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1713.35" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1743.32" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1773.3" cy="1062.87" r="2"/>
+<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1803.28" cy="1062.87" r="2"/>
+<path clip-path="url(#clip250)" d="
+M1612.19 185.792 L1855.49 185.792 L1855.49 82.1116 L1612.19 82.1116  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1612.19,185.792 1855.49,185.792 1855.49,82.1116 1612.19,82.1116 1612.19,185.792 
+  "/>
+<path clip-path="url(#clip250)" d="
+M1631.28 154.688 L1745.8 154.688 L1745.8 113.216 L1631.28 113.216 L1631.28 154.688  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1631.28,154.688 1745.8,154.688 1745.8,113.216 1631.28,113.216 1631.28,154.688 
+  "/>
+<path clip-path="url(#clip250)" d="M1778.73 153.639 Q1776.93 158.269 1775.21 159.681 Q1773.5 161.093 1770.63 161.093 L1767.23 161.093 L1767.23 157.528 L1769.73 157.528 Q1771.49 157.528 1772.46 156.695 Q1773.43 155.861 1774.61 152.759 L1775.37 150.815 L1764.89 125.306 L1769.4 125.306 L1777.5 145.583 L1785.61 125.306 L1790.12 125.306 L1778.73 153.639 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1797.41 147.296 L1805.05 147.296 L1805.05 120.931 L1796.74 122.597 L1796.74 118.338 L1805 116.672 L1809.68 116.672 L1809.68 147.296 L1817.32 147.296 L1817.32 151.232 L1797.41 151.232 L1797.41 147.296 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /></svg>
 
 ```
+
+![](gamma_sampler.png)
 
 The second parameter that we'll add to this is *nominal* (finite) and, by
 default, will be sampled uniformly. Since it is nominal, we specify
@@ -5150,7 +3464,7 @@ tuned_model = TunedModel(model=model,
 
 ````
 ProbabilisticTunedModel(
-    model = Pipeline626(
+    model = Pipeline536(
             standardizer = Standardizer,
             continuous_encoder = ContinuousEncoder,
             logistic_classifier = LogisticClassifier),
@@ -5202,7 +3516,7 @@ rep.best_model
 ````
 
 ````
-Pipeline626(
+Pipeline536(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -5225,2064 +3539,16 @@ By default, sampling of a bounded range is uniform. Lets
 In the special case of two-parameters, you can also plot the results:
 
 ````julia
-plot(tuned_mach)
+plt = plot(tuned_mach)
+savefig("tuning.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="07ff1036-908f-47ea-a8c5-540e66fa27e3" style="width:550px;height:500px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('07ff1036-908f-47ea-a8c5-540e66fa27e3');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x1",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y1",
-        "x": [
-            0.5,
-            0.5,
-            1.5,
-            0.5,
-            1.5,
-            1.5,
-            0.5,
-            0.5,
-            1.5,
-            0.5,
-            1.5,
-            0.5,
-            1.5,
-            1.5,
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": null,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8
-        },
-        "zmax": null,
-        "y": [
-            0.6947237604644253,
-            0.6970198418460459,
-            0.6762908837231785,
-            0.7052765729958649,
-            0.683090585511975,
-            0.7078735043732424,
-            0.6926395376343057,
-            0.6960286166265505,
-            0.682336182063706,
-            0.6948135255623834,
-            0.6766358652989815,
-            0.6934002697669785,
-            0.6837802628953038,
-            0.7047604278552547,
-            0.6984981284720697
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x4",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y4",
-        "x": [
-            9.892724685972443,
-            2.478099735316854,
-            5.100906526305173,
-            1.2494270258041364,
-            2.863292426229041,
-            0.9590656995775001,
-            5.118949091319244,
-            11.362293052081634,
-            2.9982944683087203,
-            3.201864395531346,
-            4.850035558102979,
-            4.041917014605834,
-            2.7496839612983868,
-            1.081200674187863,
-            2.148558024798771
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": null,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8
-        },
-        "zmax": null,
-        "y": [
-            0.6947237604644253,
-            0.6970198418460459,
-            0.6762908837231785,
-            0.7052765729958649,
-            0.683090585511975,
-            0.7078735043732424,
-            0.6926395376343057,
-            0.6960286166265505,
-            0.682336182063706,
-            0.6948135255623834,
-            0.6766358652989815,
-            0.6934002697669785,
-            0.6837802628953038,
-            0.7047604278552547,
-            0.6984981284720697
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(216, 76, 62, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 20.765030195649757
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            9.892724685972443
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(235, 101, 40, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 23.08496184543145
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            2.478099735316854
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 0, 4, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.0
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            5.100906526305173
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(244, 223, 83, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 31.396042476394992
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            1.2494270258041364
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(72, 11, 106, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8.95165057117062
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            2.863292426229041
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(252, 255, 164, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 34.0
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            0.9590656995775001
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(193, 58, 80, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 18.655836073052697
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            5.118949091319244
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(227, 89, 50, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 22.08390983889309
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            11.362293052081634
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(62, 9, 102, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8.182100545432792
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            2.9982944683087203
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(217, 77, 62, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 20.855799663387554
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            3.201864395531346
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(1, 1, 8, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.3535298958525988
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            4.850035558102979
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(202, 64, 74, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 19.426049893748644
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            4.041917014605834
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(81, 14, 109, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 9.654803256027947
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            2.7496839612983868
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(246, 215, 69, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 30.877930087049783
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            1.081200674187863
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(244, 120, 25, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 24.57658245035529
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            2.148558024798771
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            0.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 0.6762908837231785,
-        "marker": {
-            "color": [
-                0.5
-            ],
-            "cmin": 0.6762908837231785,
-            "opacity": 1.0e-10,
-            "size": 1.0e-10,
-            "colorscale": [
-                [
-                    0.0,
-                    "rgba(0, 0, 4, 1.000)"
-                ],
-                [
-                    0.00392156862745098,
-                    "rgba(1, 0, 5, 1.000)"
-                ],
-                [
-                    0.00784313725490196,
-                    "rgba(1, 1, 6, 1.000)"
-                ],
-                [
-                    0.011764705882352941,
-                    "rgba(1, 1, 8, 1.000)"
-                ],
-                [
-                    0.01568627450980392,
-                    "rgba(2, 1, 10, 1.000)"
-                ],
-                [
-                    0.0196078431372549,
-                    "rgba(2, 2, 12, 1.000)"
-                ],
-                [
-                    0.023529411764705882,
-                    "rgba(2, 2, 14, 1.000)"
-                ],
-                [
-                    0.027450980392156862,
-                    "rgba(3, 2, 16, 1.000)"
-                ],
-                [
-                    0.03137254901960784,
-                    "rgba(4, 3, 18, 1.000)"
-                ],
-                [
-                    0.03529411764705882,
-                    "rgba(4, 3, 20, 1.000)"
-                ],
-                [
-                    0.0392156862745098,
-                    "rgba(5, 4, 23, 1.000)"
-                ],
-                [
-                    0.043137254901960784,
-                    "rgba(6, 4, 25, 1.000)"
-                ],
-                [
-                    0.047058823529411764,
-                    "rgba(7, 5, 27, 1.000)"
-                ],
-                [
-                    0.050980392156862744,
-                    "rgba(8, 5, 29, 1.000)"
-                ],
-                [
-                    0.054901960784313725,
-                    "rgba(9, 6, 31, 1.000)"
-                ],
-                [
-                    0.058823529411764705,
-                    "rgba(10, 7, 34, 1.000)"
-                ],
-                [
-                    0.06274509803921569,
-                    "rgba(11, 7, 36, 1.000)"
-                ],
-                [
-                    0.06666666666666667,
-                    "rgba(12, 8, 38, 1.000)"
-                ],
-                [
-                    0.07058823529411765,
-                    "rgba(13, 8, 41, 1.000)"
-                ],
-                [
-                    0.07450980392156863,
-                    "rgba(14, 9, 43, 1.000)"
-                ],
-                [
-                    0.0784313725490196,
-                    "rgba(16, 9, 45, 1.000)"
-                ],
-                [
-                    0.08235294117647059,
-                    "rgba(17, 10, 48, 1.000)"
-                ],
-                [
-                    0.08627450980392157,
-                    "rgba(18, 10, 50, 1.000)"
-                ],
-                [
-                    0.09019607843137255,
-                    "rgba(20, 11, 52, 1.000)"
-                ],
-                [
-                    0.09411764705882353,
-                    "rgba(21, 11, 55, 1.000)"
-                ],
-                [
-                    0.09803921568627451,
-                    "rgba(22, 11, 57, 1.000)"
-                ],
-                [
-                    0.10196078431372549,
-                    "rgba(24, 12, 60, 1.000)"
-                ],
-                [
-                    0.10588235294117647,
-                    "rgba(25, 12, 62, 1.000)"
-                ],
-                [
-                    0.10980392156862745,
-                    "rgba(27, 12, 65, 1.000)"
-                ],
-                [
-                    0.11372549019607843,
-                    "rgba(28, 12, 67, 1.000)"
-                ],
-                [
-                    0.11764705882352941,
-                    "rgba(30, 12, 69, 1.000)"
-                ],
-                [
-                    0.12156862745098039,
-                    "rgba(31, 12, 72, 1.000)"
-                ],
-                [
-                    0.12549019607843137,
-                    "rgba(33, 12, 74, 1.000)"
-                ],
-                [
-                    0.12941176470588237,
-                    "rgba(35, 12, 76, 1.000)"
-                ],
-                [
-                    0.13333333333333333,
-                    "rgba(36, 12, 79, 1.000)"
-                ],
-                [
-                    0.13725490196078433,
-                    "rgba(38, 12, 81, 1.000)"
-                ],
-                [
-                    0.1411764705882353,
-                    "rgba(40, 11, 83, 1.000)"
-                ],
-                [
-                    0.1450980392156863,
-                    "rgba(41, 11, 85, 1.000)"
-                ],
-                [
-                    0.14901960784313725,
-                    "rgba(43, 11, 87, 1.000)"
-                ],
-                [
-                    0.15294117647058825,
-                    "rgba(45, 11, 89, 1.000)"
-                ],
-                [
-                    0.1568627450980392,
-                    "rgba(47, 10, 91, 1.000)"
-                ],
-                [
-                    0.1607843137254902,
-                    "rgba(49, 10, 92, 1.000)"
-                ],
-                [
-                    0.16470588235294117,
-                    "rgba(50, 10, 94, 1.000)"
-                ],
-                [
-                    0.16862745098039217,
-                    "rgba(52, 10, 95, 1.000)"
-                ],
-                [
-                    0.17254901960784313,
-                    "rgba(54, 9, 97, 1.000)"
-                ],
-                [
-                    0.17647058823529413,
-                    "rgba(56, 9, 98, 1.000)"
-                ],
-                [
-                    0.1803921568627451,
-                    "rgba(57, 9, 99, 1.000)"
-                ],
-                [
-                    0.1843137254901961,
-                    "rgba(59, 9, 100, 1.000)"
-                ],
-                [
-                    0.18823529411764706,
-                    "rgba(61, 9, 101, 1.000)"
-                ],
-                [
-                    0.19215686274509805,
-                    "rgba(62, 9, 102, 1.000)"
-                ],
-                [
-                    0.19607843137254902,
-                    "rgba(64, 10, 103, 1.000)"
-                ],
-                [
-                    0.2,
-                    "rgba(66, 10, 104, 1.000)"
-                ],
-                [
-                    0.20392156862745098,
-                    "rgba(68, 10, 104, 1.000)"
-                ],
-                [
-                    0.20784313725490197,
-                    "rgba(69, 10, 105, 1.000)"
-                ],
-                [
-                    0.21176470588235294,
-                    "rgba(71, 11, 106, 1.000)"
-                ],
-                [
-                    0.21568627450980393,
-                    "rgba(73, 11, 106, 1.000)"
-                ],
-                [
-                    0.2196078431372549,
-                    "rgba(74, 12, 107, 1.000)"
-                ],
-                [
-                    0.2235294117647059,
-                    "rgba(76, 12, 107, 1.000)"
-                ],
-                [
-                    0.22745098039215686,
-                    "rgba(77, 13, 108, 1.000)"
-                ],
-                [
-                    0.23137254901960785,
-                    "rgba(79, 13, 108, 1.000)"
-                ],
-                [
-                    0.23529411764705882,
-                    "rgba(81, 14, 108, 1.000)"
-                ],
-                [
-                    0.23921568627450981,
-                    "rgba(82, 14, 109, 1.000)"
-                ],
-                [
-                    0.24313725490196078,
-                    "rgba(84, 15, 109, 1.000)"
-                ],
-                [
-                    0.24705882352941178,
-                    "rgba(85, 15, 109, 1.000)"
-                ],
-                [
-                    0.25098039215686274,
-                    "rgba(87, 16, 110, 1.000)"
-                ],
-                [
-                    0.2549019607843137,
-                    "rgba(89, 16, 110, 1.000)"
-                ],
-                [
-                    0.25882352941176473,
-                    "rgba(90, 17, 110, 1.000)"
-                ],
-                [
-                    0.2627450980392157,
-                    "rgba(92, 18, 110, 1.000)"
-                ],
-                [
-                    0.26666666666666666,
-                    "rgba(93, 18, 110, 1.000)"
-                ],
-                [
-                    0.27058823529411763,
-                    "rgba(95, 19, 110, 1.000)"
-                ],
-                [
-                    0.27450980392156865,
-                    "rgba(97, 19, 110, 1.000)"
-                ],
-                [
-                    0.2784313725490196,
-                    "rgba(98, 20, 110, 1.000)"
-                ],
-                [
-                    0.2823529411764706,
-                    "rgba(100, 21, 110, 1.000)"
-                ],
-                [
-                    0.28627450980392155,
-                    "rgba(101, 21, 110, 1.000)"
-                ],
-                [
-                    0.2901960784313726,
-                    "rgba(103, 22, 110, 1.000)"
-                ],
-                [
-                    0.29411764705882354,
-                    "rgba(105, 22, 110, 1.000)"
-                ],
-                [
-                    0.2980392156862745,
-                    "rgba(106, 23, 110, 1.000)"
-                ],
-                [
-                    0.30196078431372547,
-                    "rgba(108, 24, 110, 1.000)"
-                ],
-                [
-                    0.3058823529411765,
-                    "rgba(109, 24, 110, 1.000)"
-                ],
-                [
-                    0.30980392156862746,
-                    "rgba(111, 25, 110, 1.000)"
-                ],
-                [
-                    0.3137254901960784,
-                    "rgba(113, 25, 110, 1.000)"
-                ],
-                [
-                    0.3176470588235294,
-                    "rgba(114, 26, 110, 1.000)"
-                ],
-                [
-                    0.3215686274509804,
-                    "rgba(116, 26, 110, 1.000)"
-                ],
-                [
-                    0.3254901960784314,
-                    "rgba(117, 27, 110, 1.000)"
-                ],
-                [
-                    0.32941176470588235,
-                    "rgba(119, 28, 109, 1.000)"
-                ],
-                [
-                    0.3333333333333333,
-                    "rgba(120, 28, 109, 1.000)"
-                ],
-                [
-                    0.33725490196078434,
-                    "rgba(122, 29, 109, 1.000)"
-                ],
-                [
-                    0.3411764705882353,
-                    "rgba(124, 29, 109, 1.000)"
-                ],
-                [
-                    0.34509803921568627,
-                    "rgba(125, 30, 109, 1.000)"
-                ],
-                [
-                    0.34901960784313724,
-                    "rgba(127, 30, 108, 1.000)"
-                ],
-                [
-                    0.35294117647058826,
-                    "rgba(128, 31, 108, 1.000)"
-                ],
-                [
-                    0.3568627450980392,
-                    "rgba(130, 32, 108, 1.000)"
-                ],
-                [
-                    0.3607843137254902,
-                    "rgba(132, 32, 107, 1.000)"
-                ],
-                [
-                    0.36470588235294116,
-                    "rgba(133, 33, 107, 1.000)"
-                ],
-                [
-                    0.3686274509803922,
-                    "rgba(135, 33, 107, 1.000)"
-                ],
-                [
-                    0.37254901960784315,
-                    "rgba(136, 34, 106, 1.000)"
-                ],
-                [
-                    0.3764705882352941,
-                    "rgba(138, 34, 106, 1.000)"
-                ],
-                [
-                    0.3803921568627451,
-                    "rgba(140, 35, 105, 1.000)"
-                ],
-                [
-                    0.3843137254901961,
-                    "rgba(141, 35, 105, 1.000)"
-                ],
-                [
-                    0.38823529411764707,
-                    "rgba(143, 36, 105, 1.000)"
-                ],
-                [
-                    0.39215686274509803,
-                    "rgba(144, 37, 104, 1.000)"
-                ],
-                [
-                    0.396078431372549,
-                    "rgba(146, 37, 104, 1.000)"
-                ],
-                [
-                    0.4,
-                    "rgba(147, 38, 103, 1.000)"
-                ],
-                [
-                    0.403921568627451,
-                    "rgba(149, 38, 103, 1.000)"
-                ],
-                [
-                    0.40784313725490196,
-                    "rgba(151, 39, 102, 1.000)"
-                ],
-                [
-                    0.4117647058823529,
-                    "rgba(152, 39, 102, 1.000)"
-                ],
-                [
-                    0.41568627450980394,
-                    "rgba(154, 40, 101, 1.000)"
-                ],
-                [
-                    0.4196078431372549,
-                    "rgba(155, 41, 100, 1.000)"
-                ],
-                [
-                    0.4235294117647059,
-                    "rgba(157, 41, 100, 1.000)"
-                ],
-                [
-                    0.42745098039215684,
-                    "rgba(159, 42, 99, 1.000)"
-                ],
-                [
-                    0.43137254901960786,
-                    "rgba(160, 42, 99, 1.000)"
-                ],
-                [
-                    0.43529411764705883,
-                    "rgba(162, 43, 98, 1.000)"
-                ],
-                [
-                    0.4392156862745098,
-                    "rgba(163, 44, 97, 1.000)"
-                ],
-                [
-                    0.44313725490196076,
-                    "rgba(165, 44, 96, 1.000)"
-                ],
-                [
-                    0.4470588235294118,
-                    "rgba(166, 45, 96, 1.000)"
-                ],
-                [
-                    0.45098039215686275,
-                    "rgba(168, 46, 95, 1.000)"
-                ],
-                [
-                    0.4549019607843137,
-                    "rgba(169, 46, 94, 1.000)"
-                ],
-                [
-                    0.4588235294117647,
-                    "rgba(171, 47, 94, 1.000)"
-                ],
-                [
-                    0.4627450980392157,
-                    "rgba(173, 48, 93, 1.000)"
-                ],
-                [
-                    0.4666666666666667,
-                    "rgba(174, 48, 92, 1.000)"
-                ],
-                [
-                    0.47058823529411764,
-                    "rgba(176, 49, 91, 1.000)"
-                ],
-                [
-                    0.4745098039215686,
-                    "rgba(177, 50, 90, 1.000)"
-                ],
-                [
-                    0.47843137254901963,
-                    "rgba(179, 50, 90, 1.000)"
-                ],
-                [
-                    0.4823529411764706,
-                    "rgba(180, 51, 89, 1.000)"
-                ],
-                [
-                    0.48627450980392156,
-                    "rgba(182, 52, 88, 1.000)"
-                ],
-                [
-                    0.49019607843137253,
-                    "rgba(183, 53, 87, 1.000)"
-                ],
-                [
-                    0.49411764705882355,
-                    "rgba(185, 53, 86, 1.000)"
-                ],
-                [
-                    0.4980392156862745,
-                    "rgba(186, 54, 85, 1.000)"
-                ],
-                [
-                    0.5019607843137255,
-                    "rgba(188, 55, 84, 1.000)"
-                ],
-                [
-                    0.5058823529411764,
-                    "rgba(189, 56, 83, 1.000)"
-                ],
-                [
-                    0.5098039215686274,
-                    "rgba(191, 57, 82, 1.000)"
-                ],
-                [
-                    0.5137254901960784,
-                    "rgba(192, 58, 81, 1.000)"
-                ],
-                [
-                    0.5176470588235295,
-                    "rgba(193, 58, 80, 1.000)"
-                ],
-                [
-                    0.5215686274509804,
-                    "rgba(195, 59, 79, 1.000)"
-                ],
-                [
-                    0.5254901960784314,
-                    "rgba(196, 60, 78, 1.000)"
-                ],
-                [
-                    0.5294117647058824,
-                    "rgba(198, 61, 77, 1.000)"
-                ],
-                [
-                    0.5333333333333333,
-                    "rgba(199, 62, 76, 1.000)"
-                ],
-                [
-                    0.5372549019607843,
-                    "rgba(200, 63, 75, 1.000)"
-                ],
-                [
-                    0.5411764705882353,
-                    "rgba(202, 64, 74, 1.000)"
-                ],
-                [
-                    0.5450980392156862,
-                    "rgba(203, 65, 73, 1.000)"
-                ],
-                [
-                    0.5490196078431373,
-                    "rgba(204, 66, 72, 1.000)"
-                ],
-                [
-                    0.5529411764705883,
-                    "rgba(206, 67, 71, 1.000)"
-                ],
-                [
-                    0.5568627450980392,
-                    "rgba(207, 68, 70, 1.000)"
-                ],
-                [
-                    0.5607843137254902,
-                    "rgba(208, 69, 69, 1.000)"
-                ],
-                [
-                    0.5647058823529412,
-                    "rgba(210, 70, 68, 1.000)"
-                ],
-                [
-                    0.5686274509803921,
-                    "rgba(211, 71, 67, 1.000)"
-                ],
-                [
-                    0.5725490196078431,
-                    "rgba(212, 72, 66, 1.000)"
-                ],
-                [
-                    0.5764705882352941,
-                    "rgba(213, 74, 65, 1.000)"
-                ],
-                [
-                    0.5803921568627451,
-                    "rgba(215, 75, 63, 1.000)"
-                ],
-                [
-                    0.5843137254901961,
-                    "rgba(216, 76, 62, 1.000)"
-                ],
-                [
-                    0.5882352941176471,
-                    "rgba(217, 77, 61, 1.000)"
-                ],
-                [
-                    0.592156862745098,
-                    "rgba(218, 78, 60, 1.000)"
-                ],
-                [
-                    0.596078431372549,
-                    "rgba(219, 80, 59, 1.000)"
-                ],
-                [
-                    0.6,
-                    "rgba(221, 81, 58, 1.000)"
-                ],
-                [
-                    0.6039215686274509,
-                    "rgba(222, 82, 56, 1.000)"
-                ],
-                [
-                    0.6078431372549019,
-                    "rgba(223, 83, 55, 1.000)"
-                ],
-                [
-                    0.611764705882353,
-                    "rgba(224, 85, 54, 1.000)"
-                ],
-                [
-                    0.615686274509804,
-                    "rgba(225, 86, 53, 1.000)"
-                ],
-                [
-                    0.6196078431372549,
-                    "rgba(226, 87, 52, 1.000)"
-                ],
-                [
-                    0.6235294117647059,
-                    "rgba(227, 89, 51, 1.000)"
-                ],
-                [
-                    0.6274509803921569,
-                    "rgba(228, 90, 49, 1.000)"
-                ],
-                [
-                    0.6313725490196078,
-                    "rgba(229, 92, 48, 1.000)"
-                ],
-                [
-                    0.6352941176470588,
-                    "rgba(230, 93, 47, 1.000)"
-                ],
-                [
-                    0.6392156862745098,
-                    "rgba(231, 94, 46, 1.000)"
-                ],
-                [
-                    0.6431372549019608,
-                    "rgba(232, 96, 45, 1.000)"
-                ],
-                [
-                    0.6470588235294118,
-                    "rgba(233, 97, 43, 1.000)"
-                ],
-                [
-                    0.6509803921568628,
-                    "rgba(234, 99, 42, 1.000)"
-                ],
-                [
-                    0.6549019607843137,
-                    "rgba(235, 100, 41, 1.000)"
-                ],
-                [
-                    0.6588235294117647,
-                    "rgba(235, 102, 40, 1.000)"
-                ],
-                [
-                    0.6627450980392157,
-                    "rgba(236, 103, 38, 1.000)"
-                ],
-                [
-                    0.6666666666666666,
-                    "rgba(237, 105, 37, 1.000)"
-                ],
-                [
-                    0.6705882352941176,
-                    "rgba(238, 106, 36, 1.000)"
-                ],
-                [
-                    0.6745098039215687,
-                    "rgba(239, 108, 35, 1.000)"
-                ],
-                [
-                    0.6784313725490196,
-                    "rgba(239, 110, 33, 1.000)"
-                ],
-                [
-                    0.6823529411764706,
-                    "rgba(240, 111, 32, 1.000)"
-                ],
-                [
-                    0.6862745098039216,
-                    "rgba(241, 113, 31, 1.000)"
-                ],
-                [
-                    0.6901960784313725,
-                    "rgba(241, 115, 29, 1.000)"
-                ],
-                [
-                    0.6941176470588235,
-                    "rgba(242, 116, 28, 1.000)"
-                ],
-                [
-                    0.6980392156862745,
-                    "rgba(243, 118, 27, 1.000)"
-                ],
-                [
-                    0.7019607843137254,
-                    "rgba(243, 120, 25, 1.000)"
-                ],
-                [
-                    0.7058823529411765,
-                    "rgba(244, 121, 24, 1.000)"
-                ],
-                [
-                    0.7098039215686275,
-                    "rgba(245, 123, 23, 1.000)"
-                ],
-                [
-                    0.7137254901960784,
-                    "rgba(245, 125, 21, 1.000)"
-                ],
-                [
-                    0.7176470588235294,
-                    "rgba(246, 126, 20, 1.000)"
-                ],
-                [
-                    0.7215686274509804,
-                    "rgba(246, 128, 19, 1.000)"
-                ],
-                [
-                    0.7254901960784313,
-                    "rgba(247, 130, 18, 1.000)"
-                ],
-                [
-                    0.7294117647058823,
-                    "rgba(247, 132, 16, 1.000)"
-                ],
-                [
-                    0.7333333333333333,
-                    "rgba(248, 133, 15, 1.000)"
-                ],
-                [
-                    0.7372549019607844,
-                    "rgba(248, 135, 14, 1.000)"
-                ],
-                [
-                    0.7411764705882353,
-                    "rgba(248, 137, 12, 1.000)"
-                ],
-                [
-                    0.7450980392156863,
-                    "rgba(249, 139, 11, 1.000)"
-                ],
-                [
-                    0.7490196078431373,
-                    "rgba(249, 140, 10, 1.000)"
-                ],
-                [
-                    0.7529411764705882,
-                    "rgba(249, 142, 9, 1.000)"
-                ],
-                [
-                    0.7568627450980392,
-                    "rgba(250, 144, 8, 1.000)"
-                ],
-                [
-                    0.7607843137254902,
-                    "rgba(250, 146, 7, 1.000)"
-                ],
-                [
-                    0.7647058823529411,
-                    "rgba(250, 148, 7, 1.000)"
-                ],
-                [
-                    0.7686274509803922,
-                    "rgba(251, 150, 6, 1.000)"
-                ],
-                [
-                    0.7725490196078432,
-                    "rgba(251, 151, 6, 1.000)"
-                ],
-                [
-                    0.7764705882352941,
-                    "rgba(251, 153, 6, 1.000)"
-                ],
-                [
-                    0.7803921568627451,
-                    "rgba(251, 155, 6, 1.000)"
-                ],
-                [
-                    0.7843137254901961,
-                    "rgba(251, 157, 7, 1.000)"
-                ],
-                [
-                    0.788235294117647,
-                    "rgba(252, 159, 7, 1.000)"
-                ],
-                [
-                    0.792156862745098,
-                    "rgba(252, 161, 8, 1.000)"
-                ],
-                [
-                    0.796078431372549,
-                    "rgba(252, 163, 9, 1.000)"
-                ],
-                [
-                    0.8,
-                    "rgba(252, 165, 10, 1.000)"
-                ],
-                [
-                    0.803921568627451,
-                    "rgba(252, 166, 12, 1.000)"
-                ],
-                [
-                    0.807843137254902,
-                    "rgba(252, 168, 13, 1.000)"
-                ],
-                [
-                    0.8117647058823529,
-                    "rgba(252, 170, 15, 1.000)"
-                ],
-                [
-                    0.8156862745098039,
-                    "rgba(252, 172, 17, 1.000)"
-                ],
-                [
-                    0.8196078431372549,
-                    "rgba(252, 174, 18, 1.000)"
-                ],
-                [
-                    0.8235294117647058,
-                    "rgba(252, 176, 20, 1.000)"
-                ],
-                [
-                    0.8274509803921568,
-                    "rgba(252, 178, 22, 1.000)"
-                ],
-                [
-                    0.8313725490196079,
-                    "rgba(252, 180, 24, 1.000)"
-                ],
-                [
-                    0.8352941176470589,
-                    "rgba(251, 182, 26, 1.000)"
-                ],
-                [
-                    0.8392156862745098,
-                    "rgba(251, 184, 29, 1.000)"
-                ],
-                [
-                    0.8431372549019608,
-                    "rgba(251, 186, 31, 1.000)"
-                ],
-                [
-                    0.8470588235294118,
-                    "rgba(251, 188, 33, 1.000)"
-                ],
-                [
-                    0.8509803921568627,
-                    "rgba(251, 190, 35, 1.000)"
-                ],
-                [
-                    0.8549019607843137,
-                    "rgba(250, 192, 38, 1.000)"
-                ],
-                [
-                    0.8588235294117647,
-                    "rgba(250, 194, 40, 1.000)"
-                ],
-                [
-                    0.8627450980392157,
-                    "rgba(250, 196, 42, 1.000)"
-                ],
-                [
-                    0.8666666666666667,
-                    "rgba(250, 198, 45, 1.000)"
-                ],
-                [
-                    0.8705882352941177,
-                    "rgba(249, 199, 47, 1.000)"
-                ],
-                [
-                    0.8745098039215686,
-                    "rgba(249, 201, 50, 1.000)"
-                ],
-                [
-                    0.8784313725490196,
-                    "rgba(249, 203, 53, 1.000)"
-                ],
-                [
-                    0.8823529411764706,
-                    "rgba(248, 205, 55, 1.000)"
-                ],
-                [
-                    0.8862745098039215,
-                    "rgba(248, 207, 58, 1.000)"
-                ],
-                [
-                    0.8901960784313725,
-                    "rgba(247, 209, 61, 1.000)"
-                ],
-                [
-                    0.8941176470588236,
-                    "rgba(247, 211, 64, 1.000)"
-                ],
-                [
-                    0.8980392156862745,
-                    "rgba(246, 213, 67, 1.000)"
-                ],
-                [
-                    0.9019607843137255,
-                    "rgba(246, 215, 70, 1.000)"
-                ],
-                [
-                    0.9058823529411765,
-                    "rgba(245, 217, 73, 1.000)"
-                ],
-                [
-                    0.9098039215686274,
-                    "rgba(245, 219, 76, 1.000)"
-                ],
-                [
-                    0.9137254901960784,
-                    "rgba(244, 221, 79, 1.000)"
-                ],
-                [
-                    0.9176470588235294,
-                    "rgba(244, 223, 83, 1.000)"
-                ],
-                [
-                    0.9215686274509803,
-                    "rgba(244, 225, 86, 1.000)"
-                ],
-                [
-                    0.9254901960784314,
-                    "rgba(243, 227, 90, 1.000)"
-                ],
-                [
-                    0.9294117647058824,
-                    "rgba(243, 229, 93, 1.000)"
-                ],
-                [
-                    0.9333333333333333,
-                    "rgba(242, 230, 97, 1.000)"
-                ],
-                [
-                    0.9372549019607843,
-                    "rgba(242, 232, 101, 1.000)"
-                ],
-                [
-                    0.9411764705882353,
-                    "rgba(242, 234, 105, 1.000)"
-                ],
-                [
-                    0.9450980392156862,
-                    "rgba(241, 236, 109, 1.000)"
-                ],
-                [
-                    0.9490196078431372,
-                    "rgba(241, 237, 113, 1.000)"
-                ],
-                [
-                    0.9529411764705882,
-                    "rgba(241, 239, 117, 1.000)"
-                ],
-                [
-                    0.9568627450980393,
-                    "rgba(241, 241, 121, 1.000)"
-                ],
-                [
-                    0.9607843137254902,
-                    "rgba(242, 242, 125, 1.000)"
-                ],
-                [
-                    0.9647058823529412,
-                    "rgba(242, 244, 130, 1.000)"
-                ],
-                [
-                    0.9686274509803922,
-                    "rgba(243, 245, 134, 1.000)"
-                ],
-                [
-                    0.9725490196078431,
-                    "rgba(243, 246, 138, 1.000)"
-                ],
-                [
-                    0.9764705882352941,
-                    "rgba(244, 248, 142, 1.000)"
-                ],
-                [
-                    0.9803921568627451,
-                    "rgba(245, 249, 146, 1.000)"
-                ],
-                [
-                    0.984313725490196,
-                    "rgba(246, 250, 150, 1.000)"
-                ],
-                [
-                    0.9882352941176471,
-                    "rgba(248, 251, 154, 1.000)"
-                ],
-                [
-                    0.9921568627450981,
-                    "rgba(249, 252, 157, 1.000)"
-                ],
-                [
-                    0.996078431372549,
-                    "rgba(250, 253, 161, 1.000)"
-                ],
-                [
-                    1.0,
-                    "rgba(252, 255, 164, 1.000)"
-                ]
-            ],
-            "cmax": 0.7078735043732424,
-            "showscale": false
-        },
-        "zmax": 0.7078735043732424,
-        "y": [
-            9.892724685972443
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    }
-]
-, {
-    "showlegend": true,
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "xaxis1": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.5,
-            1.5
-        ],
-        "range": [
-            0.47,
-            1.53
-        ],
-        "domain": [
-            0.11574405472043268,
-            0.4928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "false",
-            "true"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "height": 500,
-    "yaxis4": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.68,
-            0.685,
-            0.6900000000000001,
-            0.6950000000000001,
-            0.7000000000000001,
-            0.705
-        ],
-        "range": [
-            0.6753434051036765,
-            0.7088209829927443
-        ],
-        "domain": [
-            0.060651793525809315,
-            0.5074037620297464
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.680",
-            "0.685",
-            "0.690",
-            "0.695",
-            "0.700",
-            "0.705"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x4",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "LogLoss{Float64}",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "yaxis2": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.25,
-            0.5,
-            0.75,
-            1.0
-        ],
-        "range": [
-            -0.03,
-            1.03
-        ],
-        "domain": [
-            0.5453740157480316,
-            0.9921259842519685
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": false,
-        "ticktext": [
-            "0.00",
-            "0.25",
-            "0.50",
-            "0.75",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x2",
-        "visible": false,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "xaxis3": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.5,
-            1.5
-        ],
-        "range": [
-            -0.3153436333055711,
-            0.19040489669727112
-        ],
-        "domain": [
-            0.11574405472043268,
-            0.4928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "false",
-            "true"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y3",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "continuous_encoder.one_hot_ordered_factors",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "log"
-    },
-    "yaxis3": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.0,
-            4.0,
-            6.0,
-            8.0,
-            10.0
-        ],
-        "range": [
-            0.6469688790023761,
-            11.674389872656759
-        ],
-        "domain": [
-            0.060651793525809315,
-            0.5074037620297464
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2",
-            "4",
-            "6",
-            "8",
-            "10"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x3",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "logistic_classifier.lambda",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "xaxis4": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            1.0,
-            10.0
-        ],
-        "range": [
-            -0.050360169836476315,
-            1.0876745150671971
-        ],
-        "domain": [
-            0.6157440547204327,
-            0.9928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "10<sup>0</sup>",
-            "10<sup>1</sup>"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y4",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "logistic_classifier.lambda",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "log"
-    },
-    "yaxis1": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.68,
-            0.685,
-            0.6900000000000001,
-            0.6950000000000001,
-            0.7000000000000001,
-            0.705
-        ],
-        "range": [
-            0.6753434051036765,
-            0.7088209829927443
-        ],
-        "domain": [
-            0.5453740157480316,
-            0.9921259842519685
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.680",
-            "0.685",
-            "0.690",
-            "0.695",
-            "0.700",
-            "0.705"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "LogLoss{Float64}",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "annotations": [],
-    "xaxis2": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.25,
-            0.5,
-            0.75,
-            1.0
-        ],
-        "range": [
-            -0.03,
-            1.03
-        ],
-        "domain": [
-            0.6157440547204327,
-            0.9928418038654259
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": false,
-        "ticktext": [
-            "0.00",
-            "0.25",
-            "0.50",
-            "0.75",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y2",
-        "visible": false,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "width": 550
-}
-);
-
-    
-    </script>
-
-```
+![](tuning.png)
 
 Finally, let's compare cross-validation estimate of the performance
 of the self-tuning model with that of the original model (an example
 of [*nested
-resampling*](https://mlr3book.mlr-org.com/nested-resampling.html)
+resampling*]((https://mlr.mlr-org.com/articles/tutorial/nested_resampling.html)
 here):
 
 ````julia
@@ -7359,7 +3625,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ````
 
 ````
-Pipeline639(
+Pipeline549(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -7409,1062 +3675,295 @@ histogram(samples, nbins=50)
 ````
 
 ```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="7c09a994-1d28-4e5c-a968-b6dfe66d4f94" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('7c09a994-1d28-4e5c-a968-b6dfe66d4f94');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            5.0,
-            5.0,
-            10.0,
-            10.0,
-            5.0,
-            5.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            208.0,
-            0.0,
-            0.0,
-            208.0,
-            208.0,
-            208.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            10.0,
-            10.0,
-            15.0,
-            15.0,
-            10.0,
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            15.0,
-            15.0,
-            20.0,
-            20.0,
-            15.0,
-            15.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            207.0,
-            0.0,
-            0.0,
-            207.0,
-            207.0,
-            207.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            20.0,
-            20.0,
-            25.0,
-            25.0,
-            20.0,
-            20.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            25.0,
-            25.0,
-            30.0,
-            30.0,
-            25.0,
-            25.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            30.0,
-            30.0,
-            35.0,
-            35.0,
-            30.0,
-            30.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            184.0,
-            0.0,
-            0.0,
-            184.0,
-            184.0,
-            184.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            35.0,
-            35.0,
-            40.0,
-            40.0,
-            35.0,
-            35.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            40.0,
-            40.0,
-            45.0,
-            45.0,
-            40.0,
-            40.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            45.0,
-            45.0,
-            50.0,
-            50.0,
-            45.0,
-            45.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            50.0,
-            50.0,
-            55.0,
-            55.0,
-            50.0,
-            50.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            55.0,
-            55.0,
-            60.0,
-            60.0,
-            55.0,
-            55.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            60.0,
-            60.0,
-            65.0,
-            65.0,
-            60.0,
-            60.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            201.0,
-            0.0,
-            0.0,
-            201.0,
-            201.0,
-            201.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            65.0,
-            65.0,
-            70.0,
-            70.0,
-            65.0,
-            65.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            70.0,
-            70.0,
-            75.0,
-            75.0,
-            70.0,
-            70.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            75.0,
-            75.0,
-            80.0,
-            80.0,
-            75.0,
-            75.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            80.0,
-            80.0,
-            85.0,
-            85.0,
-            80.0,
-            80.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            85.0,
-            85.0,
-            90.0,
-            90.0,
-            85.0,
-            85.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            90.0,
-            90.0,
-            95.0,
-            95.0,
-            90.0,
-            90.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            95.0,
-            95.0,
-            100.0,
-            100.0,
-            95.0,
-            95.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            100.0,
-            100.0,
-            105.0,
-            105.0,
-            100.0,
-            100.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            105.0,
-            105.0,
-            110.0,
-            110.0,
-            105.0,
-            105.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            110.0,
-            110.0,
-            115.0,
-            115.0,
-            110.0,
-            110.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            115.0,
-            115.0,
-            120.0,
-            120.0,
-            115.0,
-            115.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            120.0,
-            120.0,
-            125.0,
-            125.0,
-            120.0,
-            120.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x1",
-        "fill": "tozeroy",
-        "yaxis": "y1",
-        "x": [
-            125.0,
-            125.0,
-            130.0,
-            130.0,
-            125.0,
-            125.0
-        ],
-        "showlegend": false,
-        "mode": "lines",
-        "fillcolor": "rgba(0, 154, 250, 1.000)",
-        "name": "y1",
-        "legendgroup": "y1",
-        "line": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            200.0,
-            0.0,
-            0.0,
-            200.0,
-            200.0,
-            200.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            7.5,
-            12.5,
-            17.5,
-            22.5,
-            27.5,
-            32.5,
-            37.5,
-            42.5,
-            47.5,
-            52.5,
-            57.5,
-            62.5,
-            67.5,
-            72.5,
-            77.5,
-            82.5,
-            87.5,
-            92.5,
-            97.5,
-            102.5,
-            107.5,
-            112.5,
-            117.5,
-            122.5,
-            127.5
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 0.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 0.000)",
-                "width": 1
-            },
-            "size": 0
-        },
-        "zmax": null,
-        "y": [
-            208.0,
-            0.0,
-            207.0,
-            0.0,
-            0.0,
-            184.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            201.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            200.0
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            20.0,
-            40.0,
-            60.0,
-            80.0,
-            100.0,
-            120.0
-        ],
-        "range": [
-            -2.7249999999999996,
-            137.725
-        ],
-        "domain": [
-            0.062456478654453904,
-            0.991965290053029
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0",
-            "20",
-            "40",
-            "60",
-            "80",
-            "100",
-            "120"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            50.0,
-            100.0,
-            150.0,
-            200.0
-        ],
-        "range": [
-            -6.24,
-            214.24
-        ],
-        "domain": [
-            0.050160396617089535,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0",
-            "50",
-            "100",
-            "150",
-            "200"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
-
-    
-    </script>
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="490" height="300" viewBox="0 0 1960 1200">
+<defs>
+  <clipPath id="clip280">
+    <rect x="0" y="0" width="1960" height="1200"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip280)" d="
+M0 1200 L1960 1200 L1960 0 L0 0  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip281">
+    <rect x="392" y="0" width="1373" height="1200"/>
+  </clipPath>
+</defs>
+<path clip-path="url(#clip280)" d="
+M166.457 1093.27 L1912.76 1093.27 L1912.76 47.2441 L166.457 47.2441  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<defs>
+  <clipPath id="clip282">
+    <rect x="166" y="47" width="1747" height="1047"/>
+  </clipPath>
+</defs>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  200.339,1093.27 200.339,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  449.011,1093.27 449.011,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  697.683,1093.27 697.683,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  946.355,1093.27 946.355,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1195.03,1093.27 1195.03,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1443.7,1093.27 1443.7,47.2441 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  1692.37,1093.27 1692.37,47.2441 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,1093.27 1912.76,1093.27 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  200.339,1093.27 200.339,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  449.011,1093.27 449.011,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  697.683,1093.27 697.683,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  946.355,1093.27 946.355,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1195.03,1093.27 1195.03,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1443.7,1093.27 1443.7,1074.37 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1692.37,1093.27 1692.37,1074.37 
+  "/>
+<path clip-path="url(#clip280)" d="M200.339 1120.67 Q196.728 1120.67 194.899 1124.23 Q193.094 1127.77 193.094 1134.9 Q193.094 1142.01 194.899 1145.58 Q196.728 1149.12 200.339 1149.12 Q203.973 1149.12 205.779 1145.58 Q207.607 1142.01 207.607 1134.9 Q207.607 1127.77 205.779 1124.23 Q203.973 1120.67 200.339 1120.67 M200.339 1116.96 Q206.149 1116.96 209.205 1121.57 Q212.283 1126.15 212.283 1134.9 Q212.283 1143.63 209.205 1148.24 Q206.149 1152.82 200.339 1152.82 Q194.529 1152.82 191.45 1148.24 Q188.395 1143.63 188.395 1134.9 Q188.395 1126.15 191.45 1121.57 Q194.529 1116.96 200.339 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M427.784 1148.21 L444.103 1148.21 L444.103 1152.15 L422.159 1152.15 L422.159 1148.21 Q424.821 1145.46 429.404 1140.83 Q434.011 1136.18 435.192 1134.83 Q437.437 1132.31 438.316 1130.58 Q439.219 1128.82 439.219 1127.13 Q439.219 1124.37 437.275 1122.64 Q435.354 1120.9 432.252 1120.9 Q430.053 1120.9 427.599 1121.66 Q425.168 1122.43 422.391 1123.98 L422.391 1119.26 Q425.215 1118.12 427.668 1117.54 Q430.122 1116.96 432.159 1116.96 Q437.529 1116.96 440.724 1119.65 Q443.918 1122.33 443.918 1126.83 Q443.918 1128.95 443.108 1130.88 Q442.321 1132.77 440.215 1135.37 Q439.636 1136.04 436.534 1139.26 Q433.432 1142.45 427.784 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M463.918 1120.67 Q460.307 1120.67 458.478 1124.23 Q456.673 1127.77 456.673 1134.9 Q456.673 1142.01 458.478 1145.58 Q460.307 1149.12 463.918 1149.12 Q467.552 1149.12 469.358 1145.58 Q471.187 1142.01 471.187 1134.9 Q471.187 1127.77 469.358 1124.23 Q467.552 1120.67 463.918 1120.67 M463.918 1116.96 Q469.728 1116.96 472.784 1121.57 Q475.863 1126.15 475.863 1134.9 Q475.863 1143.63 472.784 1148.24 Q469.728 1152.82 463.918 1152.82 Q458.108 1152.82 455.029 1148.24 Q451.974 1143.63 451.974 1134.9 Q451.974 1126.15 455.029 1121.57 Q458.108 1116.96 463.918 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M685.854 1121.66 L674.049 1140.11 L685.854 1140.11 L685.854 1121.66 M684.627 1117.59 L690.507 1117.59 L690.507 1140.11 L695.437 1140.11 L695.437 1144 L690.507 1144 L690.507 1152.15 L685.854 1152.15 L685.854 1144 L670.252 1144 L670.252 1139.49 L684.627 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M713.169 1120.67 Q709.558 1120.67 707.729 1124.23 Q705.923 1127.77 705.923 1134.9 Q705.923 1142.01 707.729 1145.58 Q709.558 1149.12 713.169 1149.12 Q716.803 1149.12 718.609 1145.58 Q720.437 1142.01 720.437 1134.9 Q720.437 1127.77 718.609 1124.23 Q716.803 1120.67 713.169 1120.67 M713.169 1116.96 Q718.979 1116.96 722.035 1121.57 Q725.113 1126.15 725.113 1134.9 Q725.113 1143.63 722.035 1148.24 Q718.979 1152.82 713.169 1152.82 Q707.359 1152.82 704.28 1148.24 Q701.224 1143.63 701.224 1134.9 Q701.224 1126.15 704.28 1121.57 Q707.359 1116.96 713.169 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M931.76 1133.01 Q928.612 1133.01 926.76 1135.16 Q924.931 1137.31 924.931 1141.06 Q924.931 1144.79 926.76 1146.96 Q928.612 1149.12 931.76 1149.12 Q934.908 1149.12 936.737 1146.96 Q938.589 1144.79 938.589 1141.06 Q938.589 1137.31 936.737 1135.16 Q934.908 1133.01 931.76 1133.01 M941.042 1118.35 L941.042 1122.61 Q939.283 1121.78 937.477 1121.34 Q935.695 1120.9 933.936 1120.9 Q929.306 1120.9 926.852 1124.02 Q924.422 1127.15 924.075 1133.47 Q925.44 1131.45 927.501 1130.39 Q929.561 1129.3 932.038 1129.3 Q937.246 1129.3 940.255 1132.47 Q943.288 1135.62 943.288 1141.06 Q943.288 1146.39 940.139 1149.6 Q936.991 1152.82 931.76 1152.82 Q925.765 1152.82 922.593 1148.24 Q919.422 1143.63 919.422 1134.9 Q919.422 1126.71 923.311 1121.85 Q927.2 1116.96 933.751 1116.96 Q935.51 1116.96 937.292 1117.31 Q939.098 1117.66 941.042 1118.35 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M961.343 1120.67 Q957.732 1120.67 955.903 1124.23 Q954.098 1127.77 954.098 1134.9 Q954.098 1142.01 955.903 1145.58 Q957.732 1149.12 961.343 1149.12 Q964.977 1149.12 966.783 1145.58 Q968.612 1142.01 968.612 1134.9 Q968.612 1127.77 966.783 1124.23 Q964.977 1120.67 961.343 1120.67 M961.343 1116.96 Q967.153 1116.96 970.209 1121.57 Q973.287 1126.15 973.287 1134.9 Q973.287 1143.63 970.209 1148.24 Q967.153 1152.82 961.343 1152.82 Q955.533 1152.82 952.454 1148.24 Q949.399 1143.63 949.399 1134.9 Q949.399 1126.15 952.454 1121.57 Q955.533 1116.96 961.343 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1179.9 1135.74 Q1176.57 1135.74 1174.64 1137.52 Q1172.75 1139.3 1172.75 1142.43 Q1172.75 1145.55 1174.64 1147.33 Q1176.57 1149.12 1179.9 1149.12 Q1183.23 1149.12 1185.15 1147.33 Q1187.08 1145.53 1187.08 1142.43 Q1187.08 1139.3 1185.15 1137.52 Q1183.26 1135.74 1179.9 1135.74 M1175.22 1133.75 Q1172.21 1133.01 1170.52 1130.95 Q1168.86 1128.89 1168.86 1125.92 Q1168.86 1121.78 1171.8 1119.37 Q1174.76 1116.96 1179.9 1116.96 Q1185.06 1116.96 1188 1119.37 Q1190.94 1121.78 1190.94 1125.92 Q1190.94 1128.89 1189.25 1130.95 Q1187.58 1133.01 1184.6 1133.75 Q1187.98 1134.53 1189.85 1136.83 Q1191.75 1139.12 1191.75 1142.43 Q1191.75 1147.45 1188.67 1150.14 Q1185.62 1152.82 1179.9 1152.82 Q1174.18 1152.82 1171.1 1150.14 Q1168.05 1147.45 1168.05 1142.43 Q1168.05 1139.12 1169.95 1136.83 Q1171.84 1134.53 1175.22 1133.75 M1173.51 1126.36 Q1173.51 1129.05 1175.18 1130.55 Q1176.87 1132.06 1179.9 1132.06 Q1182.91 1132.06 1184.6 1130.55 Q1186.31 1129.05 1186.31 1126.36 Q1186.31 1123.68 1184.6 1122.17 Q1182.91 1120.67 1179.9 1120.67 Q1176.87 1120.67 1175.18 1122.17 Q1173.51 1123.68 1173.51 1126.36 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1210.06 1120.67 Q1206.45 1120.67 1204.62 1124.23 Q1202.82 1127.77 1202.82 1134.9 Q1202.82 1142.01 1204.62 1145.58 Q1206.45 1149.12 1210.06 1149.12 Q1213.7 1149.12 1215.5 1145.58 Q1217.33 1142.01 1217.33 1134.9 Q1217.33 1127.77 1215.5 1124.23 Q1213.7 1120.67 1210.06 1120.67 M1210.06 1116.96 Q1215.87 1116.96 1218.93 1121.57 Q1222.01 1126.15 1222.01 1134.9 Q1222.01 1143.63 1218.93 1148.24 Q1215.87 1152.82 1210.06 1152.82 Q1204.25 1152.82 1201.17 1148.24 Q1198.12 1143.63 1198.12 1134.9 Q1198.12 1126.15 1201.17 1121.57 Q1204.25 1116.96 1210.06 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1403.31 1148.21 L1410.94 1148.21 L1410.94 1121.85 L1402.63 1123.51 L1402.63 1119.26 L1410.9 1117.59 L1415.57 1117.59 L1415.57 1148.21 L1423.21 1148.21 L1423.21 1152.15 L1403.31 1152.15 L1403.31 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1442.66 1120.67 Q1439.05 1120.67 1437.22 1124.23 Q1435.41 1127.77 1435.41 1134.9 Q1435.41 1142.01 1437.22 1145.58 Q1439.05 1149.12 1442.66 1149.12 Q1446.29 1149.12 1448.1 1145.58 Q1449.93 1142.01 1449.93 1134.9 Q1449.93 1127.77 1448.1 1124.23 Q1446.29 1120.67 1442.66 1120.67 M1442.66 1116.96 Q1448.47 1116.96 1451.52 1121.57 Q1454.6 1126.15 1454.6 1134.9 Q1454.6 1143.63 1451.52 1148.24 Q1448.47 1152.82 1442.66 1152.82 Q1436.85 1152.82 1433.77 1148.24 Q1430.71 1143.63 1430.71 1134.9 Q1430.71 1126.15 1433.77 1121.57 Q1436.85 1116.96 1442.66 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1472.82 1120.67 Q1469.21 1120.67 1467.38 1124.23 Q1465.57 1127.77 1465.57 1134.9 Q1465.57 1142.01 1467.38 1145.58 Q1469.21 1149.12 1472.82 1149.12 Q1476.45 1149.12 1478.26 1145.58 Q1480.09 1142.01 1480.09 1134.9 Q1480.09 1127.77 1478.26 1124.23 Q1476.45 1120.67 1472.82 1120.67 M1472.82 1116.96 Q1478.63 1116.96 1481.68 1121.57 Q1484.76 1126.15 1484.76 1134.9 Q1484.76 1143.63 1481.68 1148.24 Q1478.63 1152.82 1472.82 1152.82 Q1467.01 1152.82 1463.93 1148.24 Q1460.87 1143.63 1460.87 1134.9 Q1460.87 1126.15 1463.93 1121.57 Q1467.01 1116.96 1472.82 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1651.98 1148.21 L1659.62 1148.21 L1659.62 1121.85 L1651.31 1123.51 L1651.31 1119.26 L1659.57 1117.59 L1664.25 1117.59 L1664.25 1148.21 L1671.88 1148.21 L1671.88 1152.15 L1651.98 1152.15 L1651.98 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1685.36 1148.21 L1701.68 1148.21 L1701.68 1152.15 L1679.73 1152.15 L1679.73 1148.21 Q1682.39 1145.46 1686.98 1140.83 Q1691.58 1136.18 1692.76 1134.83 Q1695.01 1132.31 1695.89 1130.58 Q1696.79 1128.82 1696.79 1127.13 Q1696.79 1124.37 1694.85 1122.64 Q1692.93 1120.9 1689.82 1120.9 Q1687.63 1120.9 1685.17 1121.66 Q1682.74 1122.43 1679.96 1123.98 L1679.96 1119.26 Q1682.79 1118.12 1685.24 1117.54 Q1687.69 1116.96 1689.73 1116.96 Q1695.1 1116.96 1698.3 1119.65 Q1701.49 1122.33 1701.49 1126.83 Q1701.49 1128.95 1700.68 1130.88 Q1699.89 1132.77 1697.79 1135.37 Q1697.21 1136.04 1694.11 1139.26 Q1691 1142.45 1685.36 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1721.49 1120.67 Q1717.88 1120.67 1716.05 1124.23 Q1714.25 1127.77 1714.25 1134.9 Q1714.25 1142.01 1716.05 1145.58 Q1717.88 1149.12 1721.49 1149.12 Q1725.12 1149.12 1726.93 1145.58 Q1728.76 1142.01 1728.76 1134.9 Q1728.76 1127.77 1726.93 1124.23 Q1725.12 1120.67 1721.49 1120.67 M1721.49 1116.96 Q1727.3 1116.96 1730.36 1121.57 Q1733.44 1126.15 1733.44 1134.9 Q1733.44 1143.63 1730.36 1148.24 Q1727.3 1152.82 1721.49 1152.82 Q1715.68 1152.82 1712.6 1148.24 Q1709.55 1143.63 1709.55 1134.9 Q1709.55 1126.15 1712.6 1121.57 Q1715.68 1116.96 1721.49 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  166.457,1063.66 1912.76,1063.66 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  166.457,827.584 1912.76,827.584 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  166.457,591.504 1912.76,591.504 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  166.457,355.423 1912.76,355.423 
+  "/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
+  166.457,119.343 1912.76,119.343 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,1093.27 166.457,47.2441 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,1063.66 185.355,1063.66 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,827.584 185.355,827.584 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,591.504 185.355,591.504 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,355.423 185.355,355.423 
+  "/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  166.457,119.343 185.355,119.343 
+  "/>
+<path clip-path="url(#clip280)" d="M125.113 1049.46 Q121.502 1049.46 119.673 1053.03 Q117.868 1056.57 117.868 1063.7 Q117.868 1070.81 119.673 1074.37 Q121.502 1077.91 125.113 1077.91 Q128.747 1077.91 130.553 1074.37 Q132.382 1070.81 132.382 1063.7 Q132.382 1056.57 130.553 1053.03 Q128.747 1049.46 125.113 1049.46 M125.113 1045.76 Q130.923 1045.76 133.979 1050.37 Q137.057 1054.95 137.057 1063.7 Q137.057 1072.43 133.979 1077.03 Q130.923 1081.62 125.113 1081.62 Q119.303 1081.62 116.224 1077.03 Q113.169 1072.43 113.169 1063.7 Q113.169 1054.95 116.224 1050.37 Q119.303 1045.76 125.113 1045.76 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M84.9975 810.304 L103.354 810.304 L103.354 814.239 L89.2799 814.239 L89.2799 822.712 Q90.2984 822.364 91.3169 822.202 Q92.3354 822.017 93.3539 822.017 Q99.141 822.017 102.521 825.188 Q105.9 828.36 105.9 833.776 Q105.9 839.355 102.428 842.457 Q98.9558 845.536 92.6364 845.536 Q90.4604 845.536 88.1919 845.165 Q85.9466 844.795 83.5392 844.054 L83.5392 839.355 Q85.6225 840.489 87.8447 841.045 Q90.0669 841.6 92.5438 841.6 Q96.5484 841.6 98.8863 839.494 Q101.224 837.387 101.224 833.776 Q101.224 830.165 98.8863 828.059 Q96.5484 825.952 92.5438 825.952 Q90.6688 825.952 88.7938 826.369 Q86.9419 826.786 84.9975 827.665 L84.9975 810.304 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 813.383 Q121.502 813.383 119.673 816.948 Q117.868 820.489 117.868 827.619 Q117.868 834.725 119.673 838.29 Q121.502 841.832 125.113 841.832 Q128.747 841.832 130.553 838.29 Q132.382 834.725 132.382 827.619 Q132.382 820.489 130.553 816.948 Q128.747 813.383 125.113 813.383 M125.113 809.679 Q130.923 809.679 133.979 814.286 Q137.057 818.869 137.057 827.619 Q137.057 836.346 133.979 840.952 Q130.923 845.536 125.113 845.536 Q119.303 845.536 116.224 840.952 Q113.169 836.346 113.169 827.619 Q113.169 818.869 116.224 814.286 Q119.303 809.679 125.113 809.679 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M55.5995 604.849 L63.2384 604.849 L63.2384 578.483 L54.9282 580.15 L54.9282 575.89 L63.1921 574.224 L67.868 574.224 L67.868 604.849 L75.5068 604.849 L75.5068 608.784 L55.5995 608.784 L55.5995 604.849 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M94.9512 577.303 Q91.3401 577.303 89.5114 580.867 Q87.7058 584.409 87.7058 591.539 Q87.7058 598.645 89.5114 602.21 Q91.3401 605.751 94.9512 605.751 Q98.5854 605.751 100.391 602.21 Q102.22 598.645 102.22 591.539 Q102.22 584.409 100.391 580.867 Q98.5854 577.303 94.9512 577.303 M94.9512 573.599 Q100.761 573.599 103.817 578.205 Q106.896 582.789 106.896 591.539 Q106.896 600.265 103.817 604.872 Q100.761 609.455 94.9512 609.455 Q89.141 609.455 86.0623 604.872 Q83.0068 600.265 83.0068 591.539 Q83.0068 582.789 86.0623 578.205 Q89.141 573.599 94.9512 573.599 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 577.303 Q121.502 577.303 119.673 580.867 Q117.868 584.409 117.868 591.539 Q117.868 598.645 119.673 602.21 Q121.502 605.751 125.113 605.751 Q128.747 605.751 130.553 602.21 Q132.382 598.645 132.382 591.539 Q132.382 584.409 130.553 580.867 Q128.747 577.303 125.113 577.303 M125.113 573.599 Q130.923 573.599 133.979 578.205 Q137.057 582.789 137.057 591.539 Q137.057 600.265 133.979 604.872 Q130.923 609.455 125.113 609.455 Q119.303 609.455 116.224 604.872 Q113.169 600.265 113.169 591.539 Q113.169 582.789 116.224 578.205 Q119.303 573.599 125.113 573.599 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M55.5995 368.768 L63.2384 368.768 L63.2384 342.403 L54.9282 344.069 L54.9282 339.81 L63.1921 338.143 L67.868 338.143 L67.868 368.768 L75.5068 368.768 L75.5068 372.703 L55.5995 372.703 L55.5995 368.768 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M84.9975 338.143 L103.354 338.143 L103.354 342.079 L89.2799 342.079 L89.2799 350.551 Q90.2984 350.204 91.3169 350.042 Q92.3354 349.856 93.3539 349.856 Q99.141 349.856 102.521 353.028 Q105.9 356.199 105.9 361.616 Q105.9 367.194 102.428 370.296 Q98.9558 373.375 92.6364 373.375 Q90.4604 373.375 88.1919 373.004 Q85.9466 372.634 83.5392 371.893 L83.5392 367.194 Q85.6225 368.328 87.8447 368.884 Q90.0669 369.44 92.5438 369.44 Q96.5484 369.44 98.8863 367.333 Q101.224 365.227 101.224 361.616 Q101.224 358.004 98.8863 355.898 Q96.5484 353.792 92.5438 353.792 Q90.6688 353.792 88.7938 354.208 Q86.9419 354.625 84.9975 355.504 L84.9975 338.143 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 341.222 Q121.502 341.222 119.673 344.787 Q117.868 348.329 117.868 355.458 Q117.868 362.565 119.673 366.129 Q121.502 369.671 125.113 369.671 Q128.747 369.671 130.553 366.129 Q132.382 362.565 132.382 355.458 Q132.382 348.329 130.553 344.787 Q128.747 341.222 125.113 341.222 M125.113 337.518 Q130.923 337.518 133.979 342.125 Q137.057 346.708 137.057 355.458 Q137.057 364.185 133.979 368.791 Q130.923 373.375 125.113 373.375 Q119.303 373.375 116.224 368.791 Q113.169 364.185 113.169 355.458 Q113.169 346.708 116.224 342.125 Q119.303 337.518 125.113 337.518 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M58.8171 132.688 L75.1365 132.688 L75.1365 136.623 L53.1921 136.623 L53.1921 132.688 Q55.8541 129.933 60.4375 125.304 Q65.0439 120.651 66.2245 119.308 Q68.4698 116.785 69.3494 115.049 Q70.2522 113.29 70.2522 111.6 Q70.2522 108.845 68.3078 107.109 Q66.3865 105.373 63.2847 105.373 Q61.0856 105.373 58.6319 106.137 Q56.2014 106.901 53.4236 108.452 L53.4236 103.73 Q56.2477 102.595 58.7014 102.017 Q61.155 101.438 63.1921 101.438 Q68.5624 101.438 71.7568 104.123 Q74.9513 106.808 74.9513 111.299 Q74.9513 113.429 74.1411 115.35 Q73.3541 117.248 71.2476 119.841 Q70.6689 120.512 67.567 123.73 Q64.4652 126.924 58.8171 132.688 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M94.9512 105.142 Q91.3401 105.142 89.5114 108.707 Q87.7058 112.248 87.7058 119.378 Q87.7058 126.484 89.5114 130.049 Q91.3401 133.591 94.9512 133.591 Q98.5854 133.591 100.391 130.049 Q102.22 126.484 102.22 119.378 Q102.22 112.248 100.391 108.707 Q98.5854 105.142 94.9512 105.142 M94.9512 101.438 Q100.761 101.438 103.817 106.045 Q106.896 110.628 106.896 119.378 Q106.896 128.105 103.817 132.711 Q100.761 137.294 94.9512 137.294 Q89.141 137.294 86.0623 132.711 Q83.0068 128.105 83.0068 119.378 Q83.0068 110.628 86.0623 106.045 Q89.141 101.438 94.9512 101.438 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 105.142 Q121.502 105.142 119.673 108.707 Q117.868 112.248 117.868 119.378 Q117.868 126.484 119.673 130.049 Q121.502 133.591 125.113 133.591 Q128.747 133.591 130.553 130.049 Q132.382 126.484 132.382 119.378 Q132.382 112.248 130.553 108.707 Q128.747 105.142 125.113 105.142 M125.113 101.438 Q130.923 101.438 133.979 106.045 Q137.057 110.628 137.057 119.378 Q137.057 128.105 133.979 132.711 Q130.923 137.294 125.113 137.294 Q119.303 137.294 116.224 132.711 Q113.169 128.105 113.169 119.378 Q113.169 110.628 116.224 106.045 Q119.303 101.438 125.113 101.438 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip282)" d="
+M262.507 81.5702 L262.507 1063.66 L324.675 1063.66 L324.675 81.5702 L262.507 81.5702 L262.507 81.5702  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  262.507,81.5702 262.507,1063.66 324.675,1063.66 324.675,81.5702 262.507,81.5702 
+  "/>
+<path clip-path="url(#clip282)" d="
+M324.675 1063.66 L324.675 1063.66 L386.843 1063.66 L386.843 1063.66 L324.675 1063.66 L324.675 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  324.675,1063.66 324.675,1063.66 386.843,1063.66 324.675,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M386.843 76.8486 L386.843 1063.66 L449.011 1063.66 L449.011 76.8486 L386.843 76.8486 L386.843 76.8486  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  386.843,76.8486 386.843,1063.66 449.011,1063.66 449.011,76.8486 386.843,76.8486 
+  "/>
+<path clip-path="url(#clip282)" d="
+M449.011 1063.66 L449.011 1063.66 L511.179 1063.66 L511.179 1063.66 L449.011 1063.66 L449.011 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  449.011,1063.66 449.011,1063.66 511.179,1063.66 449.011,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M511.179 1063.66 L511.179 1063.66 L573.347 1063.66 L573.347 1063.66 L511.179 1063.66 L511.179 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  511.179,1063.66 511.179,1063.66 573.347,1063.66 511.179,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M573.347 147.673 L573.347 1063.66 L635.515 1063.66 L635.515 147.673 L573.347 147.673 L573.347 147.673  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  573.347,147.673 573.347,1063.66 635.515,1063.66 635.515,147.673 573.347,147.673 
+  "/>
+<path clip-path="url(#clip282)" d="
+M635.515 1063.66 L635.515 1063.66 L697.683 1063.66 L697.683 1063.66 L635.515 1063.66 L635.515 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  635.515,1063.66 635.515,1063.66 697.683,1063.66 635.515,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M697.683 1063.66 L697.683 1063.66 L759.851 1063.66 L759.851 1063.66 L697.683 1063.66 L697.683 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  697.683,1063.66 697.683,1063.66 759.851,1063.66 697.683,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M759.851 1063.66 L759.851 1063.66 L822.019 1063.66 L822.019 1063.66 L759.851 1063.66 L759.851 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  759.851,1063.66 759.851,1063.66 822.019,1063.66 759.851,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M822.019 1063.66 L822.019 1063.66 L884.187 1063.66 L884.187 1063.66 L822.019 1063.66 L822.019 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  822.019,1063.66 822.019,1063.66 884.187,1063.66 822.019,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M884.187 1063.66 L884.187 1063.66 L946.355 1063.66 L946.355 1063.66 L884.187 1063.66 L884.187 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  884.187,1063.66 884.187,1063.66 946.355,1063.66 884.187,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M946.355 176.002 L946.355 1063.66 L1008.52 1063.66 L1008.52 176.002 L946.355 176.002 L946.355 176.002  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  946.355,176.002 946.355,1063.66 1008.52,1063.66 1008.52,176.002 946.355,176.002 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1008.52 1063.66 L1008.52 1063.66 L1070.69 1063.66 L1070.69 1063.66 L1008.52 1063.66 L1008.52 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1008.52,1063.66 1008.52,1063.66 1070.69,1063.66 1008.52,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1070.69 1063.66 L1070.69 1063.66 L1132.86 1063.66 L1132.86 1063.66 L1070.69 1063.66 L1070.69 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1070.69,1063.66 1070.69,1063.66 1132.86,1063.66 1070.69,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1132.86 1063.66 L1132.86 1063.66 L1195.03 1063.66 L1195.03 1063.66 L1132.86 1063.66 L1132.86 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1132.86,1063.66 1132.86,1063.66 1195.03,1063.66 1132.86,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1195.03 1063.66 L1195.03 1063.66 L1257.19 1063.66 L1257.19 1063.66 L1195.03 1063.66 L1195.03 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1195.03,1063.66 1195.03,1063.66 1257.19,1063.66 1195.03,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1257.19 1063.66 L1257.19 1063.66 L1319.36 1063.66 L1319.36 1063.66 L1257.19 1063.66 L1257.19 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1257.19,1063.66 1257.19,1063.66 1319.36,1063.66 1257.19,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1319.36 1063.66 L1319.36 1063.66 L1381.53 1063.66 L1381.53 1063.66 L1319.36 1063.66 L1319.36 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1319.36,1063.66 1319.36,1063.66 1381.53,1063.66 1319.36,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1381.53 1063.66 L1381.53 1063.66 L1443.7 1063.66 L1443.7 1063.66 L1381.53 1063.66 L1381.53 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1381.53,1063.66 1381.53,1063.66 1443.7,1063.66 1381.53,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1443.7 1063.66 L1443.7 1063.66 L1505.87 1063.66 L1505.87 1063.66 L1443.7 1063.66 L1443.7 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1443.7,1063.66 1443.7,1063.66 1505.87,1063.66 1443.7,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1505.87 1063.66 L1505.87 1063.66 L1568.03 1063.66 L1568.03 1063.66 L1505.87 1063.66 L1505.87 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1505.87,1063.66 1505.87,1063.66 1568.03,1063.66 1505.87,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1568.03 1063.66 L1568.03 1063.66 L1630.2 1063.66 L1630.2 1063.66 L1568.03 1063.66 L1568.03 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1568.03,1063.66 1568.03,1063.66 1630.2,1063.66 1568.03,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1630.2 1063.66 L1630.2 1063.66 L1692.37 1063.66 L1692.37 1063.66 L1630.2 1063.66 L1630.2 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1630.2,1063.66 1630.2,1063.66 1692.37,1063.66 1630.2,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1692.37 1063.66 L1692.37 1063.66 L1754.54 1063.66 L1754.54 1063.66 L1692.37 1063.66 L1692.37 1063.66  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1692.37,1063.66 1692.37,1063.66 1754.54,1063.66 1692.37,1063.66 
+  "/>
+<path clip-path="url(#clip282)" d="
+M1754.54 114.621 L1754.54 1063.66 L1816.71 1063.66 L1816.71 114.621 L1754.54 114.621 L1754.54 114.621  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1754.54,114.621 1754.54,1063.66 1816.71,1063.66 1816.71,114.621 1754.54,114.621 
+  "/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="293.591" cy="81.5702" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="355.759" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="417.927" cy="76.8486" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="480.095" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="542.263" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="604.431" cy="147.673" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="666.599" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="728.767" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="790.935" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="853.103" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="915.271" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="977.439" cy="176.002" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1039.61" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1101.77" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1163.94" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1226.11" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1288.28" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1350.45" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1412.61" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1474.78" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1536.95" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1599.12" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1661.29" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1723.45" cy="1063.66" r="2"/>
+<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1785.62" cy="114.621" r="2"/>
+<path clip-path="url(#clip280)" d="
+M1608.08 185.792 L1854.55 185.792 L1854.55 82.1116 L1608.08 82.1116  Z
+  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1608.08,185.792 1854.55,185.792 1854.55,82.1116 1608.08,82.1116 1608.08,185.792 
+  "/>
+<path clip-path="url(#clip280)" d="
+M1627.49 154.688 L1743.91 154.688 L1743.91 113.216 L1627.49 113.216 L1627.49 154.688  Z
+  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
+<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
+  1627.49,154.688 1743.91,154.688 1743.91,113.216 1627.49,113.216 1627.49,154.688 
+  "/>
+<path clip-path="url(#clip280)" d="M1777.15 153.639 Q1775.35 158.269 1773.63 159.681 Q1771.92 161.093 1769.05 161.093 L1765.65 161.093 L1765.65 157.528 L1768.15 157.528 Q1769.91 157.528 1770.88 156.695 Q1771.85 155.861 1773.03 152.759 L1773.8 150.815 L1763.31 125.306 L1767.82 125.306 L1775.92 145.583 L1784.03 125.306 L1788.54 125.306 L1777.15 153.639 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1795.83 147.296 L1803.47 147.296 L1803.47 120.931 L1795.16 122.597 L1795.16 118.338 L1803.42 116.672 L1808.1 116.672 L1808.1 147.296 L1815.74 147.296 L1815.74 151.232 L1795.83 151.232 L1795.83 147.296 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /></svg>
 
 ```
 
@@ -8541,11 +4040,11 @@ pretty(X)
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ -6.63967   │ 4.28997    │ -0.647029  │
-│ 15.9674    │ 9.23765    │ -18.2396   │
-│ -8.4269    │ 6.1368     │ -0.761621  │
-│ 0.943899   │ 12.2991    │ -9.13964   │
-│ -8.46366   │ 4.65309    │ -2.26029   │
+│ -4.27165   │ 8.02646    │ 8.53392    │
+│ -4.26892   │ 9.43326    │ 7.80139    │
+│ -2.31856   │ 8.57958    │ 8.66223    │
+│ -10.8567   │ 7.74809    │ 11.3167    │
+│ -16.0841   │ 11.6774    │ 7.03383    │
 └────────────┴────────────┴────────────┘
 
 ````
@@ -8569,11 +4068,11 @@ yhat = predict(mach2, Xstand)
 
 ````
 5-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.0427, 2=>0.0489, 3=>0.908)
- UnivariateFinite{Multiclass{3}}(1=>0.704, 2=>0.198, 3=>0.0981)
- UnivariateFinite{Multiclass{3}}(1=>0.0468, 2=>0.089, 3=>0.864)
- UnivariateFinite{Multiclass{3}}(1=>0.223, 2=>0.544, 3=>0.233)
- UnivariateFinite{Multiclass{3}}(1=>0.0461, 2=>0.0576, 3=>0.896)
+ UnivariateFinite{Multiclass{3}}(1=>0.0569, 2=>0.107, 3=>0.836)
+ UnivariateFinite{Multiclass{3}}(1=>0.104, 2=>0.0614, 3=>0.835)
+ UnivariateFinite{Multiclass{3}}(1=>0.0502, 2=>0.0821, 3=>0.868)
+ UnivariateFinite{Multiclass{3}}(1=>0.0708, 2=>0.658, 3=>0.271)
+ UnivariateFinite{Multiclass{3}}(1=>0.75, 2=>0.0604, 3=>0.19)
 ````
 
 **Step 1** - Edit your code as follows:
@@ -8602,10 +4101,10 @@ Node{Machine{LogisticClassifier,…}}
     1:	Node{Machine{Standardizer,…}}
   formula:
     predict(
-        [0m[1mMachine{LogisticClassifier,…}[22m, 
+        Machine{LogisticClassifier,…}, 
         transform(
-            [0m[1mMachine{Standardizer,…}[22m, 
-            Source @185))
+            Machine{Standardizer,…}, 
+            Source @882))
 ````
 
 Now `X`, `y`, `Xstand` and `yhat` are *nodes* ("variables" or
@@ -8621,17 +4120,17 @@ Xstand() |> pretty
 
 ````
 [ Info: Training Machine{Standardizer,…}.
-┌────────────┬────────────┬────────────┐
-│ x1         │ x2         │ x3         │
-│ Float64    │ Float64    │ Float64    │
-│ Continuous │ Continuous │ Continuous │
-├────────────┼────────────┼────────────┤
-│ -0.510448  │ -0.892916  │ 0.734333   │
-│ 1.66036    │ 0.563516   │ -1.5881    │
-│ -0.682063  │ -0.349268  │ 0.719205   │
-│ 0.217749   │ 1.46469    │ -0.386797  │
-│ -0.685593  │ -0.786025  │ 0.521362   │
-└────────────┴────────────┴────────────┘
+┌────────────┬────────────┬─────────────┐
+│ x1         │ x2         │ x3          │
+│ Float64    │ Float64    │ Float64     │
+│ Continuous │ Continuous │ Continuous  │
+├────────────┼────────────┼─────────────┤
+│ 0.571032   │ -0.674353  │ -0.0839292  │
+│ 0.571505   │ 0.215184   │ -0.537029   │
+│ 0.910193   │ -0.324607  │ -0.00456439 │
+│ -0.572491  │ -0.850372  │ 1.63732     │
+│ -1.48024   │ 1.63415    │ -1.01179    │
+└────────────┴────────────┴─────────────┘
 
 ````
 
@@ -8642,11 +4141,11 @@ yhat()
 
 ````
 5-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.0427, 2=>0.0489, 3=>0.908)
- UnivariateFinite{Multiclass{3}}(1=>0.704, 2=>0.198, 3=>0.0981)
- UnivariateFinite{Multiclass{3}}(1=>0.0468, 2=>0.089, 3=>0.864)
- UnivariateFinite{Multiclass{3}}(1=>0.223, 2=>0.544, 3=>0.233)
- UnivariateFinite{Multiclass{3}}(1=>0.0461, 2=>0.0576, 3=>0.896)
+ UnivariateFinite{Multiclass{3}}(1=>0.0569, 2=>0.107, 3=>0.836)
+ UnivariateFinite{Multiclass{3}}(1=>0.104, 2=>0.0614, 3=>0.835)
+ UnivariateFinite{Multiclass{3}}(1=>0.0502, 2=>0.0821, 3=>0.868)
+ UnivariateFinite{Multiclass{3}}(1=>0.0708, 2=>0.658, 3=>0.271)
+ UnivariateFinite{Multiclass{3}}(1=>0.75, 2=>0.0604, 3=>0.19)
 ````
 
 The node `yhat` is the "descendant" (in an associated DAG we have
@@ -8658,8 +4157,8 @@ sources(yhat)
 
 ````
 2-element Vector{Any}:
- Source @185 ⏎ `Table{AbstractVector{Continuous}}`
- Source @776 ⏎ `AbstractVector{Multiclass{3}}`
+ Source @882 ⏎ `Table{AbstractVector{Continuous}}`
+ Source @521 ⏎ `AbstractVector{Multiclass{3}}`
 ````
 
 The data at the source node is replaced by `Xnew` to obtain a
@@ -8672,8 +4171,8 @@ yhat(Xnew)
 
 ````
 2-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.00136, 2=>1.46e-5, 3=>0.999)
- UnivariateFinite{Multiclass{3}}(1=>0.00614, 2=>0.000723, 3=>0.993)
+ UnivariateFinite{Multiclass{3}}(1=>0.00318, 2=>2.31e-5, 3=>0.997)
+ UnivariateFinite{Multiclass{3}}(1=>0.000824, 2=>6.46e-7, 3=>0.999)
 ````
 
 **Step 2** - Export the learning network as a new stand-alone model type
@@ -8699,8 +4198,8 @@ mach = machine(surrogate, X, y; predict=yhat)
 ````
 Machine{ProbabilisticSurrogate,…} trained 0 times; does not cache data
   args: 
-    1:	Source @185 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @776 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @882 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @521 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -8715,8 +4214,8 @@ predict(mach, Xnew)
 
 ````
 2-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.23, 2=>0.0726, 3=>0.698)
- UnivariateFinite{Multiclass{3}}(1=>0.277, 2=>0.0476, 3=>0.675)
+ UnivariateFinite{Multiclass{3}}(1=>0.00174, 2=>0.0228, 3=>0.975)
+ UnivariateFinite{Multiclass{3}}(1=>0.00019, 2=>0.011, 3=>0.989)
 ````
 
 Now we create a new model type using a Julia `struct` definition
@@ -8787,7 +4286,7 @@ y = source()
 ````
 
 ````
-Source @072 ⏎ `Nothing`
+Source @818 ⏎ `Nothing`
 ````
 
 **First layer and target transformation**
@@ -8805,11 +4304,11 @@ z = MLJ.transform(box, y)
 ````
 Node{Machine{UnivariateBoxCoxTransformer,…}}
   args:
-    1:	Source @072
+    1:	Source @818
   formula:
     transform(
-        [0m[1mMachine{UnivariateBoxCoxTransformer,…}[22m, 
-        Source @072)
+        Machine{UnivariateBoxCoxTransformer,…}, 
+        Source @818)
 ````
 
 **Second layer**
@@ -8833,16 +4332,16 @@ Node{Nothing}
     +(
         #134(
             predict(
-                [0m[1mMachine{RidgeRegressor,…}[22m, 
+                Machine{RidgeRegressor,…}, 
                 transform(
-                    [0m[1mMachine{Standardizer,…}[22m, 
-                    Source @231))),
+                    Machine{Standardizer,…}, 
+                    Source @491))),
         #134(
             predict(
-                [0m[1mMachine{RandomForestRegressor,…}[22m, 
+                Machine{RandomForestRegressor,…}, 
                 transform(
-                    [0m[1mMachine{Standardizer,…}[22m, 
-                    Source @231))))
+                    Machine{Standardizer,…}, 
+                    Source @491))))
 ````
 
 **Output**
@@ -8857,20 +4356,20 @@ Node{Machine{UnivariateBoxCoxTransformer,…}}
     1:	Node{Nothing}
   formula:
     inverse_transform(
-        [0m[1mMachine{UnivariateBoxCoxTransformer,…}[22m, 
+        Machine{UnivariateBoxCoxTransformer,…}, 
         +(
             #134(
                 predict(
-                    [0m[1mMachine{RidgeRegressor,…}[22m, 
+                    Machine{RidgeRegressor,…}, 
                     transform(
-                        [0m[1mMachine{Standardizer,…}[22m, 
-                        Source @231))),
+                        Machine{Standardizer,…}, 
+                        Source @491))),
             #134(
                 predict(
-                    [0m[1mMachine{RandomForestRegressor,…}[22m, 
+                    Machine{RandomForestRegressor,…}, 
                     transform(
-                        [0m[1mMachine{Standardizer,…}[22m, 
-                        Source @231)))))
+                        Machine{Standardizer,…}, 
+                        Source @491)))))
 ````
 
 With the learning network defined, we're ready to export:
@@ -8923,12 +4422,12 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────┬─────────────┬───────────┬──────────────────────────────────────┐
-│ measure                │ measurement │ operation │ per_fold                             │
-├────────────────────────┼─────────────┼───────────┼──────────────────────────────────────┤
-│ RootMeanSquaredError() │ 3.83        │ predict   │ [3.49, 3.07, 5.3, 3.22, 3.09, 4.29]  │
-│ MeanAbsoluteError()    │ 2.42        │ predict   │ [2.23, 2.21, 2.97, 2.22, 2.21, 2.71] │
-└────────────────────────┴─────────────┴───────────┴──────────────────────────────────────┘
+┌────────────────────────┬─────────────┬───────────┬─────────────────────────────────────┐
+│ measure                │ measurement │ operation │ per_fold                            │
+├────────────────────────┼─────────────┼───────────┼─────────────────────────────────────┤
+│ RootMeanSquaredError() │ 3.86        │ predict   │ [4.54, 2.83, 4.73, 2.8, 2.96, 4.69] │
+│ MeanAbsoluteError()    │ 2.45        │ predict   │ [2.7, 2.11, 2.89, 2.11, 2.14, 2.74] │
+└────────────────────────┴─────────────┴───────────┴─────────────────────────────────────┘
 
 ````
 
@@ -8940,10 +4439,9 @@ Extract:
     - [Learning Networks](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks/)
     - [Learning Networks 2](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
 
-    - [Stacking](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/learning-networks-2/)
-       an advanced example of model compostion
+    - [Stacking](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/stacking/): an advanced example of model composition
 
-    - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1)
+    - [Finer Control](https://alan-turing-institute.github.io/MLJ.jl/dev/composing_models/#Method-II:-Finer-control-(advanced)-1):
       exporting learning networks without a macro for finer control
 
 <a id='solutions-to-exercises'></a>
@@ -9221,496 +4719,30 @@ for i in 1:4
                            range=r,
                            resampling=Holdout(),
                            measure=cross_entropy)
-    plt=plot!(one_curve.parameter_values, one_curve.measurements)
+    plot!(one_curve.parameter_values, one_curve.measurements)
 end
 xlabel!(plt, "n_trees")
 ylabel!(plt, "cross entropy")
-plt
+savefig("exercise_6ci.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="6e033c6b-fac4-446f-a15e-a7a8f14de7b6" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('6e033c6b-fac4-446f-a15e-a7a8f14de7b6');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            10.0,
-            11.0,
-            12.0,
-            13.0,
-            14.0,
-            15.0,
-            16.0,
-            17.0,
-            18.0,
-            20.0,
-            21.0,
-            22.0,
-            24.0,
-            26.0,
-            27.0,
-            29.0,
-            31.0,
-            33.0,
-            36.0,
-            38.0,
-            41.0,
-            44.0,
-            47.0,
-            50.0,
-            54.0,
-            57.0,
-            61.0,
-            65.0,
-            70.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.500592629219947,
-            2.4844079381716195,
-            1.589419049629833,
-            2.201692075243932,
-            1.515721068423343,
-            1.6347827036241174,
-            1.8696531100049416,
-            1.5441411231166788,
-            1.6126301663014575,
-            1.5882631712678525,
-            1.5653964891991226,
-            1.5587275032786951,
-            1.59065542574611,
-            1.876681001711597,
-            1.604196730762838,
-            1.2959188958851218,
-            1.243570023099615,
-            1.8833384202412176,
-            1.5784577020000967,
-            0.9112491057047294,
-            1.2774566677603563,
-            0.9677190607000338,
-            0.9315968238231759,
-            1.2930135879591567,
-            1.2831691326827137,
-            1.5670985807057622,
-            1.0162385304807988,
-            0.9596572079013734,
-            1.2695842704709341
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            10.0,
-            11.0,
-            12.0,
-            13.0,
-            14.0,
-            15.0,
-            16.0,
-            17.0,
-            18.0,
-            20.0,
-            21.0,
-            22.0,
-            24.0,
-            26.0,
-            27.0,
-            29.0,
-            31.0,
-            33.0,
-            36.0,
-            38.0,
-            41.0,
-            44.0,
-            47.0,
-            50.0,
-            54.0,
-            57.0,
-            61.0,
-            65.0,
-            70.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y2",
-        "zmin": null,
-        "legendgroup": "y2",
-        "zmax": null,
-        "line": {
-            "color": "rgba(227, 111, 71, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.883899554238724,
-            1.625867734175794,
-            2.5022142975220754,
-            2.1623448775741125,
-            1.9288387074644613,
-            1.8788667647156383,
-            2.5133822787967963,
-            1.6020239405698984,
-            1.8671017146352946,
-            1.3121601733020927,
-            1.872251431920012,
-            1.5548314755184725,
-            0.9587632687903472,
-            1.2664791929730221,
-            1.5803187544213393,
-            1.6045315999111314,
-            1.5531099582741648,
-            1.294948084181965,
-            1.5694522851356478,
-            1.5836030459520019,
-            1.305398724633725,
-            0.655934689357321,
-            0.9854311522748207,
-            1.2523588519285673,
-            1.2512513479180503,
-            0.6805919124383506,
-            1.2563422381852816,
-            0.9910248432720332,
-            0.9695139903590071
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            10.0,
-            11.0,
-            12.0,
-            13.0,
-            14.0,
-            15.0,
-            16.0,
-            17.0,
-            18.0,
-            20.0,
-            21.0,
-            22.0,
-            24.0,
-            26.0,
-            27.0,
-            29.0,
-            31.0,
-            33.0,
-            36.0,
-            38.0,
-            41.0,
-            44.0,
-            47.0,
-            50.0,
-            54.0,
-            57.0,
-            61.0,
-            65.0,
-            70.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y3",
-        "zmin": null,
-        "legendgroup": "y3",
-        "zmax": null,
-        "line": {
-            "color": "rgba(62, 164, 78, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            2.80810377562416,
-            1.5450100059267853,
-            2.1905480590706006,
-            2.1567800153555465,
-            1.2619388450020796,
-            1.8892089921655586,
-            2.1880639893892915,
-            1.8689806384499592,
-            1.8643339415381082,
-            0.9893528722295268,
-            1.5576115427962824,
-            1.5959636566489295,
-            1.599671434872608,
-            1.882757359621781,
-            1.5850257418609048,
-            1.275473687534327,
-            1.576221418624591,
-            1.5650140114892312,
-            1.255081080486682,
-            1.2541176998342265,
-            1.0011295054428586,
-            1.2519341823754833,
-            1.256250767927983,
-            0.9888239260497446,
-            0.9569400149262214,
-            0.9833664635736361,
-            1.2830280209366278,
-            1.276077490464742,
-            1.5407912364558107
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            10.0,
-            11.0,
-            12.0,
-            13.0,
-            14.0,
-            15.0,
-            16.0,
-            17.0,
-            18.0,
-            20.0,
-            21.0,
-            22.0,
-            24.0,
-            26.0,
-            27.0,
-            29.0,
-            31.0,
-            33.0,
-            36.0,
-            38.0,
-            41.0,
-            44.0,
-            47.0,
-            50.0,
-            54.0,
-            57.0,
-            61.0,
-            65.0,
-            70.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y4",
-        "zmin": null,
-        "legendgroup": "y4",
-        "zmax": null,
-        "line": {
-            "color": "rgba(195, 113, 210, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            1.5527906831910534,
-            2.175201053397431,
-            1.5450866239159031,
-            2.4634675656676506,
-            1.5762461644329513,
-            1.9151838213681003,
-            2.2212885663691533,
-            1.8972433425266422,
-            1.5339495157378469,
-            1.536969528935671,
-            1.5830413491024007,
-            1.2805761659044252,
-            1.3037447037152468,
-            1.8661014705949202,
-            0.9592656068137831,
-            1.857110429723102,
-            2.1772120865811417,
-            1.294893843575161,
-            0.955605393559062,
-            1.2884121799797748,
-            1.5851870710761609,
-            0.9498310264888373,
-            1.5583453580256361,
-            1.3023979744277596,
-            1.8745735076348031,
-            1.5536463392295161,
-            1.280504820345702,
-            1.5482822115514197,
-            0.9720927318214075
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            10.0,
-            20.0,
-            30.0,
-            40.0,
-            50.0,
-            60.0,
-            70.0
-        ],
-        "range": [
-            8.2,
-            71.8
-        ],
-        "domain": [
-            0.09363561697644936,
-            0.9919652900530291
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "10",
-            "20",
-            "30",
-            "40",
-            "50",
-            "60",
-            "70"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "n_trees",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            1.0,
-            1.5,
-            2.0,
-            2.5
-        ],
-        "range": [
-            0.5913696167693159,
-            2.8726688482121654
-        ],
-        "domain": [
-            0.10108632254301551,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "1.0",
-            "1.5",
-            "2.0",
-            "2.5"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "cross entropy",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 29 models.
+Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:01[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 29 models.
+Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 29 models.
+Evaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 29 models.
+Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
 
-    
-    </script>
+````
 
-```
+![](exercise_6ci.png)
 
 6(c)(ii)
 
@@ -9734,7 +4766,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ````
 
 ````
-0.7026647659355011
+1.2607761032743634
 ````
 
 #### Exercise 7
@@ -9751,7 +4783,7 @@ pipe = @pipeline(Standardizer,
 ````
 
 ````
-Pipeline665(
+Pipeline575(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -9793,11 +4825,11 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────────┬─────────────┬───────────┬───────────────────────────────────────────┐
-│ measure                    │ measurement │ operation │ per_fold                                  │
-├────────────────────────────┼─────────────┼───────────┼───────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.804       │ predict   │ [0.874, 0.99, 0.662, 0.789, 0.776, 0.734] │
-└────────────────────────────┴─────────────┴───────────┴───────────────────────────────────────────┘
+┌────────────────────────────┬─────────────┬───────────┬────────────────────────────────────────────┐
+│ measure                    │ measurement │ operation │ per_fold                                   │
+├────────────────────────────┼─────────────┼───────────┼────────────────────────────────────────────┤
+│ LogLoss(tol = 2.22045e-16) │ 0.817       │ predict   │ [0.874, 0.916, 0.797, 0.868, 0.706, 0.738] │
+└────────────────────────────┴─────────────┴───────────┴────────────────────────────────────────────┘
 
 ````
 
@@ -9814,206 +4846,17 @@ curve = learning_curve(mach,
 plt = plot(curve.parameter_values, curve.measurements)
 xlabel!(plt, "max_depth")
 ylabel!(plt, "CV estimate of cross entropy")
-plt
+savefig("exercise_7c.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="ec2638a4-ab84-4b52-914d-478ae92af3c0" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('ec2638a4-ab84-4b52-914d-478ae92af3c0');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.7745626577651471,
-            0.7406583158592932,
-            0.7946563699634687,
-            0.8125338673899253,
-            0.8173011861881747,
-            0.8765012519612285,
-            0.9826805809060014,
-            0.9505051671900722,
-            0.9639596945260562
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.0,
-            4.0,
-            6.0,
-            8.0,
-            10.0
-        ],
-        "range": [
-            0.73,
-            10.27
-        ],
-        "domain": [
-            0.11177620654561035,
-            0.9919652900530291
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2",
-            "4",
-            "6",
-            "8",
-            "10"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "max_depth",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.75,
-            0.8,
-            0.8500000000000001,
-            0.9,
-            0.9500000000000001
-        ],
-        "range": [
-            0.733397647907892,
-            0.9899412488574026
-        ],
-        "domain": [
-            0.10108632254301551,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.75",
-            "0.80",
-            "0.85",
-            "0.90",
-            "0.95"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "CV estimate of cross entropy",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 10 models.
+Evaluating over 10 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 10 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:21[K
 
-    
-    </script>
+````
 
-```
+![](exercise_7c.png)
 
 Here's a second curve using a different random seed for the booster:
 
@@ -10025,251 +4868,17 @@ curve = learning_curve(mach,
                        resampling=CV(nfolds=6),
                        measure=cross_entropy)
 plot!(curve.parameter_values, curve.measurements)
+savefig("exercise_7c_2.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="c21fffa3-9bf3-4cbb-8de1-9295c2f4cced" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('c21fffa3-9bf3-4cbb-8de1-9295c2f4cced');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.7745626577651471,
-            0.7406583158592932,
-            0.7946563699634687,
-            0.8125338673899253,
-            0.8173011861881747,
-            0.8765012519612285,
-            0.9826805809060014,
-            0.9505051671900722,
-            0.9639596945260562
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y2",
-        "zmin": null,
-        "legendgroup": "y2",
-        "zmax": null,
-        "line": {
-            "color": "rgba(227, 111, 71, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.795228936318412,
-            0.7727722336927306,
-            0.7736236792566343,
-            0.8022407995094171,
-            0.8171364945813848,
-            0.8374830251445303,
-            0.9752326407357771,
-            1.0029594328432385,
-            0.9462890870977344
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.0,
-            4.0,
-            6.0,
-            8.0,
-            10.0
-        ],
-        "range": [
-            0.73,
-            10.27
-        ],
-        "domain": [
-            0.11177620654561035,
-            0.9919652900530291
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2",
-            "4",
-            "6",
-            "8",
-            "10"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "max_depth",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.75,
-            0.8,
-            0.8500000000000001,
-            0.9,
-            0.9500000000000001,
-            1.0
-        ],
-        "range": [
-            0.7327892823497748,
-            1.010828466352757
-        ],
-        "domain": [
-            0.10108632254301551,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.75",
-            "0.80",
-            "0.85",
-            "0.90",
-            "0.95",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "CV estimate of cross entropy",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 10 models.
+Evaluating over 10 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 10 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:24[K
 
-    
-    </script>
+````
 
-```
+![](exercise_7c_2.png)
 
 One can automatic the production of multiple curves with different
 seeds in the following way:
@@ -10281,428 +4890,16 @@ curves = learning_curve(mach,
                         measure=cross_entropy,
                         rng_name=:(evo_tree_classifier.rng),
                         rngs=6) # list of RNGs, or num to auto generate
-plot(curves.parameter_values, curves.measurements)
+plt = plot(curves.parameter_values, curves.measurements)
+savefig("exercise_7c_3.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="1beb7da3-98f0-4a46-8ded-f7ef65a9eb7d" style="width:490px;height:300px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('1beb7da3-98f0-4a46-8ded-f7ef65a9eb7d');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y1",
-        "zmin": null,
-        "legendgroup": "y1",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 154, 250, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.767677935754984,
-            0.7786128987870696,
-            0.7766682353724471,
-            0.8447195263531576,
-            0.8503118961425608,
-            0.871288635946203,
-            0.9505346481123973,
-            0.8970884689016629,
-            0.9985844048714466
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y2",
-        "zmin": null,
-        "legendgroup": "y2",
-        "zmax": null,
-        "line": {
-            "color": "rgba(227, 111, 71, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.7662635496998623,
-            0.7751446463692543,
-            0.7741287611733841,
-            0.8107759398247611,
-            0.8154300032658872,
-            0.8439963201653328,
-            0.9511511319474469,
-            0.9197675650490673,
-            1.059406337079816
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y3",
-        "zmin": null,
-        "legendgroup": "y3",
-        "zmax": null,
-        "line": {
-            "color": "rgba(62, 164, 78, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.7852084126004854,
-            0.7619887546012379,
-            0.7880481466883781,
-            0.8245855322668941,
-            0.8653131947218237,
-            0.8609839296904048,
-            0.9270419072460047,
-            0.9320549766470666,
-            0.9671343761402054
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y4",
-        "zmin": null,
-        "legendgroup": "y4",
-        "zmax": null,
-        "line": {
-            "color": "rgba(195, 113, 210, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.8008075646867914,
-            0.7643448420396503,
-            0.7876663808908777,
-            0.8059816452377436,
-            0.7725585525129796,
-            0.9307285213708983,
-            0.9201057700781181,
-            0.9540019557709658,
-            0.981086136189291
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y5",
-        "zmin": null,
-        "legendgroup": "y5",
-        "zmax": null,
-        "line": {
-            "color": "rgba(172, 142, 24, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.784778431791898,
-            0.7695142315970737,
-            0.78628742183407,
-            0.7993960306571676,
-            0.8482626960394204,
-            0.8994467957541467,
-            0.901331632951137,
-            0.9696814349568762,
-            1.0473450855016655
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y",
-        "x": [
-            1.0,
-            2.0,
-            3.0,
-            4.0,
-            5.0,
-            6.0,
-            7.0,
-            8.0,
-            9.0,
-            10.0
-        ],
-        "showlegend": true,
-        "mode": "lines",
-        "name": "y6",
-        "zmin": null,
-        "legendgroup": "y6",
-        "zmax": null,
-        "line": {
-            "color": "rgba(0, 170, 174, 1.000)",
-            "shape": "linear",
-            "dash": "solid",
-            "width": 1
-        },
-        "y": [
-            0.9238731498849247,
-            0.7812808505547748,
-            0.7844177421806817,
-            0.7742691482959025,
-            0.8083476992677316,
-            0.835725539857429,
-            0.8683510886156259,
-            0.9076539761822641,
-            0.9263029332525514,
-            1.0105062542840904
-        ],
-        "type": "scatter"
-    }
-]
-, {
-    "showlegend": true,
-    "xaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.0,
-            4.0,
-            6.0,
-            8.0,
-            10.0
-        ],
-        "range": [
-            0.73,
-            10.27
-        ],
-        "domain": [
-            0.0805970682236149,
-            0.991965290053029
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2",
-            "4",
-            "6",
-            "8",
-            "10"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "annotations": [],
-    "height": 300,
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "yaxis": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.8,
-            0.8500000000000001,
-            0.9,
-            0.9500000000000001,
-            1.0,
-            1.05
-        ],
-        "range": [
-            0.7530662271268806,
-            1.0683288645541733
-        ],
-        "domain": [
-            0.050160396617089535,
-            0.9868766404199475
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "0.80",
-            "0.85",
-            "0.90",
-            "0.95",
-            "1.00",
-            "1.05"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "width": 490
-}
-);
+````
+Evaluating Learning curve with 6 rngs:   0%[>                 ]  ETA: N/A[KEvaluating Learning curve with 6 rngs:  17%[===>              ]  ETA: 0:01:51[KEvaluating Learning curve with 6 rngs:  33%[======>           ]  ETA: 0:01:32[KEvaluating Learning curve with 6 rngs:  50%[=========>        ]  ETA: 0:01:09[KEvaluating Learning curve with 6 rngs:  67%[============>     ]  ETA: 0:00:45[KEvaluating Learning curve with 6 rngs:  83%[===============>  ]  ETA: 0:00:23[KEvaluating Learning curve with 6 rngs: 100%[==================] Time: 0:02:19[K
 
-    
-    </script>
+````
 
-```
+![](exercise_7c_3.png)
 
 If you have multiple threads available in your julia session, you
 can add the option `acceleration=CPUThreads()` to speed up this
@@ -10719,7 +4916,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ````
 
 ````
-Pipeline674(
+Pipeline584(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -10761,2902 +4958,18 @@ tuned_model = TunedModel(model=model,
                          n=40)
 
 tuned_mach = machine(tuned_model, X, y) |> fit!
-plot(tuned_mach)
+plt = plot(tuned_mach)
+savefig("exercise_8c.png")
 ````
 
-```@raw html
-<script src="https://cdn.plot.ly/plotly-1.57.1.min.js"></script>    <div id="60c64092-b272-45ba-aa6d-61fa11803898" style="width:550px;height:500px;"></div>
-    <script>
-    
-        var PLOT = document.getElementById('60c64092-b272-45ba-aa6d-61fa11803898');
-    Plotly.plot(PLOT, [
-    {
-        "xaxis": "x1",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y1",
-        "x": [
-            8.0,
-            4.0,
-            4.0,
-            6.0,
-            4.0,
-            4.0,
-            4.0,
-            10.0,
-            11.0,
-            7.0,
-            10.0,
-            1.0,
-            8.0,
-            7.0,
-            9.0,
-            2.0,
-            7.0,
-            7.0,
-            4.0,
-            6.0,
-            10.0,
-            11.0,
-            2.0,
-            7.0,
-            1.0,
-            10.0,
-            10.0,
-            5.0,
-            11.0,
-            4.0,
-            8.0,
-            10.0,
-            6.0,
-            3.0,
-            12.0,
-            12.0,
-            5.0,
-            4.0,
-            6.0,
-            9.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": null,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8
-        },
-        "zmax": null,
-        "y": [
-            68548.32883032663,
-            84191.51882482592,
-            95072.80134377317,
-            86632.84038714247,
-            84191.51882482592,
-            85878.81923900853,
-            84191.51882482592,
-            75655.62745197897,
-            70459.29990851681,
-            69709.81453229475,
-            75655.62745197897,
-            235247.7958973312,
-            68548.32883032663,
-            77007.66977573698,
-            84646.0763450026,
-            114840.74306390483,
-            85262.73635979637,
-            71772.0808568759,
-            84191.51882482592,
-            74970.02478086705,
-            84932.16703010538,
-            76694.48801937555,
-            113372.1344869396,
-            85262.73635979637,
-            235247.7958973312,
-            67710.06227324973,
-            67710.06227324973,
-            79061.65344832145,
-            70459.29990851681,
-            82164.16372192024,
-            75107.78759995372,
-            84932.16703010538,
-            86632.84038714247,
-            97088.80834333315,
-            69606.65176409061,
-            71428.11919380794,
-            90159.97757256187,
-            95072.80134377317,
-            74970.02478086705,
-            70509.41327146809
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x4",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y4",
-        "x": [
-            128.0,
-            64.0,
-            8.0,
-            8.0,
-            64.0,
-            32.0,
-            64.0,
-            16.0,
-            64.0,
-            128.0,
-            16.0,
-            32.0,
-            128.0,
-            16.0,
-            8.0,
-            64.0,
-            8.0,
-            64.0,
-            64.0,
-            32.0,
-            8.0,
-            16.0,
-            128.0,
-            8.0,
-            128.0,
-            128.0,
-            128.0,
-            32.0,
-            64.0,
-            128.0,
-            16.0,
-            8.0,
-            8.0,
-            16.0,
-            128.0,
-            64.0,
-            8.0,
-            8.0,
-            32.0,
-            32.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": null,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 154, 250, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8
-        },
-        "zmax": null,
-        "y": [
-            68548.32883032663,
-            84191.51882482592,
-            95072.80134377317,
-            86632.84038714247,
-            84191.51882482592,
-            85878.81923900853,
-            84191.51882482592,
-            75655.62745197897,
-            70459.29990851681,
-            69709.81453229475,
-            75655.62745197897,
-            235247.7958973312,
-            68548.32883032663,
-            77007.66977573698,
-            84646.0763450026,
-            114840.74306390483,
-            85262.73635979637,
-            71772.0808568759,
-            84191.51882482592,
-            74970.02478086705,
-            84932.16703010538,
-            76694.48801937555,
-            113372.1344869396,
-            85262.73635979637,
-            235247.7958973312,
-            67710.06227324973,
-            67710.06227324973,
-            79061.65344832145,
-            70459.29990851681,
-            82164.16372192024,
-            75107.78759995372,
-            84932.16703010538,
-            86632.84038714247,
-            97088.80834333315,
-            69606.65176409061,
-            71428.11919380794,
-            90159.97757256187,
-            95072.80134377317,
-            74970.02478086705,
-            70509.41327146809
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            8.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(1, 0, 5, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.228569456923344
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(22, 11, 58, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.2625746809132234
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(50, 10, 93, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8.850484157318771
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            6.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(28, 12, 67, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.857108830633711
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(22, 11, 58, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.2625746809132234
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(26, 12, 64, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.674386777227789
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(22, 11, 58, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.2625746809132234
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(7, 5, 27, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 4.112928241320031
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            11.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(2, 1, 10, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.744463706263933
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(1, 1, 8, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.5429733890317854
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(7, 5, 27, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 4.112928241320031
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(252, 255, 164, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 34.0
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            8.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(1, 0, 5, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.228569456923344
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(9, 6, 32, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 4.461219725346705
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            9.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(23, 12, 59, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.373919571194207
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            2.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(99, 20, 110, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 13.19798718881681
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(25, 12, 62, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.524495025240721
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(3, 2, 14, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 3.094823939791908
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(22, 11, 58, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.2625746809132234
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            6.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(6, 4, 25, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 3.935124954354717
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(24, 12, 60, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.443844886932734
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            11.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(8, 6, 31, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 4.380816711477143
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            2.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(96, 19, 110, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 12.888563282333715
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            7.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(25, 12, 62, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.524495025240721
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            1.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(252, 255, 164, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 34.0
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 0, 4, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.0
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(0, 0, 4, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.0
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            5.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(12, 8, 39, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 4.984534801721769
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            11.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(2, 1, 10, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.744463706263933
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(18, 10, 50, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 5.762269849018324
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            8.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(6, 5, 25, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 3.9709172415625194
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            10.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(24, 12, 60, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.443844886932734
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            6.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(28, 12, 67, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 6.857108830633711
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            3.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(55, 9, 97, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 9.313376852011107
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            16.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            12.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(1, 1, 8, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.515154651194204
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            12.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(2, 2, 13, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 3.003338038521688
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            64.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            5.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(37, 12, 79, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 7.70146811537132
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            4.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(50, 10, 93, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 8.850484157318771
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            8.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            6.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(6, 4, 25, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 3.935124954354717
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            9.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "legendgroup": "",
-        "marker": {
-            "symbol": "circle",
-            "color": "rgba(2, 1, 10, 1.000)",
-            "line": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "width": 1
-            },
-            "size": 2.757897782760912
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            32.0
-        ],
-        "type": "scatter"
-    },
-    {
-        "xaxis": "x3",
-        "colorbar": {
-            "title": ""
-        },
-        "yaxis": "y3",
-        "x": [
-            8.0
-        ],
-        "showlegend": false,
-        "mode": "markers",
-        "name": "",
-        "zmin": 67710.06227324973,
-        "marker": {
-            "color": [
-                0.5
-            ],
-            "cmin": 67710.06227324973,
-            "opacity": 1.0e-10,
-            "size": 1.0e-10,
-            "colorscale": [
-                [
-                    0.0,
-                    "rgba(0, 0, 4, 1.000)"
-                ],
-                [
-                    0.00392156862745098,
-                    "rgba(1, 0, 5, 1.000)"
-                ],
-                [
-                    0.00784313725490196,
-                    "rgba(1, 1, 6, 1.000)"
-                ],
-                [
-                    0.011764705882352941,
-                    "rgba(1, 1, 8, 1.000)"
-                ],
-                [
-                    0.01568627450980392,
-                    "rgba(2, 1, 10, 1.000)"
-                ],
-                [
-                    0.0196078431372549,
-                    "rgba(2, 2, 12, 1.000)"
-                ],
-                [
-                    0.023529411764705882,
-                    "rgba(2, 2, 14, 1.000)"
-                ],
-                [
-                    0.027450980392156862,
-                    "rgba(3, 2, 16, 1.000)"
-                ],
-                [
-                    0.03137254901960784,
-                    "rgba(4, 3, 18, 1.000)"
-                ],
-                [
-                    0.03529411764705882,
-                    "rgba(4, 3, 20, 1.000)"
-                ],
-                [
-                    0.0392156862745098,
-                    "rgba(5, 4, 23, 1.000)"
-                ],
-                [
-                    0.043137254901960784,
-                    "rgba(6, 4, 25, 1.000)"
-                ],
-                [
-                    0.047058823529411764,
-                    "rgba(7, 5, 27, 1.000)"
-                ],
-                [
-                    0.050980392156862744,
-                    "rgba(8, 5, 29, 1.000)"
-                ],
-                [
-                    0.054901960784313725,
-                    "rgba(9, 6, 31, 1.000)"
-                ],
-                [
-                    0.058823529411764705,
-                    "rgba(10, 7, 34, 1.000)"
-                ],
-                [
-                    0.06274509803921569,
-                    "rgba(11, 7, 36, 1.000)"
-                ],
-                [
-                    0.06666666666666667,
-                    "rgba(12, 8, 38, 1.000)"
-                ],
-                [
-                    0.07058823529411765,
-                    "rgba(13, 8, 41, 1.000)"
-                ],
-                [
-                    0.07450980392156863,
-                    "rgba(14, 9, 43, 1.000)"
-                ],
-                [
-                    0.0784313725490196,
-                    "rgba(16, 9, 45, 1.000)"
-                ],
-                [
-                    0.08235294117647059,
-                    "rgba(17, 10, 48, 1.000)"
-                ],
-                [
-                    0.08627450980392157,
-                    "rgba(18, 10, 50, 1.000)"
-                ],
-                [
-                    0.09019607843137255,
-                    "rgba(20, 11, 52, 1.000)"
-                ],
-                [
-                    0.09411764705882353,
-                    "rgba(21, 11, 55, 1.000)"
-                ],
-                [
-                    0.09803921568627451,
-                    "rgba(22, 11, 57, 1.000)"
-                ],
-                [
-                    0.10196078431372549,
-                    "rgba(24, 12, 60, 1.000)"
-                ],
-                [
-                    0.10588235294117647,
-                    "rgba(25, 12, 62, 1.000)"
-                ],
-                [
-                    0.10980392156862745,
-                    "rgba(27, 12, 65, 1.000)"
-                ],
-                [
-                    0.11372549019607843,
-                    "rgba(28, 12, 67, 1.000)"
-                ],
-                [
-                    0.11764705882352941,
-                    "rgba(30, 12, 69, 1.000)"
-                ],
-                [
-                    0.12156862745098039,
-                    "rgba(31, 12, 72, 1.000)"
-                ],
-                [
-                    0.12549019607843137,
-                    "rgba(33, 12, 74, 1.000)"
-                ],
-                [
-                    0.12941176470588237,
-                    "rgba(35, 12, 76, 1.000)"
-                ],
-                [
-                    0.13333333333333333,
-                    "rgba(36, 12, 79, 1.000)"
-                ],
-                [
-                    0.13725490196078433,
-                    "rgba(38, 12, 81, 1.000)"
-                ],
-                [
-                    0.1411764705882353,
-                    "rgba(40, 11, 83, 1.000)"
-                ],
-                [
-                    0.1450980392156863,
-                    "rgba(41, 11, 85, 1.000)"
-                ],
-                [
-                    0.14901960784313725,
-                    "rgba(43, 11, 87, 1.000)"
-                ],
-                [
-                    0.15294117647058825,
-                    "rgba(45, 11, 89, 1.000)"
-                ],
-                [
-                    0.1568627450980392,
-                    "rgba(47, 10, 91, 1.000)"
-                ],
-                [
-                    0.1607843137254902,
-                    "rgba(49, 10, 92, 1.000)"
-                ],
-                [
-                    0.16470588235294117,
-                    "rgba(50, 10, 94, 1.000)"
-                ],
-                [
-                    0.16862745098039217,
-                    "rgba(52, 10, 95, 1.000)"
-                ],
-                [
-                    0.17254901960784313,
-                    "rgba(54, 9, 97, 1.000)"
-                ],
-                [
-                    0.17647058823529413,
-                    "rgba(56, 9, 98, 1.000)"
-                ],
-                [
-                    0.1803921568627451,
-                    "rgba(57, 9, 99, 1.000)"
-                ],
-                [
-                    0.1843137254901961,
-                    "rgba(59, 9, 100, 1.000)"
-                ],
-                [
-                    0.18823529411764706,
-                    "rgba(61, 9, 101, 1.000)"
-                ],
-                [
-                    0.19215686274509805,
-                    "rgba(62, 9, 102, 1.000)"
-                ],
-                [
-                    0.19607843137254902,
-                    "rgba(64, 10, 103, 1.000)"
-                ],
-                [
-                    0.2,
-                    "rgba(66, 10, 104, 1.000)"
-                ],
-                [
-                    0.20392156862745098,
-                    "rgba(68, 10, 104, 1.000)"
-                ],
-                [
-                    0.20784313725490197,
-                    "rgba(69, 10, 105, 1.000)"
-                ],
-                [
-                    0.21176470588235294,
-                    "rgba(71, 11, 106, 1.000)"
-                ],
-                [
-                    0.21568627450980393,
-                    "rgba(73, 11, 106, 1.000)"
-                ],
-                [
-                    0.2196078431372549,
-                    "rgba(74, 12, 107, 1.000)"
-                ],
-                [
-                    0.2235294117647059,
-                    "rgba(76, 12, 107, 1.000)"
-                ],
-                [
-                    0.22745098039215686,
-                    "rgba(77, 13, 108, 1.000)"
-                ],
-                [
-                    0.23137254901960785,
-                    "rgba(79, 13, 108, 1.000)"
-                ],
-                [
-                    0.23529411764705882,
-                    "rgba(81, 14, 108, 1.000)"
-                ],
-                [
-                    0.23921568627450981,
-                    "rgba(82, 14, 109, 1.000)"
-                ],
-                [
-                    0.24313725490196078,
-                    "rgba(84, 15, 109, 1.000)"
-                ],
-                [
-                    0.24705882352941178,
-                    "rgba(85, 15, 109, 1.000)"
-                ],
-                [
-                    0.25098039215686274,
-                    "rgba(87, 16, 110, 1.000)"
-                ],
-                [
-                    0.2549019607843137,
-                    "rgba(89, 16, 110, 1.000)"
-                ],
-                [
-                    0.25882352941176473,
-                    "rgba(90, 17, 110, 1.000)"
-                ],
-                [
-                    0.2627450980392157,
-                    "rgba(92, 18, 110, 1.000)"
-                ],
-                [
-                    0.26666666666666666,
-                    "rgba(93, 18, 110, 1.000)"
-                ],
-                [
-                    0.27058823529411763,
-                    "rgba(95, 19, 110, 1.000)"
-                ],
-                [
-                    0.27450980392156865,
-                    "rgba(97, 19, 110, 1.000)"
-                ],
-                [
-                    0.2784313725490196,
-                    "rgba(98, 20, 110, 1.000)"
-                ],
-                [
-                    0.2823529411764706,
-                    "rgba(100, 21, 110, 1.000)"
-                ],
-                [
-                    0.28627450980392155,
-                    "rgba(101, 21, 110, 1.000)"
-                ],
-                [
-                    0.2901960784313726,
-                    "rgba(103, 22, 110, 1.000)"
-                ],
-                [
-                    0.29411764705882354,
-                    "rgba(105, 22, 110, 1.000)"
-                ],
-                [
-                    0.2980392156862745,
-                    "rgba(106, 23, 110, 1.000)"
-                ],
-                [
-                    0.30196078431372547,
-                    "rgba(108, 24, 110, 1.000)"
-                ],
-                [
-                    0.3058823529411765,
-                    "rgba(109, 24, 110, 1.000)"
-                ],
-                [
-                    0.30980392156862746,
-                    "rgba(111, 25, 110, 1.000)"
-                ],
-                [
-                    0.3137254901960784,
-                    "rgba(113, 25, 110, 1.000)"
-                ],
-                [
-                    0.3176470588235294,
-                    "rgba(114, 26, 110, 1.000)"
-                ],
-                [
-                    0.3215686274509804,
-                    "rgba(116, 26, 110, 1.000)"
-                ],
-                [
-                    0.3254901960784314,
-                    "rgba(117, 27, 110, 1.000)"
-                ],
-                [
-                    0.32941176470588235,
-                    "rgba(119, 28, 109, 1.000)"
-                ],
-                [
-                    0.3333333333333333,
-                    "rgba(120, 28, 109, 1.000)"
-                ],
-                [
-                    0.33725490196078434,
-                    "rgba(122, 29, 109, 1.000)"
-                ],
-                [
-                    0.3411764705882353,
-                    "rgba(124, 29, 109, 1.000)"
-                ],
-                [
-                    0.34509803921568627,
-                    "rgba(125, 30, 109, 1.000)"
-                ],
-                [
-                    0.34901960784313724,
-                    "rgba(127, 30, 108, 1.000)"
-                ],
-                [
-                    0.35294117647058826,
-                    "rgba(128, 31, 108, 1.000)"
-                ],
-                [
-                    0.3568627450980392,
-                    "rgba(130, 32, 108, 1.000)"
-                ],
-                [
-                    0.3607843137254902,
-                    "rgba(132, 32, 107, 1.000)"
-                ],
-                [
-                    0.36470588235294116,
-                    "rgba(133, 33, 107, 1.000)"
-                ],
-                [
-                    0.3686274509803922,
-                    "rgba(135, 33, 107, 1.000)"
-                ],
-                [
-                    0.37254901960784315,
-                    "rgba(136, 34, 106, 1.000)"
-                ],
-                [
-                    0.3764705882352941,
-                    "rgba(138, 34, 106, 1.000)"
-                ],
-                [
-                    0.3803921568627451,
-                    "rgba(140, 35, 105, 1.000)"
-                ],
-                [
-                    0.3843137254901961,
-                    "rgba(141, 35, 105, 1.000)"
-                ],
-                [
-                    0.38823529411764707,
-                    "rgba(143, 36, 105, 1.000)"
-                ],
-                [
-                    0.39215686274509803,
-                    "rgba(144, 37, 104, 1.000)"
-                ],
-                [
-                    0.396078431372549,
-                    "rgba(146, 37, 104, 1.000)"
-                ],
-                [
-                    0.4,
-                    "rgba(147, 38, 103, 1.000)"
-                ],
-                [
-                    0.403921568627451,
-                    "rgba(149, 38, 103, 1.000)"
-                ],
-                [
-                    0.40784313725490196,
-                    "rgba(151, 39, 102, 1.000)"
-                ],
-                [
-                    0.4117647058823529,
-                    "rgba(152, 39, 102, 1.000)"
-                ],
-                [
-                    0.41568627450980394,
-                    "rgba(154, 40, 101, 1.000)"
-                ],
-                [
-                    0.4196078431372549,
-                    "rgba(155, 41, 100, 1.000)"
-                ],
-                [
-                    0.4235294117647059,
-                    "rgba(157, 41, 100, 1.000)"
-                ],
-                [
-                    0.42745098039215684,
-                    "rgba(159, 42, 99, 1.000)"
-                ],
-                [
-                    0.43137254901960786,
-                    "rgba(160, 42, 99, 1.000)"
-                ],
-                [
-                    0.43529411764705883,
-                    "rgba(162, 43, 98, 1.000)"
-                ],
-                [
-                    0.4392156862745098,
-                    "rgba(163, 44, 97, 1.000)"
-                ],
-                [
-                    0.44313725490196076,
-                    "rgba(165, 44, 96, 1.000)"
-                ],
-                [
-                    0.4470588235294118,
-                    "rgba(166, 45, 96, 1.000)"
-                ],
-                [
-                    0.45098039215686275,
-                    "rgba(168, 46, 95, 1.000)"
-                ],
-                [
-                    0.4549019607843137,
-                    "rgba(169, 46, 94, 1.000)"
-                ],
-                [
-                    0.4588235294117647,
-                    "rgba(171, 47, 94, 1.000)"
-                ],
-                [
-                    0.4627450980392157,
-                    "rgba(173, 48, 93, 1.000)"
-                ],
-                [
-                    0.4666666666666667,
-                    "rgba(174, 48, 92, 1.000)"
-                ],
-                [
-                    0.47058823529411764,
-                    "rgba(176, 49, 91, 1.000)"
-                ],
-                [
-                    0.4745098039215686,
-                    "rgba(177, 50, 90, 1.000)"
-                ],
-                [
-                    0.47843137254901963,
-                    "rgba(179, 50, 90, 1.000)"
-                ],
-                [
-                    0.4823529411764706,
-                    "rgba(180, 51, 89, 1.000)"
-                ],
-                [
-                    0.48627450980392156,
-                    "rgba(182, 52, 88, 1.000)"
-                ],
-                [
-                    0.49019607843137253,
-                    "rgba(183, 53, 87, 1.000)"
-                ],
-                [
-                    0.49411764705882355,
-                    "rgba(185, 53, 86, 1.000)"
-                ],
-                [
-                    0.4980392156862745,
-                    "rgba(186, 54, 85, 1.000)"
-                ],
-                [
-                    0.5019607843137255,
-                    "rgba(188, 55, 84, 1.000)"
-                ],
-                [
-                    0.5058823529411764,
-                    "rgba(189, 56, 83, 1.000)"
-                ],
-                [
-                    0.5098039215686274,
-                    "rgba(191, 57, 82, 1.000)"
-                ],
-                [
-                    0.5137254901960784,
-                    "rgba(192, 58, 81, 1.000)"
-                ],
-                [
-                    0.5176470588235295,
-                    "rgba(193, 58, 80, 1.000)"
-                ],
-                [
-                    0.5215686274509804,
-                    "rgba(195, 59, 79, 1.000)"
-                ],
-                [
-                    0.5254901960784314,
-                    "rgba(196, 60, 78, 1.000)"
-                ],
-                [
-                    0.5294117647058824,
-                    "rgba(198, 61, 77, 1.000)"
-                ],
-                [
-                    0.5333333333333333,
-                    "rgba(199, 62, 76, 1.000)"
-                ],
-                [
-                    0.5372549019607843,
-                    "rgba(200, 63, 75, 1.000)"
-                ],
-                [
-                    0.5411764705882353,
-                    "rgba(202, 64, 74, 1.000)"
-                ],
-                [
-                    0.5450980392156862,
-                    "rgba(203, 65, 73, 1.000)"
-                ],
-                [
-                    0.5490196078431373,
-                    "rgba(204, 66, 72, 1.000)"
-                ],
-                [
-                    0.5529411764705883,
-                    "rgba(206, 67, 71, 1.000)"
-                ],
-                [
-                    0.5568627450980392,
-                    "rgba(207, 68, 70, 1.000)"
-                ],
-                [
-                    0.5607843137254902,
-                    "rgba(208, 69, 69, 1.000)"
-                ],
-                [
-                    0.5647058823529412,
-                    "rgba(210, 70, 68, 1.000)"
-                ],
-                [
-                    0.5686274509803921,
-                    "rgba(211, 71, 67, 1.000)"
-                ],
-                [
-                    0.5725490196078431,
-                    "rgba(212, 72, 66, 1.000)"
-                ],
-                [
-                    0.5764705882352941,
-                    "rgba(213, 74, 65, 1.000)"
-                ],
-                [
-                    0.5803921568627451,
-                    "rgba(215, 75, 63, 1.000)"
-                ],
-                [
-                    0.5843137254901961,
-                    "rgba(216, 76, 62, 1.000)"
-                ],
-                [
-                    0.5882352941176471,
-                    "rgba(217, 77, 61, 1.000)"
-                ],
-                [
-                    0.592156862745098,
-                    "rgba(218, 78, 60, 1.000)"
-                ],
-                [
-                    0.596078431372549,
-                    "rgba(219, 80, 59, 1.000)"
-                ],
-                [
-                    0.6,
-                    "rgba(221, 81, 58, 1.000)"
-                ],
-                [
-                    0.6039215686274509,
-                    "rgba(222, 82, 56, 1.000)"
-                ],
-                [
-                    0.6078431372549019,
-                    "rgba(223, 83, 55, 1.000)"
-                ],
-                [
-                    0.611764705882353,
-                    "rgba(224, 85, 54, 1.000)"
-                ],
-                [
-                    0.615686274509804,
-                    "rgba(225, 86, 53, 1.000)"
-                ],
-                [
-                    0.6196078431372549,
-                    "rgba(226, 87, 52, 1.000)"
-                ],
-                [
-                    0.6235294117647059,
-                    "rgba(227, 89, 51, 1.000)"
-                ],
-                [
-                    0.6274509803921569,
-                    "rgba(228, 90, 49, 1.000)"
-                ],
-                [
-                    0.6313725490196078,
-                    "rgba(229, 92, 48, 1.000)"
-                ],
-                [
-                    0.6352941176470588,
-                    "rgba(230, 93, 47, 1.000)"
-                ],
-                [
-                    0.6392156862745098,
-                    "rgba(231, 94, 46, 1.000)"
-                ],
-                [
-                    0.6431372549019608,
-                    "rgba(232, 96, 45, 1.000)"
-                ],
-                [
-                    0.6470588235294118,
-                    "rgba(233, 97, 43, 1.000)"
-                ],
-                [
-                    0.6509803921568628,
-                    "rgba(234, 99, 42, 1.000)"
-                ],
-                [
-                    0.6549019607843137,
-                    "rgba(235, 100, 41, 1.000)"
-                ],
-                [
-                    0.6588235294117647,
-                    "rgba(235, 102, 40, 1.000)"
-                ],
-                [
-                    0.6627450980392157,
-                    "rgba(236, 103, 38, 1.000)"
-                ],
-                [
-                    0.6666666666666666,
-                    "rgba(237, 105, 37, 1.000)"
-                ],
-                [
-                    0.6705882352941176,
-                    "rgba(238, 106, 36, 1.000)"
-                ],
-                [
-                    0.6745098039215687,
-                    "rgba(239, 108, 35, 1.000)"
-                ],
-                [
-                    0.6784313725490196,
-                    "rgba(239, 110, 33, 1.000)"
-                ],
-                [
-                    0.6823529411764706,
-                    "rgba(240, 111, 32, 1.000)"
-                ],
-                [
-                    0.6862745098039216,
-                    "rgba(241, 113, 31, 1.000)"
-                ],
-                [
-                    0.6901960784313725,
-                    "rgba(241, 115, 29, 1.000)"
-                ],
-                [
-                    0.6941176470588235,
-                    "rgba(242, 116, 28, 1.000)"
-                ],
-                [
-                    0.6980392156862745,
-                    "rgba(243, 118, 27, 1.000)"
-                ],
-                [
-                    0.7019607843137254,
-                    "rgba(243, 120, 25, 1.000)"
-                ],
-                [
-                    0.7058823529411765,
-                    "rgba(244, 121, 24, 1.000)"
-                ],
-                [
-                    0.7098039215686275,
-                    "rgba(245, 123, 23, 1.000)"
-                ],
-                [
-                    0.7137254901960784,
-                    "rgba(245, 125, 21, 1.000)"
-                ],
-                [
-                    0.7176470588235294,
-                    "rgba(246, 126, 20, 1.000)"
-                ],
-                [
-                    0.7215686274509804,
-                    "rgba(246, 128, 19, 1.000)"
-                ],
-                [
-                    0.7254901960784313,
-                    "rgba(247, 130, 18, 1.000)"
-                ],
-                [
-                    0.7294117647058823,
-                    "rgba(247, 132, 16, 1.000)"
-                ],
-                [
-                    0.7333333333333333,
-                    "rgba(248, 133, 15, 1.000)"
-                ],
-                [
-                    0.7372549019607844,
-                    "rgba(248, 135, 14, 1.000)"
-                ],
-                [
-                    0.7411764705882353,
-                    "rgba(248, 137, 12, 1.000)"
-                ],
-                [
-                    0.7450980392156863,
-                    "rgba(249, 139, 11, 1.000)"
-                ],
-                [
-                    0.7490196078431373,
-                    "rgba(249, 140, 10, 1.000)"
-                ],
-                [
-                    0.7529411764705882,
-                    "rgba(249, 142, 9, 1.000)"
-                ],
-                [
-                    0.7568627450980392,
-                    "rgba(250, 144, 8, 1.000)"
-                ],
-                [
-                    0.7607843137254902,
-                    "rgba(250, 146, 7, 1.000)"
-                ],
-                [
-                    0.7647058823529411,
-                    "rgba(250, 148, 7, 1.000)"
-                ],
-                [
-                    0.7686274509803922,
-                    "rgba(251, 150, 6, 1.000)"
-                ],
-                [
-                    0.7725490196078432,
-                    "rgba(251, 151, 6, 1.000)"
-                ],
-                [
-                    0.7764705882352941,
-                    "rgba(251, 153, 6, 1.000)"
-                ],
-                [
-                    0.7803921568627451,
-                    "rgba(251, 155, 6, 1.000)"
-                ],
-                [
-                    0.7843137254901961,
-                    "rgba(251, 157, 7, 1.000)"
-                ],
-                [
-                    0.788235294117647,
-                    "rgba(252, 159, 7, 1.000)"
-                ],
-                [
-                    0.792156862745098,
-                    "rgba(252, 161, 8, 1.000)"
-                ],
-                [
-                    0.796078431372549,
-                    "rgba(252, 163, 9, 1.000)"
-                ],
-                [
-                    0.8,
-                    "rgba(252, 165, 10, 1.000)"
-                ],
-                [
-                    0.803921568627451,
-                    "rgba(252, 166, 12, 1.000)"
-                ],
-                [
-                    0.807843137254902,
-                    "rgba(252, 168, 13, 1.000)"
-                ],
-                [
-                    0.8117647058823529,
-                    "rgba(252, 170, 15, 1.000)"
-                ],
-                [
-                    0.8156862745098039,
-                    "rgba(252, 172, 17, 1.000)"
-                ],
-                [
-                    0.8196078431372549,
-                    "rgba(252, 174, 18, 1.000)"
-                ],
-                [
-                    0.8235294117647058,
-                    "rgba(252, 176, 20, 1.000)"
-                ],
-                [
-                    0.8274509803921568,
-                    "rgba(252, 178, 22, 1.000)"
-                ],
-                [
-                    0.8313725490196079,
-                    "rgba(252, 180, 24, 1.000)"
-                ],
-                [
-                    0.8352941176470589,
-                    "rgba(251, 182, 26, 1.000)"
-                ],
-                [
-                    0.8392156862745098,
-                    "rgba(251, 184, 29, 1.000)"
-                ],
-                [
-                    0.8431372549019608,
-                    "rgba(251, 186, 31, 1.000)"
-                ],
-                [
-                    0.8470588235294118,
-                    "rgba(251, 188, 33, 1.000)"
-                ],
-                [
-                    0.8509803921568627,
-                    "rgba(251, 190, 35, 1.000)"
-                ],
-                [
-                    0.8549019607843137,
-                    "rgba(250, 192, 38, 1.000)"
-                ],
-                [
-                    0.8588235294117647,
-                    "rgba(250, 194, 40, 1.000)"
-                ],
-                [
-                    0.8627450980392157,
-                    "rgba(250, 196, 42, 1.000)"
-                ],
-                [
-                    0.8666666666666667,
-                    "rgba(250, 198, 45, 1.000)"
-                ],
-                [
-                    0.8705882352941177,
-                    "rgba(249, 199, 47, 1.000)"
-                ],
-                [
-                    0.8745098039215686,
-                    "rgba(249, 201, 50, 1.000)"
-                ],
-                [
-                    0.8784313725490196,
-                    "rgba(249, 203, 53, 1.000)"
-                ],
-                [
-                    0.8823529411764706,
-                    "rgba(248, 205, 55, 1.000)"
-                ],
-                [
-                    0.8862745098039215,
-                    "rgba(248, 207, 58, 1.000)"
-                ],
-                [
-                    0.8901960784313725,
-                    "rgba(247, 209, 61, 1.000)"
-                ],
-                [
-                    0.8941176470588236,
-                    "rgba(247, 211, 64, 1.000)"
-                ],
-                [
-                    0.8980392156862745,
-                    "rgba(246, 213, 67, 1.000)"
-                ],
-                [
-                    0.9019607843137255,
-                    "rgba(246, 215, 70, 1.000)"
-                ],
-                [
-                    0.9058823529411765,
-                    "rgba(245, 217, 73, 1.000)"
-                ],
-                [
-                    0.9098039215686274,
-                    "rgba(245, 219, 76, 1.000)"
-                ],
-                [
-                    0.9137254901960784,
-                    "rgba(244, 221, 79, 1.000)"
-                ],
-                [
-                    0.9176470588235294,
-                    "rgba(244, 223, 83, 1.000)"
-                ],
-                [
-                    0.9215686274509803,
-                    "rgba(244, 225, 86, 1.000)"
-                ],
-                [
-                    0.9254901960784314,
-                    "rgba(243, 227, 90, 1.000)"
-                ],
-                [
-                    0.9294117647058824,
-                    "rgba(243, 229, 93, 1.000)"
-                ],
-                [
-                    0.9333333333333333,
-                    "rgba(242, 230, 97, 1.000)"
-                ],
-                [
-                    0.9372549019607843,
-                    "rgba(242, 232, 101, 1.000)"
-                ],
-                [
-                    0.9411764705882353,
-                    "rgba(242, 234, 105, 1.000)"
-                ],
-                [
-                    0.9450980392156862,
-                    "rgba(241, 236, 109, 1.000)"
-                ],
-                [
-                    0.9490196078431372,
-                    "rgba(241, 237, 113, 1.000)"
-                ],
-                [
-                    0.9529411764705882,
-                    "rgba(241, 239, 117, 1.000)"
-                ],
-                [
-                    0.9568627450980393,
-                    "rgba(241, 241, 121, 1.000)"
-                ],
-                [
-                    0.9607843137254902,
-                    "rgba(242, 242, 125, 1.000)"
-                ],
-                [
-                    0.9647058823529412,
-                    "rgba(242, 244, 130, 1.000)"
-                ],
-                [
-                    0.9686274509803922,
-                    "rgba(243, 245, 134, 1.000)"
-                ],
-                [
-                    0.9725490196078431,
-                    "rgba(243, 246, 138, 1.000)"
-                ],
-                [
-                    0.9764705882352941,
-                    "rgba(244, 248, 142, 1.000)"
-                ],
-                [
-                    0.9803921568627451,
-                    "rgba(245, 249, 146, 1.000)"
-                ],
-                [
-                    0.984313725490196,
-                    "rgba(246, 250, 150, 1.000)"
-                ],
-                [
-                    0.9882352941176471,
-                    "rgba(248, 251, 154, 1.000)"
-                ],
-                [
-                    0.9921568627450981,
-                    "rgba(249, 252, 157, 1.000)"
-                ],
-                [
-                    0.996078431372549,
-                    "rgba(250, 253, 161, 1.000)"
-                ],
-                [
-                    1.0,
-                    "rgba(252, 255, 164, 1.000)"
-                ]
-            ],
-            "cmax": 235247.7958973312,
-            "showscale": false
-        },
-        "zmax": 235247.7958973312,
-        "y": [
-            128.0
-        ],
-        "type": "scatter",
-        "hoverinfo": "none"
-    }
-]
-, {
-    "showlegend": true,
-    "paper_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "xaxis1": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.5,
-            5.0,
-            7.5,
-            10.0
-        ],
-        "range": [
-            0.67,
-            12.33
-        ],
-        "domain": [
-            0.3581682971446751,
-            0.4928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2.5",
-            "5.0",
-            "7.5",
-            "10.0"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y1",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "legend": {
-        "yanchor": "auto",
-        "xanchor": "auto",
-        "bordercolor": "rgba(0, 0, 0, 1.000)",
-        "bgcolor": "rgba(255, 255, 255, 1.000)",
-        "borderwidth": 1,
-        "tracegroupgap": 0,
-        "y": 1.0,
-        "font": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "title": {
-            "font": {
-                "color": "rgba(0, 0, 0, 1.000)",
-                "family": "sans-serif",
-                "size": 15
-            },
-            "text": ""
-        },
-        "traceorder": "normal",
-        "x": 1.0
-    },
-    "height": 500,
-    "yaxis4": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            75000.0,
-            100000.0,
-            125000.0,
-            150000.0,
-            175000.0,
-            200000.0,
-            225000.0
-        ],
-        "range": [
-            62683.930264527284,
-            240273.92790605364
-        ],
-        "domain": [
-            0.060651793525809315,
-            0.5074037620297464
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "7.500×10<sup>4</sup>",
-            "1.000×10<sup>5</sup>",
-            "1.250×10<sup>5</sup>",
-            "1.500×10<sup>5</sup>",
-            "1.750×10<sup>5</sup>",
-            "2.000×10<sup>5</sup>",
-            "2.250×10<sup>5</sup>"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x4",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "MeanAbsoluteError",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "yaxis2": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.25,
-            0.5,
-            0.75,
-            1.0
-        ],
-        "range": [
-            -0.03,
-            1.03
-        ],
-        "domain": [
-            0.5453740157480316,
-            0.9921259842519685
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": false,
-        "ticktext": [
-            "0.00",
-            "0.25",
-            "0.50",
-            "0.75",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x2",
-        "visible": false,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "xaxis3": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            2.5,
-            5.0,
-            7.5,
-            10.0
-        ],
-        "range": [
-            0.67,
-            12.33
-        ],
-        "domain": [
-            0.3581682971446751,
-            0.4928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "2.5",
-            "5.0",
-            "7.5",
-            "10.0"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y3",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "evo_tree_regressor.max_depth",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "yaxis3": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            25.0,
-            50.0,
-            75.0,
-            100.0,
-            125.0
-        ],
-        "range": [
-            4.4,
-            131.6
-        ],
-        "domain": [
-            0.060651793525809315,
-            0.5074037620297464
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "25",
-            "50",
-            "75",
-            "100",
-            "125"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x3",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "evo_tree_regressor.nbins",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "xaxis4": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            25.0,
-            50.0,
-            75.0,
-            100.0,
-            125.0
-        ],
-        "range": [
-            4.4,
-            131.6
-        ],
-        "domain": [
-            0.858168297144675,
-            0.9928418038654259
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "25",
-            "50",
-            "75",
-            "100",
-            "125"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y4",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "evo_tree_regressor.nbins",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "yaxis1": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            75000.0,
-            100000.0,
-            125000.0,
-            150000.0,
-            175000.0,
-            200000.0,
-            225000.0
-        ],
-        "range": [
-            62683.930264527284,
-            240273.92790605364
-        ],
-        "domain": [
-            0.5453740157480316,
-            0.9921259842519685
-        ],
-        "mirror": true,
-        "tickangle": 0,
-        "showline": true,
-        "ticktext": [
-            "7.500×10<sup>4</sup>",
-            "1.000×10<sup>5</sup>",
-            "1.250×10<sup>5</sup>",
-            "1.500×10<sup>5</sup>",
-            "1.750×10<sup>5</sup>",
-            "2.000×10<sup>5</sup>",
-            "2.250×10<sup>5</sup>"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "x1",
-        "visible": true,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "MeanAbsoluteError",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "annotations": [],
-    "xaxis2": {
-        "showticklabels": true,
-        "gridwidth": 0.5,
-        "tickvals": [
-            0.0,
-            0.25,
-            0.5,
-            0.75,
-            1.0
-        ],
-        "range": [
-            -0.03,
-            1.03
-        ],
-        "domain": [
-            0.858168297144675,
-            0.9928418038654259
-        ],
-        "mirror": false,
-        "tickangle": 0,
-        "showline": false,
-        "ticktext": [
-            "0.00",
-            "0.25",
-            "0.50",
-            "0.75",
-            "1.00"
-        ],
-        "zeroline": false,
-        "tickfont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 11
-        },
-        "zerolinecolor": "rgba(0, 0, 0, 1.000)",
-        "anchor": "y2",
-        "visible": false,
-        "ticks": "inside",
-        "tickmode": "array",
-        "linecolor": "rgba(0, 0, 0, 1.000)",
-        "showgrid": true,
-        "title": "",
-        "gridcolor": "rgba(0, 0, 0, 0.100)",
-        "titlefont": {
-            "color": "rgba(0, 0, 0, 1.000)",
-            "family": "sans-serif",
-            "size": 15
-        },
-        "tickcolor": "rgb(0, 0, 0)",
-        "type": "-"
-    },
-    "plot_bgcolor": "rgba(255, 255, 255, 1.000)",
-    "margin": {
-        "l": 0,
-        "b": 20,
-        "r": 0,
-        "t": 20
-    },
-    "width": 550
-}
-);
+````
+[ Info: Training Machine{DeterministicTunedModel{RandomSearch,…},…}.
+[ Info: Attempting to evaluate 40 models.
+Evaluating over 40 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 40 metamodels:   2%[>                        ]  ETA: 0:05:19[KEvaluating over 40 metamodels:   5%[=>                       ]  ETA: 0:02:58[KEvaluating over 40 metamodels:   8%[=>                       ]  ETA: 0:02:00[KEvaluating over 40 metamodels:  10%[==>                      ]  ETA: 0:01:39[KEvaluating over 40 metamodels:  12%[===>                     ]  ETA: 0:01:20[KEvaluating over 40 metamodels:  15%[===>                     ]  ETA: 0:01:11[KEvaluating over 40 metamodels:  18%[====>                    ]  ETA: 0:01:01[KEvaluating over 40 metamodels:  20%[=====>                   ]  ETA: 0:01:19[KEvaluating over 40 metamodels:  22%[=====>                   ]  ETA: 0:02:34[KEvaluating over 40 metamodels:  25%[======>                  ]  ETA: 0:02:25[KEvaluating over 40 metamodels:  28%[======>                  ]  ETA: 0:02:21[KEvaluating over 40 metamodels:  30%[=======>                 ]  ETA: 0:02:05[KEvaluating over 40 metamodels:  32%[========>                ]  ETA: 0:02:03[KEvaluating over 40 metamodels:  35%[========>                ]  ETA: 0:01:53[KEvaluating over 40 metamodels:  38%[=========>               ]  ETA: 0:01:45[KEvaluating over 40 metamodels:  40%[==========>              ]  ETA: 0:01:35[KEvaluating over 40 metamodels:  42%[==========>              ]  ETA: 0:01:28[KEvaluating over 40 metamodels:  45%[===========>             ]  ETA: 0:01:21[KEvaluating over 40 metamodels:  48%[===========>             ]  ETA: 0:01:14[KEvaluating over 40 metamodels:  50%[============>            ]  ETA: 0:01:08[KEvaluating over 40 metamodels:  52%[=============>           ]  ETA: 0:01:05[KEvaluating over 40 metamodels:  55%[=============>           ]  ETA: 0:01:06[KEvaluating over 40 metamodels:  58%[==============>          ]  ETA: 0:01:00[KEvaluating over 40 metamodels:  60%[===============>         ]  ETA: 0:00:55[KEvaluating over 40 metamodels:  62%[===============>         ]  ETA: 0:00:50[KEvaluating over 40 metamodels:  65%[================>        ]  ETA: 0:00:57[KEvaluating over 40 metamodels:  70%[=================>       ]  ETA: 0:00:45[KEvaluating over 40 metamodels:  72%[==================>      ]  ETA: 0:00:49[KEvaluating over 40 metamodels:  75%[==================>      ]  ETA: 0:00:43[KEvaluating over 40 metamodels:  78%[===================>     ]  ETA: 0:00:38[KEvaluating over 40 metamodels:  80%[====================>    ]  ETA: 0:00:34[KEvaluating over 40 metamodels:  82%[====================>    ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  85%[=====================>   ]  ETA: 0:00:24[KEvaluating over 40 metamodels:  88%[=====================>   ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  90%[======================>  ]  ETA: 0:00:28[KEvaluating over 40 metamodels:  92%[=======================> ]  ETA: 0:00:21[KEvaluating over 40 metamodels:  95%[=======================> ]  ETA: 0:00:14[KEvaluating over 40 metamodels:  98%[========================>]  ETA: 0:00:07[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:04:21[K
 
-    
-    </script>
+````
 
-```
+![](exercise_8c.png)
 
 (d)
 
