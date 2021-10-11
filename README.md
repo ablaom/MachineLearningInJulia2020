@@ -2,6 +2,8 @@
 
 **Now updated for MLJ version 0.16 and Julia 1.6**
 
+But binder notebook will not work until [this binder issue](https://github.com/jupyterhub/binderhub/issues/1424) is resolved.
+
 Interactive tutorials for a workshop introducing the machine learning
 toolbox [MLJ](https://alan-turing-institute.github.io/MLJ.jl/stable/) (v0.14.4)
 
