@@ -444,7 +444,10 @@ scitype(y)
 # Here's one way to access the documentation (at the REPL, `?unpack`
 # also works):
 
-@doc unpack
+@doc unpack #!md
+
+# <display omitted, as not markdown renderable> #md
+
 
 # ### On searching for a model
 
@@ -1205,7 +1208,7 @@ import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
 plt = histogram(rand(sampler_r, 10000), nbins=50)
 savefig("gamma_sampler.png")
-plt #md
+plt #!md
 
 # ![](gamma_sampler.png)
 
@@ -1315,9 +1318,12 @@ r2 = range(model,
 
 r2_sampler = sampler(r2, Distributions.Uniform)
 samples = rand(r2_sampler, 1000);
-histogram(samples, nbins=50)
+plt = histogram(samples, nbins=50)
+savefig("uniform_sampler.png")
 
-#-
+plt #!md
+
+# ![](uniform_sampler.png)
 
 sort(unique(samples))
 

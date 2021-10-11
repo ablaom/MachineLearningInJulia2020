@@ -617,8 +617,8 @@ A = rand(2, 3)
 
 ````
 2×3 Matrix{Float64}:
- 0.586902  0.635427  0.433316
- 0.583547  0.473668  0.61271
+ 0.214416  0.610352  0.158818
+ 0.174811  0.121146  0.104297
 ````
 
 -
@@ -646,8 +646,8 @@ Asparse = sparse(A)
 
 ````
 2×3 SparseMatrixCSC{Float64, Int64} with 6 stored entries:
- 0.586902  0.635427  0.433316
- 0.583547  0.473668  0.61271
+ 0.214416  0.610352  0.158818
+ 0.174811  0.121146  0.104297
 ````
 
 ````julia
@@ -665,8 +665,8 @@ C1 = categorical(A)
 
 ````
 2×3 CategoricalArray{Float64,2,UInt32}:
- 0.586902  0.635427  0.433316
- 0.583547  0.473668  0.61271
+ 0.214416  0.610352  0.158818
+ 0.174811  0.121146  0.104297
 ````
 
 ````julia
@@ -878,40 +878,7 @@ AbstractVector{Multiclass{3}} (alias for AbstractArray{Multiclass{3}, 1})
 Here's one way to access the documentation (at the REPL, `?unpack`
 also works):
 
-````julia
-@doc unpack
-````
-
-```@raw html
-<div class="markdown"><pre><code>t1, t2, ...., tk &#61; unpack&#40;table, f1, f2, ... fk;
-                         wrap_singles&#61;false,
-                         shuffle&#61;false,
-                         rng::Union&#123;AbstractRNG,Int,Nothing&#125;&#61;nothing&#41;</code></pre>
-<p>Horizontally split any Tables.jl compatible <code>table</code> into smaller tables &#40;or vectors&#41; <code>t1, t2, ..., tk</code> by making column selections <strong>without replacement</strong> by successively applying the columnn name filters <code>f1</code>, <code>f2</code>, ..., <code>fk</code>. A <em>filter</em> is any object <code>f</code> such that <code>f&#40;name&#41;</code> is <code>true</code> or <code>false</code> for each column <code>name::Symbol</code> of <code>table</code>. For example, use the filter <code>_ -&gt; true</code> to pick up all remaining columns of the table.</p>
-<p>Whenever a returned table contains a single column, it is converted to a vector unless <code>wrap_singles&#61;true</code>.</p>
-<p>Scientific type conversions can be optionally specified &#40;note semicolon&#41;:</p>
-<pre><code>unpack&#40;table, t...; col1&#61;&gt;scitype1, col2&#61;&gt;scitype2, ... &#41;</code></pre>
-<p>If <code>shuffle&#61;true</code> then the rows of <code>table</code> are first shuffled, using the global RNG, unless <code>rng</code> is specified; if <code>rng</code> is an integer, it specifies the seed of an automatically generated Mersenne twister. If <code>rng</code> is specified then <code>shuffle&#61;true</code> is implicit.</p>
-<h3>Example</h3>
-<pre><code>julia&gt; table &#61; DataFrame&#40;x&#61;&#91;1,2&#93;, y&#61;&#91;&#39;a&#39;, &#39;b&#39;&#93;, z&#61;&#91;10.0, 20.0&#93;, w&#61;&#91;&quot;A&quot;, &quot;B&quot;&#93;&#41;
-julia&gt; Z, XY &#61; unpack&#40;table, &#61;&#61;&#40;:z&#41;, &#33;&#61;&#40;:w&#41;;
-               :x&#61;&gt;Continuous, :y&#61;&gt;Multiclass&#41;
-julia&gt; XY
-2×2 DataFrame
-│ Row │ x       │ y            │
-│     │ Float64 │ Categorical… │
-├─────┼─────────┼──────────────┤
-│ 1   │ 1.0     │ &#39;a&#39;          │
-│ 2   │ 2.0     │ &#39;b&#39;          │
-
-julia&gt; Z
-2-element Array&#123;Float64,1&#125;:
- 10.0
- 20.0</code></pre>
-
-
-</div>
-```
+<display omitted, as not markdown renderable>
 
 ### On searching for a model
 
@@ -1426,8 +1393,8 @@ mach = machine(model, X, y)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 0 times; caches data
   args: 
-    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @264 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @596 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1453,8 +1420,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 1 time; caches data
   args: 
-    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @264 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @596 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1467,9 +1434,9 @@ yhat[1:3]
 
 ````
 3-element MLJBase.UnivariateFiniteVector{Multiclass{3}, String, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.247, Iris-versicolor=>0.394, Iris-virginica=>0.359)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.207, Iris-versicolor=>0.393, Iris-virginica=>0.401)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.483, Iris-versicolor=>0.333, Iris-virginica=>0.185)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.298, Iris-versicolor=>0.37, Iris-virginica=>0.332)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.282, Iris-versicolor=>0.371, Iris-virginica=>0.347)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.379, Iris-versicolor=>0.357, Iris-virginica=>0.264)
 ````
 
 We'll have more to say on the form of this prediction shortly.
@@ -1492,7 +1459,7 @@ report(mach)
 ````
 
 ````
-(training_losses = [1.5156192707126666, 1.6780407939092195, 1.5478420559388637, 1.4199297061792355, 1.3360638062270704, 1.1756546101084517, 1.037690913759279, 0.9965093701804687, 0.9474401185836681, 0.9775993501790641, 0.9158615923796721, 0.9730838334665759, 0.9010222126994627],)
+(training_losses = [1.2102369904460677, 1.2573466409636107, 1.2012884763249403, 1.159415930492209, 1.1176625852059021, 1.074384151701623, 1.1164166010124859, 1.0904731571087158, 1.088586369749853, 1.062854355958386, 1.0343942781406288, 1.016767866961867, 1.0185323857138837],)
 ````
 
 You save a machine like this:
@@ -1511,9 +1478,9 @@ yhat[1:3]
 
 ````
 3-element MLJBase.UnivariateFiniteVector{Multiclass{3}, String, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.195, Iris-versicolor=>0.397, Iris-virginica=>0.409)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.246, Iris-versicolor=>0.393, Iris-virginica=>0.361)
- UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.18, Iris-versicolor=>0.394, Iris-virginica=>0.426)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.27, Iris-versicolor=>0.369, Iris-virginica=>0.362)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.3, Iris-versicolor=>0.371, Iris-virginica=>0.329)
+ UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.263, Iris-versicolor=>0.375, Iris-virginica=>0.362)
 ````
 
 If you want to fit a retrieved model, you will need to bind some data to it:
@@ -1526,8 +1493,8 @@ fit!(mach3)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 2 times; caches data
   args: 
-    1:	Source @019 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @680 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @715 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @743 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1544,8 +1511,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 2 times; caches data
   args: 
-    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @264 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @596 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1561,8 +1528,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 3 times; caches data
   args: 
-    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @264 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @596 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1577,8 +1544,8 @@ fit!(mach, rows=train, verbosity=2)
 ````
 Machine{NeuralNetworkClassifier{Short,…},…} trained 4 times; caches data
   args: 
-    1:	Source @286 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @234 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @264 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @596 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -1599,7 +1566,7 @@ yhat[1]
 ````
 
 ````
-UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.108, Iris-versicolor=>0.553, Iris-virginica=>0.339)
+UnivariateFinite{Multiclass{3}}(Iris-setosa=>0.101, Iris-versicolor=>0.558, Iris-virginica=>0.341)
 ````
 
 What's going on here?
@@ -1624,7 +1591,7 @@ pdf(yhat[1], "Iris-virginica")
 ````
 
 ````
-0.33900670784011633
+0.3411491914755774
 ````
 
 To get the most likely observation, we do
@@ -1645,10 +1612,10 @@ broadcast(pdf, yhat[1:4], "Iris-versicolor")
 
 ````
 4-element Vector{Float64}:
- 0.5533409672785429
- 0.5180722923338932
- 0.07102889246903585
- 0.3696441445728432
+ 0.5581346326645432
+ 0.47812424130633313
+ 0.11796874746986409
+ 0.2748136014125683
 ````
 
 ````julia
@@ -1658,7 +1625,7 @@ mode.(yhat[1:4])
 ````
 4-element CategoricalArray{String,1,UInt32}:
  "Iris-versicolor"
- "Iris-versicolor"
+ "Iris-virginica"
  "Iris-setosa"
  "Iris-virginica"
 ````
@@ -1673,7 +1640,7 @@ predict_mode(mach, X[test,:])[1:4] # or predict_mode(mach, rows=test)[1:4]
 ````
 4-element CategoricalArray{String,1,UInt32}:
  "Iris-versicolor"
- "Iris-versicolor"
+ "Iris-virginica"
  "Iris-setosa"
  "Iris-virginica"
 ````
@@ -1687,10 +1654,10 @@ pdf(yhat, L)[1:4, :]
 
 ````
 4×3 Matrix{Float64}:
- 0.107652   0.553341   0.339007
- 0.074373   0.518072   0.407555
- 0.925246   0.0710289  0.00372534
- 0.0215614  0.369644   0.608794
+ 0.100716    0.558135  0.341149
+ 0.0254209   0.478124  0.496455
+ 0.845594    0.117969  0.0364368
+ 0.00171405  0.274814  0.723472
 ````
 
 However, in a typical MLJ work-flow, this is not as useful as you
@@ -1702,7 +1669,7 @@ cross_entropy(yhat, y[test]) |> mean
 ````
 
 ````
-0.38633478435313934
+0.36798476414020065
 ````
 
 To apply a deterministic measure, we first need to obtain point-estimates:
@@ -1712,7 +1679,7 @@ misclassification_rate(mode.(yhat), y[test])
 ````
 
 ````
-0.0
+0.06666666666666667
 ````
 
 We note in passing that there is also a search tool for measures
@@ -1807,8 +1774,8 @@ Extract:
 ┌────────────────────────────┬─────────────┬───────────┬──────────┐
 │ measure                    │ measurement │ operation │ per_fold │
 ├────────────────────────────┼─────────────┼───────────┼──────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.386       │ predict   │ [0.386]  │
-│ BrierScore()               │ -0.214      │ predict   │ [-0.214] │
+│ LogLoss(tol = 2.22045e-16) │ 0.368       │ predict   │ [0.368]  │
+│ BrierScore()               │ -0.191      │ predict   │ [-0.191] │
 └────────────────────────────┴─────────────┴───────────┴──────────┘
 
 ````
@@ -1829,8 +1796,8 @@ Extract:
 ┌────────────────────────────┬─────────────┬───────────┬──────────────────────────────────────────────────┐
 │ measure                    │ measurement │ operation │ per_fold                                         │
 ├────────────────────────────┼─────────────┼───────────┼──────────────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.406       │ predict   │ [0.431, 0.325, 0.436, 0.438, 0.424, 0.38]        │
-│ BrierScore()               │ -0.227      │ predict   │ [-0.248, -0.169, -0.241, -0.236, -0.239, -0.232] │
+│ LogLoss(tol = 2.22045e-16) │ 0.418       │ predict   │ [0.39, 0.401, 0.468, 0.416, 0.459, 0.372]        │
+│ BrierScore()               │ -0.232      │ predict   │ [-0.204, -0.206, -0.263, -0.233, -0.281, -0.207] │
 └────────────────────────────┴─────────────┴───────────┴──────────────────────────────────────────────────┘
 
 ````
@@ -1850,12 +1817,12 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────────┬─────────────┬───────────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│ measure                    │ measurement │ operation │ per_fold                                                                                                                                       │
-├────────────────────────────┼─────────────┼───────────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.404       │ predict   │ [0.308, 0.387, 0.392, 0.482, 0.473, 0.384, 0.444, 0.409, 0.416, 0.379, 0.411, 0.429, 0.425, 0.337, 0.397, 0.376, 0.412, 0.408]                 │
-│ BrierScore()               │ -0.224      │ predict   │ [-0.166, -0.221, -0.226, -0.267, -0.271, -0.2, -0.253, -0.213, -0.238, -0.196, -0.231, -0.246, -0.228, -0.195, -0.216, -0.187, -0.238, -0.232] │
-└────────────────────────────┴─────────────┴───────────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────┬─────────────┬───────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ measure                    │ measurement │ operation │ per_fold                                                                                                                                         │
+├────────────────────────────┼─────────────┼───────────┼──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+│ LogLoss(tol = 2.22045e-16) │ 0.398       │ predict   │ [0.322, 0.305, 0.401, 0.493, 0.474, 0.478, 0.426, 0.372, 0.392, 0.422, 0.364, 0.352, 0.414, 0.381, 0.415, 0.376, 0.381, 0.394]                   │
+│ BrierScore()               │ -0.22       │ predict   │ [-0.178, -0.155, -0.226, -0.277, -0.271, -0.269, -0.247, -0.208, -0.215, -0.227, -0.198, -0.187, -0.228, -0.197, -0.225, -0.213, -0.211, -0.225] │
+└────────────────────────────┴─────────────┴───────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 ````
 
@@ -1882,9 +1849,9 @@ nothing #hide
 
 ````
 [ Info: Creating subsamples from a subset of all rows. 
-Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:11[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:08[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:16[K
+Evaluating over 6 folds:  33%[========>                ]  ETA: 0:00:10[KEvaluating over 6 folds:  50%[============>            ]  ETA: 0:00:08[KEvaluating over 6 folds:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 6 folds:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 6 folds: 100%[=========================] Time: 0:00:15[K
 [ Info: Training Machine{NeuralNetworkClassifier{Short,…},…}.
-Optimising neural net:  4%[>                        ]  ETA: 0:00:01[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:02[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:02[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 33%[========>                ]  ETA: 0:00:02[KOptimising neural net: 35%[========>                ]  ETA: 0:00:02[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 49%[============>            ]  ETA: 0:00:02[KOptimising neural net: 51%[============>            ]  ETA: 0:00:02[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 65%[================>        ]  ETA: 0:00:01[KOptimising neural net: 67%[================>        ]  ETA: 0:00:01[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:01[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:03[K
+Optimising neural net:  4%[>                        ]  ETA: 0:00:02[KOptimising neural net:  6%[=>                       ]  ETA: 0:00:02[KOptimising neural net:  8%[=>                       ]  ETA: 0:00:02[KOptimising neural net: 10%[==>                      ]  ETA: 0:00:02[KOptimising neural net: 12%[==>                      ]  ETA: 0:00:03[KOptimising neural net: 14%[===>                     ]  ETA: 0:00:03[KOptimising neural net: 16%[===>                     ]  ETA: 0:00:02[KOptimising neural net: 18%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 20%[====>                    ]  ETA: 0:00:02[KOptimising neural net: 22%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 24%[=====>                   ]  ETA: 0:00:02[KOptimising neural net: 25%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 27%[======>                  ]  ETA: 0:00:02[KOptimising neural net: 29%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 31%[=======>                 ]  ETA: 0:00:02[KOptimising neural net: 33%[========>                ]  ETA: 0:00:02[KOptimising neural net: 35%[========>                ]  ETA: 0:00:02[KOptimising neural net: 37%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 39%[=========>               ]  ETA: 0:00:02[KOptimising neural net: 41%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 43%[==========>              ]  ETA: 0:00:02[KOptimising neural net: 45%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 47%[===========>             ]  ETA: 0:00:02[KOptimising neural net: 49%[============>            ]  ETA: 0:00:02[KOptimising neural net: 51%[============>            ]  ETA: 0:00:02[KOptimising neural net: 53%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 55%[=============>           ]  ETA: 0:00:01[KOptimising neural net: 57%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 59%[==============>          ]  ETA: 0:00:01[KOptimising neural net: 61%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 63%[===============>         ]  ETA: 0:00:01[KOptimising neural net: 65%[================>        ]  ETA: 0:00:01[KOptimising neural net: 67%[================>        ]  ETA: 0:00:01[KOptimising neural net: 69%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 71%[=================>       ]  ETA: 0:00:01[KOptimising neural net: 73%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 75%[==================>      ]  ETA: 0:00:01[KOptimising neural net: 76%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 78%[===================>     ]  ETA: 0:00:01[KOptimising neural net: 80%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 82%[====================>    ]  ETA: 0:00:01[KOptimising neural net: 84%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 86%[=====================>   ]  ETA: 0:00:00[KOptimising neural net: 88%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 90%[======================>  ]  ETA: 0:00:00[KOptimising neural net: 92%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 94%[=======================> ]  ETA: 0:00:00[KOptimising neural net: 96%[========================>]  ETA: 0:00:00[KOptimising neural net: 98%[========================>]  ETA: 0:00:00[KOptimising neural net:100%[=========================] Time: 0:00:03[K
 
 ````
 
@@ -1973,16 +1940,16 @@ y4 = [n_devices(row.salary) for row in eachrow(X4)]
 
 ````
 10-element Vector{Int64}:
- 4
- 4
+ 3
+ 0
  1
  4
- 3
- 6
+ 0
+ 0
  1
- 2
- 5
- 3
+ 7
+ 0
+ 0
 ````
 
 (b) What models can be applied if you coerce the salary to a
@@ -2006,10 +1973,10 @@ pretty(data)
 │ Int64 │ Float64    │ Float64    │ CategoricalValue{String, UInt32} │
 │ Count │ Continuous │ Continuous │ OrderedFactor{2}                 │
 ├───────┼────────────┼────────────┼──────────────────────────────────┤
-│ 1     │ 0.243236   │ 0.0290742  │ male                             │
-│ 2     │ 0.480514   │ 0.575621   │ female                           │
-│ 3     │ 0.944733   │ 0.21603    │ female                           │
-│ 4     │ 0.230733   │ 0.129638   │ male                             │
+│ 1     │ 0.148655   │ 0.802052   │ male                             │
+│ 2     │ 0.440145   │ 0.301427   │ female                           │
+│ 3     │ 0.157132   │ 0.285097   │ female                           │
+│ 4     │ 0.287972   │ 0.839287   │ male                             │
 └───────┴────────────┴────────────┴──────────────────────────────────┘
 
 ````
@@ -2047,10 +2014,10 @@ pretty(X)
 │ Float64    │ Float64    │
 │ Continuous │ Continuous │
 ├────────────┼────────────┤
-│ 0.243236   │ 0.0290742  │
-│ 0.480514   │ 0.575621   │
-│ 0.944733   │ 0.21603    │
-│ 0.230733   │ 0.129638   │
+│ 0.148655   │ 0.802052   │
+│ 0.440145   │ 0.301427   │
+│ 0.157132   │ 0.285097   │
+│ 0.287972   │ 0.839287   │
 └────────────┴────────────┘
 
 ````
@@ -2142,8 +2109,8 @@ nothing #hide
 ````
 
 ````
-mean(x) = 0.5000214909621086
-std(x) = 0.26384039583977714
+mean(x) = 0.5306341241001111
+std(x) = 0.291180654132626
 
 ````
 
@@ -2158,8 +2125,8 @@ nothing #hide
 
 ````
 [ Info: Training Machine{Standardizer,…}.
-mean(xhat) = 1.7819079545233762e-16
-std(xhat) = 1.0
+mean(xhat) = -5.2735593669694933e-17
+std(xhat) = 0.9999999999999997
 
 ````
 
@@ -2484,7 +2451,7 @@ pipe = @pipeline encoder reducer
 ````
 
 ````
-Pipeline499(
+Pipeline694(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2527,7 +2494,7 @@ pipe2 = @pipeline encoder reducer rgs
 ````
 
 ````
-Pipeline507(
+Pipeline702(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -2575,10 +2542,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline507,…} trained 2 times; caches data
+Machine{Pipeline702,…} trained 2 times; caches data
   args: 
-    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @995 ⏎ `AbstractVector{Continuous}`
+    1:	Source @982 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @236 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2588,10 +2555,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline507,…} trained 3 times; caches data
+Machine{Pipeline702,…} trained 3 times; caches data
   args: 
-    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @995 ⏎ `AbstractVector{Continuous}`
+    1:	Source @982 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @236 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2606,10 +2573,10 @@ fit!(mach)
 ````
 
 ````
-Machine{Pipeline507,…} trained 4 times; caches data
+Machine{Pipeline702,…} trained 4 times; caches data
   args: 
-    1:	Source @665 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
-    2:	Source @995 ⏎ `AbstractVector{Continuous}`
+    1:	Source @982 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{70}}, AbstractVector{OrderedFactor{6}}, AbstractVector{OrderedFactor{13}}, AbstractVector{OrderedFactor{30}}, AbstractVector{OrderedFactor{5}}, AbstractVector{OrderedFactor{12}}, AbstractVector{OrderedFactor{2}}}}`
+    2:	Source @236 ⏎ `AbstractVector{Continuous}`
 
 ````
 
@@ -2815,10 +2782,10 @@ mach = machine(model, X, y)
 ````
 
 ````
-Machine{Pipeline536,…} trained 0 times; caches data
+Machine{Pipeline731,…} trained 0 times; caches data
   args: 
-    1:	Source @042 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}, AbstractVector{Multiclass{6}}, AbstractVector{Multiclass{3}}, AbstractVector{OrderedFactor{2}}, AbstractVector{OrderedFactor{4}}, AbstractVector{OrderedFactor{5}}}}`
-    2:	Source @768 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @004 ⏎ `Table{Union{AbstractVector{Continuous}, AbstractVector{Multiclass{2}}, AbstractVector{Multiclass{6}}, AbstractVector{Multiclass{3}}, AbstractVector{OrderedFactor{2}}, AbstractVector{OrderedFactor{4}}, AbstractVector{OrderedFactor{5}}}}`
+    2:	Source @765 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -2861,7 +2828,7 @@ savefig("learning_curve2.png")
 ````
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 30 models.
-Evaluating over 30 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 30 metamodels:   3%[>                        ]  ETA: 0:01:59[KEvaluating over 30 metamodels:   7%[=>                       ]  ETA: 0:01:09[KEvaluating over 30 metamodels:  10%[==>                      ]  ETA: 0:00:51[KEvaluating over 30 metamodels:  13%[===>                     ]  ETA: 0:00:41[KEvaluating over 30 metamodels:  17%[====>                    ]  ETA: 0:00:34[KEvaluating over 30 metamodels:  20%[=====>                   ]  ETA: 0:00:30[KEvaluating over 30 metamodels:  23%[=====>                   ]  ETA: 0:00:26[KEvaluating over 30 metamodels:  27%[======>                  ]  ETA: 0:00:24[KEvaluating over 30 metamodels:  30%[=======>                 ]  ETA: 0:00:21[KEvaluating over 30 metamodels:  33%[========>                ]  ETA: 0:00:19[KEvaluating over 30 metamodels:  37%[=========>               ]  ETA: 0:00:17[KEvaluating over 30 metamodels:  40%[==========>              ]  ETA: 0:00:15[KEvaluating over 30 metamodels:  43%[==========>              ]  ETA: 0:00:14[KEvaluating over 30 metamodels:  47%[===========>             ]  ETA: 0:00:12[KEvaluating over 30 metamodels:  50%[============>            ]  ETA: 0:00:11[KEvaluating over 30 metamodels:  53%[=============>           ]  ETA: 0:00:10[KEvaluating over 30 metamodels:  57%[==============>          ]  ETA: 0:00:09[KEvaluating over 30 metamodels:  60%[===============>         ]  ETA: 0:00:08[KEvaluating over 30 metamodels:  63%[===============>         ]  ETA: 0:00:07[KEvaluating over 30 metamodels:  67%[================>        ]  ETA: 0:00:06[KEvaluating over 30 metamodels:  70%[=================>       ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  73%[==================>      ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  77%[===================>     ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  83%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  87%[=====================>   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  90%[======================>  ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  93%[=======================> ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:12[K
+Evaluating over 30 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 30 metamodels:   3%[>                        ]  ETA: 0:01:33[KEvaluating over 30 metamodels:   7%[=>                       ]  ETA: 0:00:54[KEvaluating over 30 metamodels:  10%[==>                      ]  ETA: 0:00:40[KEvaluating over 30 metamodels:  13%[===>                     ]  ETA: 0:00:33[KEvaluating over 30 metamodels:  17%[====>                    ]  ETA: 0:00:28[KEvaluating over 30 metamodels:  20%[=====>                   ]  ETA: 0:00:24[KEvaluating over 30 metamodels:  23%[=====>                   ]  ETA: 0:00:22[KEvaluating over 30 metamodels:  27%[======>                  ]  ETA: 0:00:20[KEvaluating over 30 metamodels:  30%[=======>                 ]  ETA: 0:00:18[KEvaluating over 30 metamodels:  33%[========>                ]  ETA: 0:00:16[KEvaluating over 30 metamodels:  37%[=========>               ]  ETA: 0:00:14[KEvaluating over 30 metamodels:  40%[==========>              ]  ETA: 0:00:13[KEvaluating over 30 metamodels:  43%[==========>              ]  ETA: 0:00:12[KEvaluating over 30 metamodels:  47%[===========>             ]  ETA: 0:00:11[KEvaluating over 30 metamodels:  50%[============>            ]  ETA: 0:00:09[KEvaluating over 30 metamodels:  53%[=============>           ]  ETA: 0:00:08[KEvaluating over 30 metamodels:  57%[==============>          ]  ETA: 0:00:08[KEvaluating over 30 metamodels:  60%[===============>         ]  ETA: 0:00:07[KEvaluating over 30 metamodels:  63%[===============>         ]  ETA: 0:00:06[KEvaluating over 30 metamodels:  67%[================>        ]  ETA: 0:00:05[KEvaluating over 30 metamodels:  70%[=================>       ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  73%[==================>      ]  ETA: 0:00:04[KEvaluating over 30 metamodels:  77%[===================>     ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 30 metamodels:  83%[====================>    ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  87%[=====================>   ]  ETA: 0:00:02[KEvaluating over 30 metamodels:  90%[======================>  ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  93%[=======================> ]  ETA: 0:00:01[KEvaluating over 30 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 30 metamodels: 100%[=========================] Time: 0:00:11[K
 
 ````
 
@@ -2950,489 +2917,7 @@ import Distributions
 sampler_r = sampler(r, Distributions.Gamma)
 plt = histogram(rand(sampler_r, 10000), nbins=50)
 savefig("gamma_sampler.png")
-plt
 ````
-
-```@raw html
-<?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="490" height="300" viewBox="0 0 1960 1200">
-<defs>
-  <clipPath id="clip250">
-    <rect x="0" y="0" width="1960" height="1200"/>
-  </clipPath>
-</defs>
-<path clip-path="url(#clip250)" d="
-M0 1200 L1960 1200 L1960 0 L0 0  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<defs>
-  <clipPath id="clip251">
-    <rect x="392" y="0" width="1373" height="1200"/>
-  </clipPath>
-</defs>
-<path clip-path="url(#clip250)" d="
-M194.883 1093.27 L1912.76 1093.27 L1912.76 47.2441 L194.883 47.2441  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<defs>
-  <clipPath id="clip252">
-    <rect x="194" y="47" width="1719" height="1047"/>
-  </clipPath>
-</defs>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  289.369,1093.27 289.369,47.2441 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  589.154,1093.27 589.154,47.2441 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  888.938,1093.27 888.938,47.2441 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1188.72,1093.27 1188.72,47.2441 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1488.51,1093.27 1488.51,47.2441 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1788.29,1093.27 1788.29,47.2441 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,1093.27 1912.76,1093.27 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  289.369,1093.27 289.369,1074.37 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  589.154,1093.27 589.154,1074.37 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  888.938,1093.27 888.938,1074.37 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1188.72,1093.27 1188.72,1074.37 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1488.51,1093.27 1488.51,1074.37 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1788.29,1093.27 1788.29,1074.37 
-  "/>
-<path clip-path="url(#clip250)" d="M289.369 1120.67 Q285.758 1120.67 283.929 1124.23 Q282.124 1127.77 282.124 1134.9 Q282.124 1142.01 283.929 1145.58 Q285.758 1149.12 289.369 1149.12 Q293.003 1149.12 294.809 1145.58 Q296.638 1142.01 296.638 1134.9 Q296.638 1127.77 294.809 1124.23 Q293.003 1120.67 289.369 1120.67 M289.369 1116.96 Q295.179 1116.96 298.235 1121.57 Q301.314 1126.15 301.314 1134.9 Q301.314 1143.63 298.235 1148.24 Q295.179 1152.82 289.369 1152.82 Q283.559 1152.82 280.48 1148.24 Q277.425 1143.63 277.425 1134.9 Q277.425 1126.15 280.48 1121.57 Q283.559 1116.96 289.369 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M563.841 1148.21 L571.48 1148.21 L571.48 1121.85 L563.17 1123.51 L563.17 1119.26 L571.434 1117.59 L576.11 1117.59 L576.11 1148.21 L583.749 1148.21 L583.749 1152.15 L563.841 1152.15 L563.841 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M603.193 1120.67 Q599.582 1120.67 597.753 1124.23 Q595.948 1127.77 595.948 1134.9 Q595.948 1142.01 597.753 1145.58 Q599.582 1149.12 603.193 1149.12 Q606.827 1149.12 608.633 1145.58 Q610.461 1142.01 610.461 1134.9 Q610.461 1127.77 608.633 1124.23 Q606.827 1120.67 603.193 1120.67 M603.193 1116.96 Q609.003 1116.96 612.059 1121.57 Q615.137 1126.15 615.137 1134.9 Q615.137 1143.63 612.059 1148.24 Q609.003 1152.82 603.193 1152.82 Q597.383 1152.82 594.304 1148.24 Q591.249 1143.63 591.249 1134.9 Q591.249 1126.15 594.304 1121.57 Q597.383 1116.96 603.193 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M867.711 1148.21 L884.031 1148.21 L884.031 1152.15 L862.086 1152.15 L862.086 1148.21 Q864.748 1145.46 869.332 1140.83 Q873.938 1136.18 875.119 1134.83 Q877.364 1132.31 878.244 1130.58 Q879.146 1128.82 879.146 1127.13 Q879.146 1124.37 877.202 1122.64 Q875.281 1120.9 872.179 1120.9 Q869.98 1120.9 867.526 1121.66 Q865.096 1122.43 862.318 1123.98 L862.318 1119.26 Q865.142 1118.12 867.596 1117.54 Q870.049 1116.96 872.086 1116.96 Q877.457 1116.96 880.651 1119.65 Q883.846 1122.33 883.846 1126.83 Q883.846 1128.95 883.035 1130.88 Q882.248 1132.77 880.142 1135.37 Q879.563 1136.04 876.461 1139.26 Q873.359 1142.45 867.711 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M903.845 1120.67 Q900.234 1120.67 898.406 1124.23 Q896.6 1127.77 896.6 1134.9 Q896.6 1142.01 898.406 1145.58 Q900.234 1149.12 903.845 1149.12 Q907.48 1149.12 909.285 1145.58 Q911.114 1142.01 911.114 1134.9 Q911.114 1127.77 909.285 1124.23 Q907.48 1120.67 903.845 1120.67 M903.845 1116.96 Q909.656 1116.96 912.711 1121.57 Q915.79 1126.15 915.79 1134.9 Q915.79 1143.63 912.711 1148.24 Q909.656 1152.82 903.845 1152.82 Q898.035 1152.82 894.957 1148.24 Q891.901 1143.63 891.901 1134.9 Q891.901 1126.15 894.957 1121.57 Q898.035 1116.96 903.845 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1177.57 1133.51 Q1180.92 1134.23 1182.8 1136.5 Q1184.69 1138.77 1184.69 1142.1 Q1184.69 1147.22 1181.18 1150.02 Q1177.66 1152.82 1171.18 1152.82 Q1169 1152.82 1166.69 1152.38 Q1164.39 1151.96 1161.94 1151.11 L1161.94 1146.59 Q1163.88 1147.73 1166.2 1148.31 Q1168.51 1148.89 1171.04 1148.89 Q1175.44 1148.89 1177.73 1147.15 Q1180.04 1145.41 1180.04 1142.1 Q1180.04 1139.05 1177.89 1137.33 Q1175.76 1135.6 1171.94 1135.6 L1167.91 1135.6 L1167.91 1131.76 L1172.13 1131.76 Q1175.57 1131.76 1177.4 1130.39 Q1179.23 1129 1179.23 1126.41 Q1179.23 1123.75 1177.33 1122.33 Q1175.46 1120.9 1171.94 1120.9 Q1170.02 1120.9 1167.82 1121.32 Q1165.62 1121.73 1162.98 1122.61 L1162.98 1118.45 Q1165.64 1117.7 1167.96 1117.33 Q1170.3 1116.96 1172.36 1116.96 Q1177.68 1116.96 1180.78 1119.39 Q1183.88 1121.8 1183.88 1125.92 Q1183.88 1128.79 1182.24 1130.78 Q1180.6 1132.75 1177.57 1133.51 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1203.56 1120.67 Q1199.95 1120.67 1198.12 1124.23 Q1196.32 1127.77 1196.32 1134.9 Q1196.32 1142.01 1198.12 1145.58 Q1199.95 1149.12 1203.56 1149.12 Q1207.19 1149.12 1209 1145.58 Q1210.83 1142.01 1210.83 1134.9 Q1210.83 1127.77 1209 1124.23 Q1207.19 1120.67 1203.56 1120.67 M1203.56 1116.96 Q1209.37 1116.96 1212.43 1121.57 Q1215.5 1126.15 1215.5 1134.9 Q1215.5 1143.63 1212.43 1148.24 Q1209.37 1152.82 1203.56 1152.82 Q1197.75 1152.82 1194.67 1148.24 Q1191.62 1143.63 1191.62 1134.9 Q1191.62 1126.15 1194.67 1121.57 Q1197.75 1116.96 1203.56 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1476.68 1121.66 L1464.87 1140.11 L1476.68 1140.11 L1476.68 1121.66 M1475.45 1117.59 L1481.33 1117.59 L1481.33 1140.11 L1486.26 1140.11 L1486.26 1144 L1481.33 1144 L1481.33 1152.15 L1476.68 1152.15 L1476.68 1144 L1461.08 1144 L1461.08 1139.49 L1475.45 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1503.99 1120.67 Q1500.38 1120.67 1498.55 1124.23 Q1496.75 1127.77 1496.75 1134.9 Q1496.75 1142.01 1498.55 1145.58 Q1500.38 1149.12 1503.99 1149.12 Q1507.63 1149.12 1509.43 1145.58 Q1511.26 1142.01 1511.26 1134.9 Q1511.26 1127.77 1509.43 1124.23 Q1507.63 1120.67 1503.99 1120.67 M1503.99 1116.96 Q1509.8 1116.96 1512.86 1121.57 Q1515.94 1126.15 1515.94 1134.9 Q1515.94 1143.63 1512.86 1148.24 Q1509.8 1152.82 1503.99 1152.82 Q1498.18 1152.82 1495.1 1148.24 Q1492.05 1143.63 1492.05 1134.9 Q1492.05 1126.15 1495.1 1121.57 Q1498.18 1116.96 1503.99 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1762.99 1117.59 L1781.35 1117.59 L1781.35 1121.52 L1767.27 1121.52 L1767.27 1130 Q1768.29 1129.65 1769.31 1129.49 Q1770.33 1129.3 1771.35 1129.3 Q1777.13 1129.3 1780.51 1132.47 Q1783.89 1135.64 1783.89 1141.06 Q1783.89 1146.64 1780.42 1149.74 Q1776.95 1152.82 1770.63 1152.82 Q1768.45 1152.82 1766.19 1152.45 Q1763.94 1152.08 1761.53 1151.34 L1761.53 1146.64 Q1763.62 1147.77 1765.84 1148.33 Q1768.06 1148.89 1770.54 1148.89 Q1774.54 1148.89 1776.88 1146.78 Q1779.22 1144.67 1779.22 1141.06 Q1779.22 1137.45 1776.88 1135.34 Q1774.54 1133.24 1770.54 1133.24 Q1768.66 1133.24 1766.79 1133.65 Q1764.94 1134.07 1762.99 1134.95 L1762.99 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1803.11 1120.67 Q1799.5 1120.67 1797.67 1124.23 Q1795.86 1127.77 1795.86 1134.9 Q1795.86 1142.01 1797.67 1145.58 Q1799.5 1149.12 1803.11 1149.12 Q1806.74 1149.12 1808.55 1145.58 Q1810.37 1142.01 1810.37 1134.9 Q1810.37 1127.77 1808.55 1124.23 Q1806.74 1120.67 1803.11 1120.67 M1803.11 1116.96 Q1808.92 1116.96 1811.97 1121.57 Q1815.05 1126.15 1815.05 1134.9 Q1815.05 1143.63 1811.97 1148.24 Q1808.92 1152.82 1803.11 1152.82 Q1797.3 1152.82 1794.22 1148.24 Q1791.16 1143.63 1791.16 1134.9 Q1791.16 1126.15 1794.22 1121.57 Q1797.3 1116.96 1803.11 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,1063.66 1912.76,1063.66 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,905.521 1912.76,905.521 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,747.377 1912.76,747.377 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,589.234 1912.76,589.234 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,431.09 1912.76,431.09 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,272.947 1912.76,272.947 
-  "/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  194.883,114.803 1912.76,114.803 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,1093.27 194.883,47.2441 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,1063.66 213.781,1063.66 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,905.521 213.781,905.521 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,747.377 213.781,747.377 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,589.234 213.781,589.234 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,431.09 213.781,431.09 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,272.947 213.781,272.947 
-  "/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  194.883,114.803 213.781,114.803 
-  "/>
-<path clip-path="url(#clip250)" d="M153.539 1049.46 Q149.928 1049.46 148.099 1053.03 Q146.293 1056.57 146.293 1063.7 Q146.293 1070.81 148.099 1074.37 Q149.928 1077.91 153.539 1077.91 Q157.173 1077.91 158.979 1074.37 Q160.807 1070.81 160.807 1063.7 Q160.807 1056.57 158.979 1053.03 Q157.173 1049.46 153.539 1049.46 M153.539 1045.76 Q159.349 1045.76 162.405 1050.37 Q165.483 1054.95 165.483 1063.7 Q165.483 1072.43 162.405 1077.03 Q159.349 1081.62 153.539 1081.62 Q147.729 1081.62 144.65 1077.03 Q141.594 1072.43 141.594 1063.7 Q141.594 1054.95 144.65 1050.37 Q147.729 1045.76 153.539 1045.76 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M87.2429 918.866 L103.562 918.866 L103.562 922.801 L81.6179 922.801 L81.6179 918.866 Q84.2799 916.111 88.8632 911.482 Q93.4697 906.829 94.6502 905.486 Q96.8956 902.963 97.7752 901.227 Q98.678 899.468 98.678 897.778 Q98.678 895.023 96.7336 893.287 Q94.8123 891.551 91.7104 891.551 Q89.5114 891.551 87.0577 892.315 Q84.6271 893.079 81.8494 894.63 L81.8494 889.908 Q84.6734 888.773 87.1271 888.195 Q89.5808 887.616 91.6178 887.616 Q96.9882 887.616 100.183 890.301 Q103.377 892.986 103.377 897.477 Q103.377 899.607 102.567 901.528 Q101.78 903.426 99.6734 906.019 Q99.0947 906.69 95.9928 909.908 Q92.891 913.102 87.2429 918.866 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 891.32 Q119.766 891.32 117.937 894.885 Q116.132 898.426 116.132 905.556 Q116.132 912.662 117.937 916.227 Q119.766 919.769 123.377 919.769 Q127.011 919.769 128.817 916.227 Q130.645 912.662 130.645 905.556 Q130.645 898.426 128.817 894.885 Q127.011 891.32 123.377 891.32 M123.377 887.616 Q129.187 887.616 132.243 892.222 Q135.321 896.806 135.321 905.556 Q135.321 914.283 132.243 918.889 Q129.187 923.472 123.377 923.472 Q117.567 923.472 114.488 918.889 Q111.433 914.283 111.433 905.556 Q111.433 896.806 114.488 892.222 Q117.567 887.616 123.377 887.616 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 891.32 Q149.928 891.32 148.099 894.885 Q146.293 898.426 146.293 905.556 Q146.293 912.662 148.099 916.227 Q149.928 919.769 153.539 919.769 Q157.173 919.769 158.979 916.227 Q160.807 912.662 160.807 905.556 Q160.807 898.426 158.979 894.885 Q157.173 891.32 153.539 891.32 M153.539 887.616 Q159.349 887.616 162.405 892.222 Q165.483 896.806 165.483 905.556 Q165.483 914.283 162.405 918.889 Q159.349 923.472 153.539 923.472 Q147.729 923.472 144.65 918.889 Q141.594 914.283 141.594 905.556 Q141.594 896.806 144.65 892.222 Q147.729 887.616 153.539 887.616 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M96.0623 734.171 L84.2568 752.62 L96.0623 752.62 L96.0623 734.171 M94.8354 730.097 L100.715 730.097 L100.715 752.62 L105.646 752.62 L105.646 756.509 L100.715 756.509 L100.715 764.657 L96.0623 764.657 L96.0623 756.509 L80.4605 756.509 L80.4605 751.995 L94.8354 730.097 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 733.176 Q119.766 733.176 117.937 736.741 Q116.132 740.283 116.132 747.412 Q116.132 754.519 117.937 758.083 Q119.766 761.625 123.377 761.625 Q127.011 761.625 128.817 758.083 Q130.645 754.519 130.645 747.412 Q130.645 740.283 128.817 736.741 Q127.011 733.176 123.377 733.176 M123.377 729.472 Q129.187 729.472 132.243 734.079 Q135.321 738.662 135.321 747.412 Q135.321 756.139 132.243 760.745 Q129.187 765.329 123.377 765.329 Q117.567 765.329 114.488 760.745 Q111.433 756.139 111.433 747.412 Q111.433 738.662 114.488 734.079 Q117.567 729.472 123.377 729.472 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 733.176 Q149.928 733.176 148.099 736.741 Q146.293 740.283 146.293 747.412 Q146.293 754.519 148.099 758.083 Q149.928 761.625 153.539 761.625 Q157.173 761.625 158.979 758.083 Q160.807 754.519 160.807 747.412 Q160.807 740.283 158.979 736.741 Q157.173 733.176 153.539 733.176 M153.539 729.472 Q159.349 729.472 162.405 734.079 Q165.483 738.662 165.483 747.412 Q165.483 756.139 162.405 760.745 Q159.349 765.329 153.539 765.329 Q147.729 765.329 144.65 760.745 Q141.594 756.139 141.594 747.412 Q141.594 738.662 144.65 734.079 Q147.729 729.472 153.539 729.472 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.7938 587.37 Q90.6456 587.37 88.7938 589.523 Q86.9651 591.676 86.9651 595.426 Q86.9651 599.153 88.7938 601.329 Q90.6456 603.481 93.7938 603.481 Q96.9419 603.481 98.7706 601.329 Q100.622 599.153 100.622 595.426 Q100.622 591.676 98.7706 589.523 Q96.9419 587.37 93.7938 587.37 M103.076 572.718 L103.076 576.977 Q101.317 576.144 99.5113 575.704 Q97.7289 575.264 95.9697 575.264 Q91.3401 575.264 88.8864 578.389 Q86.4558 581.514 86.1086 587.833 Q87.4743 585.819 89.5345 584.755 Q91.5947 583.667 94.0715 583.667 Q99.2798 583.667 102.289 586.838 Q105.321 589.986 105.321 595.426 Q105.321 600.75 102.173 603.968 Q99.0252 607.185 93.7938 607.185 Q87.7984 607.185 84.6271 602.602 Q81.4559 597.995 81.4559 589.269 Q81.4559 581.074 85.3447 576.213 Q89.2336 571.329 95.7845 571.329 Q97.5437 571.329 99.3261 571.676 Q101.132 572.023 103.076 572.718 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 575.033 Q119.766 575.033 117.937 578.597 Q116.132 582.139 116.132 589.269 Q116.132 596.375 117.937 599.94 Q119.766 603.481 123.377 603.481 Q127.011 603.481 128.817 599.94 Q130.645 596.375 130.645 589.269 Q130.645 582.139 128.817 578.597 Q127.011 575.033 123.377 575.033 M123.377 571.329 Q129.187 571.329 132.243 575.935 Q135.321 580.519 135.321 589.269 Q135.321 597.995 132.243 602.602 Q129.187 607.185 123.377 607.185 Q117.567 607.185 114.488 602.602 Q111.433 597.995 111.433 589.269 Q111.433 580.519 114.488 575.935 Q117.567 571.329 123.377 571.329 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 575.033 Q149.928 575.033 148.099 578.597 Q146.293 582.139 146.293 589.269 Q146.293 596.375 148.099 599.94 Q149.928 603.481 153.539 603.481 Q157.173 603.481 158.979 599.94 Q160.807 596.375 160.807 589.269 Q160.807 582.139 158.979 578.597 Q157.173 575.033 153.539 575.033 M153.539 571.329 Q159.349 571.329 162.405 575.935 Q165.483 580.519 165.483 589.269 Q165.483 597.995 162.405 602.602 Q159.349 607.185 153.539 607.185 Q147.729 607.185 144.65 602.602 Q141.594 597.995 141.594 589.269 Q141.594 580.519 144.65 575.935 Q147.729 571.329 153.539 571.329 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.2151 431.958 Q89.8817 431.958 87.9605 433.741 Q86.0623 435.523 86.0623 438.648 Q86.0623 441.773 87.9605 443.555 Q89.8817 445.338 93.2151 445.338 Q96.5484 445.338 98.4697 443.555 Q100.391 441.75 100.391 438.648 Q100.391 435.523 98.4697 433.741 Q96.5715 431.958 93.2151 431.958 M88.5392 429.968 Q85.5299 429.227 83.8401 427.167 Q82.1735 425.106 82.1735 422.144 Q82.1735 418 85.1133 415.593 Q88.0762 413.185 93.2151 413.185 Q98.3771 413.185 101.317 415.593 Q104.257 418 104.257 422.144 Q104.257 425.106 102.567 427.167 Q100.9 429.227 97.9141 429.968 Q101.294 430.755 103.169 433.046 Q105.067 435.338 105.067 438.648 Q105.067 443.671 101.988 446.356 Q98.9326 449.042 93.2151 449.042 Q87.4975 449.042 84.4188 446.356 Q81.3633 443.671 81.3633 438.648 Q81.3633 435.338 83.2614 433.046 Q85.1595 430.755 88.5392 429.968 M86.8262 422.583 Q86.8262 425.269 88.4929 426.773 Q90.1827 428.278 93.2151 428.278 Q96.2243 428.278 97.9141 426.773 Q99.6271 425.269 99.6271 422.583 Q99.6271 419.898 97.9141 418.394 Q96.2243 416.889 93.2151 416.889 Q90.1827 416.889 88.4929 418.394 Q86.8262 419.898 86.8262 422.583 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 416.889 Q119.766 416.889 117.937 420.454 Q116.132 423.995 116.132 431.125 Q116.132 438.231 117.937 441.796 Q119.766 445.338 123.377 445.338 Q127.011 445.338 128.817 441.796 Q130.645 438.231 130.645 431.125 Q130.645 423.995 128.817 420.454 Q127.011 416.889 123.377 416.889 M123.377 413.185 Q129.187 413.185 132.243 417.792 Q135.321 422.375 135.321 431.125 Q135.321 439.852 132.243 444.458 Q129.187 449.042 123.377 449.042 Q117.567 449.042 114.488 444.458 Q111.433 439.852 111.433 431.125 Q111.433 422.375 114.488 417.792 Q117.567 413.185 123.377 413.185 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 416.889 Q149.928 416.889 148.099 420.454 Q146.293 423.995 146.293 431.125 Q146.293 438.231 148.099 441.796 Q149.928 445.338 153.539 445.338 Q157.173 445.338 158.979 441.796 Q160.807 438.231 160.807 431.125 Q160.807 423.995 158.979 420.454 Q157.173 416.889 153.539 416.889 M153.539 413.185 Q159.349 413.185 162.405 417.792 Q165.483 422.375 165.483 431.125 Q165.483 439.852 162.405 444.458 Q159.349 449.042 153.539 449.042 Q147.729 449.042 144.65 444.458 Q141.594 439.852 141.594 431.125 Q141.594 422.375 144.65 417.792 Q147.729 413.185 153.539 413.185 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M53.8634 286.291 L61.5023 286.291 L61.5023 259.926 L53.1921 261.593 L53.1921 257.333 L61.456 255.667 L66.1319 255.667 L66.1319 286.291 L73.7707 286.291 L73.7707 290.227 L53.8634 290.227 L53.8634 286.291 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M93.2151 258.745 Q89.604 258.745 87.7753 262.31 Q85.9697 265.852 85.9697 272.981 Q85.9697 280.088 87.7753 283.653 Q89.604 287.194 93.2151 287.194 Q96.8493 287.194 98.6548 283.653 Q100.484 280.088 100.484 272.981 Q100.484 265.852 98.6548 262.31 Q96.8493 258.745 93.2151 258.745 M93.2151 255.042 Q99.0252 255.042 102.081 259.648 Q105.159 264.231 105.159 272.981 Q105.159 281.708 102.081 286.315 Q99.0252 290.898 93.2151 290.898 Q87.4049 290.898 84.3262 286.315 Q81.2707 281.708 81.2707 272.981 Q81.2707 264.231 84.3262 259.648 Q87.4049 255.042 93.2151 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 258.745 Q119.766 258.745 117.937 262.31 Q116.132 265.852 116.132 272.981 Q116.132 280.088 117.937 283.653 Q119.766 287.194 123.377 287.194 Q127.011 287.194 128.817 283.653 Q130.645 280.088 130.645 272.981 Q130.645 265.852 128.817 262.31 Q127.011 258.745 123.377 258.745 M123.377 255.042 Q129.187 255.042 132.243 259.648 Q135.321 264.231 135.321 272.981 Q135.321 281.708 132.243 286.315 Q129.187 290.898 123.377 290.898 Q117.567 290.898 114.488 286.315 Q111.433 281.708 111.433 272.981 Q111.433 264.231 114.488 259.648 Q117.567 255.042 123.377 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 258.745 Q149.928 258.745 148.099 262.31 Q146.293 265.852 146.293 272.981 Q146.293 280.088 148.099 283.653 Q149.928 287.194 153.539 287.194 Q157.173 287.194 158.979 283.653 Q160.807 280.088 160.807 272.981 Q160.807 265.852 158.979 262.31 Q157.173 258.745 153.539 258.745 M153.539 255.042 Q159.349 255.042 162.405 259.648 Q165.483 264.231 165.483 272.981 Q165.483 281.708 162.405 286.315 Q159.349 290.898 153.539 290.898 Q147.729 290.898 144.65 286.315 Q141.594 281.708 141.594 272.981 Q141.594 264.231 144.65 259.648 Q147.729 255.042 153.539 255.042 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M53.8634 128.148 L61.5023 128.148 L61.5023 101.782 L53.1921 103.449 L53.1921 99.1897 L61.456 97.523 L66.1319 97.523 L66.1319 128.148 L73.7707 128.148 L73.7707 132.083 L53.8634 132.083 L53.8634 128.148 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M87.2429 128.148 L103.562 128.148 L103.562 132.083 L81.6179 132.083 L81.6179 128.148 Q84.2799 125.393 88.8632 120.764 Q93.4697 116.111 94.6502 114.768 Q96.8956 112.245 97.7752 110.509 Q98.678 108.75 98.678 107.06 Q98.678 104.305 96.7336 102.569 Q94.8123 100.833 91.7104 100.833 Q89.5114 100.833 87.0577 101.597 Q84.6271 102.361 81.8494 103.912 L81.8494 99.1897 Q84.6734 98.0554 87.1271 97.4767 Q89.5808 96.898 91.6178 96.898 Q96.9882 96.898 100.183 99.5832 Q103.377 102.268 103.377 106.759 Q103.377 108.889 102.567 110.81 Q101.78 112.708 99.6734 115.301 Q99.0947 115.972 95.9928 119.19 Q92.891 122.384 87.2429 128.148 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M123.377 100.602 Q119.766 100.602 117.937 104.167 Q116.132 107.708 116.132 114.838 Q116.132 121.944 117.937 125.509 Q119.766 129.051 123.377 129.051 Q127.011 129.051 128.817 125.509 Q130.645 121.944 130.645 114.838 Q130.645 107.708 128.817 104.167 Q127.011 100.602 123.377 100.602 M123.377 96.898 Q129.187 96.898 132.243 101.504 Q135.321 106.088 135.321 114.838 Q135.321 123.565 132.243 128.171 Q129.187 132.754 123.377 132.754 Q117.567 132.754 114.488 128.171 Q111.433 123.565 111.433 114.838 Q111.433 106.088 114.488 101.504 Q117.567 96.898 123.377 96.898 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M153.539 100.602 Q149.928 100.602 148.099 104.167 Q146.293 107.708 146.293 114.838 Q146.293 121.944 148.099 125.509 Q149.928 129.051 153.539 129.051 Q157.173 129.051 158.979 125.509 Q160.807 121.944 160.807 114.838 Q160.807 107.708 158.979 104.167 Q157.173 100.602 153.539 100.602 M153.539 96.898 Q159.349 96.898 162.405 101.504 Q165.483 106.088 165.483 114.838 Q165.483 123.565 162.405 128.171 Q159.349 132.754 153.539 132.754 Q147.729 132.754 144.65 128.171 Q141.594 123.565 141.594 114.838 Q141.594 106.088 144.65 101.504 Q147.729 96.898 153.539 96.898 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip252)" d="
-M289.369 376.531 L289.369 1063.66 L319.348 1063.66 L319.348 376.531 L289.369 376.531 L289.369 376.531  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  289.369,376.531 289.369,1063.66 319.348,1063.66 319.348,376.531 289.369,376.531 
-  "/>
-<path clip-path="url(#clip252)" d="
-M319.348 76.8486 L319.348 1063.66 L349.326 1063.66 L349.326 76.8486 L319.348 76.8486 L319.348 76.8486  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  319.348,76.8486 319.348,1063.66 349.326,1063.66 349.326,76.8486 319.348,76.8486 
-  "/>
-<path clip-path="url(#clip252)" d="
-M349.326 112.431 L349.326 1063.66 L379.305 1063.66 L379.305 112.431 L349.326 112.431 L349.326 112.431  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  349.326,112.431 349.326,1063.66 379.305,1063.66 379.305,112.431 349.326,112.431 
-  "/>
-<path clip-path="url(#clip252)" d="
-M379.305 185.968 L379.305 1063.66 L409.283 1063.66 L409.283 185.968 L379.305 185.968 L379.305 185.968  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  379.305,185.968 379.305,1063.66 409.283,1063.66 409.283,185.968 379.305,185.968 
-  "/>
-<path clip-path="url(#clip252)" d="
-M409.283 294.296 L409.283 1063.66 L439.261 1063.66 L439.261 294.296 L409.283 294.296 L409.283 294.296  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  409.283,294.296 409.283,1063.66 439.261,1063.66 439.261,294.296 409.283,294.296 
-  "/>
-<path clip-path="url(#clip252)" d="
-M439.261 455.602 L439.261 1063.66 L469.24 1063.66 L469.24 455.602 L439.261 455.602 L439.261 455.602  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  439.261,455.602 439.261,1063.66 469.24,1063.66 469.24,455.602 439.261,455.602 
-  "/>
-<path clip-path="url(#clip252)" d="
-M469.24 550.489 L469.24 1063.66 L499.218 1063.66 L499.218 550.489 L469.24 550.489 L469.24 550.489  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  469.24,550.489 469.24,1063.66 499.218,1063.66 499.218,550.489 469.24,550.489 
-  "/>
-<path clip-path="url(#clip252)" d="
-M499.218 599.513 L499.218 1063.66 L529.197 1063.66 L529.197 599.513 L499.218 599.513 L499.218 599.513  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  499.218,599.513 499.218,1063.66 529.197,1063.66 529.197,599.513 499.218,599.513 
-  "/>
-<path clip-path="url(#clip252)" d="
-M529.197 675.422 L529.197 1063.66 L559.175 1063.66 L559.175 675.422 L529.197 675.422 L529.197 675.422  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  529.197,675.422 529.197,1063.66 559.175,1063.66 559.175,675.422 529.197,675.422 
-  "/>
-<path clip-path="url(#clip252)" d="
-M559.175 748.168 L559.175 1063.66 L589.154 1063.66 L589.154 748.168 L559.175 748.168 L559.175 748.168  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  559.175,748.168 559.175,1063.66 589.154,1063.66 589.154,748.168 559.175,748.168 
-  "/>
-<path clip-path="url(#clip252)" d="
-M589.154 812.216 L589.154 1063.66 L619.132 1063.66 L619.132 812.216 L589.154 812.216 L589.154 812.216  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  589.154,812.216 589.154,1063.66 619.132,1063.66 619.132,812.216 589.154,812.216 
-  "/>
-<path clip-path="url(#clip252)" d="
-M619.132 854.124 L619.132 1063.66 L649.111 1063.66 L649.111 854.124 L619.132 854.124 L619.132 854.124  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  619.132,854.124 619.132,1063.66 649.111,1063.66 649.111,854.124 619.132,854.124 
-  "/>
-<path clip-path="url(#clip252)" d="
-M649.111 885.753 L649.111 1063.66 L679.089 1063.66 L679.089 885.753 L649.111 885.753 L649.111 885.753  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  649.111,885.753 649.111,1063.66 679.089,1063.66 679.089,885.753 649.111,885.753 
-  "/>
-<path clip-path="url(#clip252)" d="
-M679.089 934.778 L679.089 1063.66 L709.067 1063.66 L709.067 934.778 L679.089 934.778 L679.089 934.778  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  679.089,934.778 679.089,1063.66 709.067,1063.66 709.067,934.778 679.089,934.778 
-  "/>
-<path clip-path="url(#clip252)" d="
-M709.067 955.336 L709.067 1063.66 L739.046 1063.66 L739.046 955.336 L709.067 955.336 L709.067 955.336  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  709.067,955.336 709.067,1063.66 739.046,1063.66 739.046,955.336 709.067,955.336 
-  "/>
-<path clip-path="url(#clip252)" d="
-M739.046 967.988 L739.046 1063.66 L769.024 1063.66 L769.024 967.988 L739.046 967.988 L739.046 967.988  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  739.046,967.988 739.046,1063.66 769.024,1063.66 769.024,967.988 739.046,967.988 
-  "/>
-<path clip-path="url(#clip252)" d="
-M769.024 980.639 L769.024 1063.66 L799.003 1063.66 L799.003 980.639 L769.024 980.639 L769.024 980.639  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  769.024,980.639 769.024,1063.66 799.003,1063.66 799.003,980.639 769.024,980.639 
-  "/>
-<path clip-path="url(#clip252)" d="
-M799.003 1013.06 L799.003 1063.66 L828.981 1063.66 L828.981 1013.06 L799.003 1013.06 L799.003 1013.06  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  799.003,1013.06 799.003,1063.66 828.981,1063.66 828.981,1013.06 799.003,1013.06 
-  "/>
-<path clip-path="url(#clip252)" d="
-M828.981 1019.38 L828.981 1063.66 L858.96 1063.66 L858.96 1019.38 L828.981 1019.38 L828.981 1019.38  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  828.981,1019.38 828.981,1063.66 858.96,1063.66 858.96,1019.38 828.981,1019.38 
-  "/>
-<path clip-path="url(#clip252)" d="
-M858.96 1024.13 L858.96 1063.66 L888.938 1063.66 L888.938 1024.13 L858.96 1024.13 L858.96 1024.13  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  858.96,1024.13 858.96,1063.66 888.938,1063.66 888.938,1024.13 858.96,1024.13 
-  "/>
-<path clip-path="url(#clip252)" d="
-M888.938 1032.04 L888.938 1063.66 L918.917 1063.66 L918.917 1032.04 L888.938 1032.04 L888.938 1032.04  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  888.938,1032.04 888.938,1063.66 918.917,1063.66 918.917,1032.04 888.938,1032.04 
-  "/>
-<path clip-path="url(#clip252)" d="
-M918.917 1047.06 L918.917 1063.66 L948.895 1063.66 L948.895 1047.06 L918.917 1047.06 L918.917 1047.06  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  918.917,1047.06 918.917,1063.66 948.895,1063.66 948.895,1047.06 918.917,1047.06 
-  "/>
-<path clip-path="url(#clip252)" d="
-M948.895 1049.43 L948.895 1063.66 L978.873 1063.66 L978.873 1049.43 L948.895 1049.43 L948.895 1049.43  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  948.895,1049.43 948.895,1063.66 978.873,1063.66 978.873,1049.43 948.895,1049.43 
-  "/>
-<path clip-path="url(#clip252)" d="
-M978.873 1044.69 L978.873 1063.66 L1008.85 1063.66 L1008.85 1044.69 L978.873 1044.69 L978.873 1044.69  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  978.873,1044.69 978.873,1063.66 1008.85,1063.66 1008.85,1044.69 978.873,1044.69 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1008.85 1047.85 L1008.85 1063.66 L1038.83 1063.66 L1038.83 1047.85 L1008.85 1047.85 L1008.85 1047.85  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1008.85,1047.85 1008.85,1063.66 1038.83,1063.66 1038.83,1047.85 1008.85,1047.85 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1038.83 1051.8 L1038.83 1063.66 L1068.81 1063.66 L1068.81 1051.8 L1038.83 1051.8 L1038.83 1051.8  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1038.83,1051.8 1038.83,1063.66 1068.81,1063.66 1068.81,1051.8 1038.83,1051.8 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1068.81 1053.39 L1068.81 1063.66 L1098.79 1063.66 L1098.79 1053.39 L1068.81 1053.39 L1068.81 1053.39  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1068.81,1053.39 1068.81,1063.66 1098.79,1063.66 1098.79,1053.39 1068.81,1053.39 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1098.79 1057.34 L1098.79 1063.66 L1128.77 1063.66 L1128.77 1057.34 L1098.79 1057.34 L1098.79 1057.34  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1098.79,1057.34 1098.79,1063.66 1128.77,1063.66 1128.77,1057.34 1098.79,1057.34 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1128.77 1057.34 L1128.77 1063.66 L1158.74 1063.66 L1158.74 1057.34 L1128.77 1057.34 L1128.77 1057.34  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1128.77,1057.34 1128.77,1063.66 1158.74,1063.66 1158.74,1057.34 1128.77,1057.34 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1158.74 1058.13 L1158.74 1063.66 L1188.72 1063.66 L1188.72 1058.13 L1158.74 1058.13 L1158.74 1058.13  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1158.74,1058.13 1158.74,1063.66 1188.72,1063.66 1188.72,1058.13 1158.74,1058.13 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1188.72 1061.29 L1188.72 1063.66 L1218.7 1063.66 L1218.7 1061.29 L1188.72 1061.29 L1188.72 1061.29  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1188.72,1061.29 1188.72,1063.66 1218.7,1063.66 1218.7,1061.29 1188.72,1061.29 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1218.7 1061.29 L1218.7 1063.66 L1248.68 1063.66 L1248.68 1061.29 L1218.7 1061.29 L1218.7 1061.29  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1218.7,1061.29 1218.7,1063.66 1248.68,1063.66 1248.68,1061.29 1218.7,1061.29 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1248.68 1061.29 L1248.68 1063.66 L1278.66 1063.66 L1278.66 1061.29 L1248.68 1061.29 L1248.68 1061.29  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1248.68,1061.29 1248.68,1063.66 1278.66,1063.66 1278.66,1061.29 1248.68,1061.29 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1278.66 1062.08 L1278.66 1063.66 L1308.64 1063.66 L1308.64 1062.08 L1278.66 1062.08 L1278.66 1062.08  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1278.66,1062.08 1278.66,1063.66 1308.64,1063.66 1308.64,1062.08 1278.66,1062.08 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1308.64 1063.66 L1308.64 1063.66 L1338.61 1063.66 L1338.61 1063.66 L1308.64 1063.66 L1308.64 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1308.64,1063.66 1308.64,1063.66 1338.61,1063.66 1308.64,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1338.61 1062.87 L1338.61 1063.66 L1368.59 1063.66 L1368.59 1062.87 L1338.61 1062.87 L1338.61 1062.87  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1338.61,1062.87 1338.61,1063.66 1368.59,1063.66 1368.59,1062.87 1338.61,1062.87 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1368.59 1063.66 L1368.59 1063.66 L1398.57 1063.66 L1398.57 1063.66 L1368.59 1063.66 L1368.59 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1368.59,1063.66 1368.59,1063.66 1398.57,1063.66 1368.59,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1398.57 1060.5 L1398.57 1063.66 L1428.55 1063.66 L1428.55 1060.5 L1398.57 1060.5 L1398.57 1060.5  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1398.57,1060.5 1398.57,1063.66 1428.55,1063.66 1428.55,1060.5 1398.57,1060.5 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1428.55 1061.29 L1428.55 1063.66 L1458.53 1063.66 L1458.53 1061.29 L1428.55 1061.29 L1428.55 1061.29  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1428.55,1061.29 1428.55,1063.66 1458.53,1063.66 1458.53,1061.29 1428.55,1061.29 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1458.53 1063.66 L1458.53 1063.66 L1488.51 1063.66 L1488.51 1063.66 L1458.53 1063.66 L1458.53 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1458.53,1063.66 1458.53,1063.66 1488.51,1063.66 1458.53,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1488.51 1062.08 L1488.51 1063.66 L1518.49 1063.66 L1518.49 1062.08 L1488.51 1062.08 L1488.51 1062.08  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1488.51,1062.08 1488.51,1063.66 1518.49,1063.66 1518.49,1062.08 1488.51,1062.08 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1518.49 1063.66 L1518.49 1063.66 L1548.46 1063.66 L1548.46 1063.66 L1518.49 1063.66 L1518.49 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1518.49,1063.66 1518.49,1063.66 1548.46,1063.66 1518.49,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1548.46 1063.66 L1548.46 1063.66 L1578.44 1063.66 L1578.44 1063.66 L1548.46 1063.66 L1548.46 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1548.46,1063.66 1548.46,1063.66 1578.44,1063.66 1548.46,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1578.44 1063.66 L1578.44 1063.66 L1608.42 1063.66 L1608.42 1063.66 L1578.44 1063.66 L1578.44 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1578.44,1063.66 1578.44,1063.66 1608.42,1063.66 1578.44,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1608.42 1062.87 L1608.42 1063.66 L1638.4 1063.66 L1638.4 1062.87 L1608.42 1062.87 L1608.42 1062.87  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1608.42,1062.87 1608.42,1063.66 1638.4,1063.66 1638.4,1062.87 1608.42,1062.87 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1638.4 1063.66 L1638.4 1063.66 L1668.38 1063.66 L1668.38 1063.66 L1638.4 1063.66 L1638.4 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1638.4,1063.66 1638.4,1063.66 1668.38,1063.66 1638.4,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1668.38 1063.66 L1668.38 1063.66 L1698.36 1063.66 L1698.36 1063.66 L1668.38 1063.66 L1668.38 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1668.38,1063.66 1668.38,1063.66 1698.36,1063.66 1668.38,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1698.36 1063.66 L1698.36 1063.66 L1728.33 1063.66 L1728.33 1063.66 L1698.36 1063.66 L1698.36 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1698.36,1063.66 1698.36,1063.66 1728.33,1063.66 1698.36,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1728.33 1063.66 L1728.33 1063.66 L1758.31 1063.66 L1758.31 1063.66 L1728.33 1063.66 L1728.33 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1728.33,1063.66 1728.33,1063.66 1758.31,1063.66 1728.33,1063.66 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1758.31 1062.87 L1758.31 1063.66 L1788.29 1063.66 L1788.29 1062.87 L1758.31 1062.87 L1758.31 1062.87  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1758.31,1062.87 1758.31,1063.66 1788.29,1063.66 1788.29,1062.87 1758.31,1062.87 
-  "/>
-<path clip-path="url(#clip252)" d="
-M1788.29 1062.87 L1788.29 1063.66 L1818.27 1063.66 L1818.27 1062.87 L1788.29 1062.87 L1788.29 1062.87  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip252)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1788.29,1062.87 1788.29,1063.66 1818.27,1063.66 1818.27,1062.87 1788.29,1062.87 
-  "/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="304.358" cy="376.531" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="334.337" cy="76.8486" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="364.315" cy="112.431" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="394.294" cy="185.968" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="424.272" cy="294.296" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="454.251" cy="455.602" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="484.229" cy="550.489" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="514.208" cy="599.513" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="544.186" cy="675.422" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="574.164" cy="748.168" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="604.143" cy="812.216" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="634.121" cy="854.124" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="664.1" cy="885.753" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="694.078" cy="934.778" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="724.057" cy="955.336" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="754.035" cy="967.988" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="784.014" cy="980.639" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="813.992" cy="1013.06" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="843.97" cy="1019.38" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="873.949" cy="1024.13" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="903.927" cy="1032.04" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="933.906" cy="1047.06" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="963.884" cy="1049.43" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="993.863" cy="1044.69" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1023.84" cy="1047.85" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1053.82" cy="1051.8" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1083.8" cy="1053.39" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1113.78" cy="1057.34" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1143.75" cy="1057.34" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1173.73" cy="1058.13" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1203.71" cy="1061.29" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1233.69" cy="1061.29" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1263.67" cy="1061.29" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1293.65" cy="1062.08" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1323.63" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1353.6" cy="1062.87" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1383.58" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1413.56" cy="1060.5" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1443.54" cy="1061.29" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1473.52" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1503.5" cy="1062.08" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1533.47" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1563.45" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1593.43" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1623.41" cy="1062.87" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1653.39" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1683.37" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1713.35" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1743.32" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1773.3" cy="1062.87" r="2"/>
-<circle clip-path="url(#clip252)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1803.28" cy="1062.87" r="2"/>
-<path clip-path="url(#clip250)" d="
-M1612.19 185.792 L1855.49 185.792 L1855.49 82.1116 L1612.19 82.1116  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1612.19,185.792 1855.49,185.792 1855.49,82.1116 1612.19,82.1116 1612.19,185.792 
-  "/>
-<path clip-path="url(#clip250)" d="
-M1631.28 154.688 L1745.8 154.688 L1745.8 113.216 L1631.28 113.216 L1631.28 154.688  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip250)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1631.28,154.688 1745.8,154.688 1745.8,113.216 1631.28,113.216 1631.28,154.688 
-  "/>
-<path clip-path="url(#clip250)" d="M1778.73 153.639 Q1776.93 158.269 1775.21 159.681 Q1773.5 161.093 1770.63 161.093 L1767.23 161.093 L1767.23 157.528 L1769.73 157.528 Q1771.49 157.528 1772.46 156.695 Q1773.43 155.861 1774.61 152.759 L1775.37 150.815 L1764.89 125.306 L1769.4 125.306 L1777.5 145.583 L1785.61 125.306 L1790.12 125.306 L1778.73 153.639 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip250)" d="M1797.41 147.296 L1805.05 147.296 L1805.05 120.931 L1796.74 122.597 L1796.74 118.338 L1805 116.672 L1809.68 116.672 L1809.68 147.296 L1817.32 147.296 L1817.32 151.232 L1797.41 151.232 L1797.41 147.296 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /></svg>
-
-```
 
 ![](gamma_sampler.png)
 
@@ -3464,7 +2949,7 @@ tuned_model = TunedModel(model=model,
 
 ````
 ProbabilisticTunedModel(
-    model = Pipeline536(
+    model = Pipeline731(
             standardizer = Standardizer,
             continuous_encoder = ContinuousEncoder,
             logistic_classifier = LogisticClassifier),
@@ -3516,7 +3001,7 @@ rep.best_model
 ````
 
 ````
-Pipeline536(
+Pipeline731(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -3625,7 +3110,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ````
 
 ````
-Pipeline549(
+Pipeline744(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -3671,301 +3156,11 @@ code?
 ````julia
 r2_sampler = sampler(r2, Distributions.Uniform)
 samples = rand(r2_sampler, 1000);
-histogram(samples, nbins=50)
+plt = histogram(samples, nbins=50)
+savefig("uniform_sampler.png")
 ````
 
-```@raw html
-<?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="490" height="300" viewBox="0 0 1960 1200">
-<defs>
-  <clipPath id="clip280">
-    <rect x="0" y="0" width="1960" height="1200"/>
-  </clipPath>
-</defs>
-<path clip-path="url(#clip280)" d="
-M0 1200 L1960 1200 L1960 0 L0 0  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<defs>
-  <clipPath id="clip281">
-    <rect x="392" y="0" width="1373" height="1200"/>
-  </clipPath>
-</defs>
-<path clip-path="url(#clip280)" d="
-M166.457 1093.27 L1912.76 1093.27 L1912.76 47.2441 L166.457 47.2441  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<defs>
-  <clipPath id="clip282">
-    <rect x="166" y="47" width="1747" height="1047"/>
-  </clipPath>
-</defs>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  200.339,1093.27 200.339,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  449.011,1093.27 449.011,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  697.683,1093.27 697.683,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  946.355,1093.27 946.355,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1195.03,1093.27 1195.03,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1443.7,1093.27 1443.7,47.2441 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  1692.37,1093.27 1692.37,47.2441 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,1093.27 1912.76,1093.27 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  200.339,1093.27 200.339,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  449.011,1093.27 449.011,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  697.683,1093.27 697.683,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  946.355,1093.27 946.355,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1195.03,1093.27 1195.03,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1443.7,1093.27 1443.7,1074.37 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1692.37,1093.27 1692.37,1074.37 
-  "/>
-<path clip-path="url(#clip280)" d="M200.339 1120.67 Q196.728 1120.67 194.899 1124.23 Q193.094 1127.77 193.094 1134.9 Q193.094 1142.01 194.899 1145.58 Q196.728 1149.12 200.339 1149.12 Q203.973 1149.12 205.779 1145.58 Q207.607 1142.01 207.607 1134.9 Q207.607 1127.77 205.779 1124.23 Q203.973 1120.67 200.339 1120.67 M200.339 1116.96 Q206.149 1116.96 209.205 1121.57 Q212.283 1126.15 212.283 1134.9 Q212.283 1143.63 209.205 1148.24 Q206.149 1152.82 200.339 1152.82 Q194.529 1152.82 191.45 1148.24 Q188.395 1143.63 188.395 1134.9 Q188.395 1126.15 191.45 1121.57 Q194.529 1116.96 200.339 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M427.784 1148.21 L444.103 1148.21 L444.103 1152.15 L422.159 1152.15 L422.159 1148.21 Q424.821 1145.46 429.404 1140.83 Q434.011 1136.18 435.192 1134.83 Q437.437 1132.31 438.316 1130.58 Q439.219 1128.82 439.219 1127.13 Q439.219 1124.37 437.275 1122.64 Q435.354 1120.9 432.252 1120.9 Q430.053 1120.9 427.599 1121.66 Q425.168 1122.43 422.391 1123.98 L422.391 1119.26 Q425.215 1118.12 427.668 1117.54 Q430.122 1116.96 432.159 1116.96 Q437.529 1116.96 440.724 1119.65 Q443.918 1122.33 443.918 1126.83 Q443.918 1128.95 443.108 1130.88 Q442.321 1132.77 440.215 1135.37 Q439.636 1136.04 436.534 1139.26 Q433.432 1142.45 427.784 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M463.918 1120.67 Q460.307 1120.67 458.478 1124.23 Q456.673 1127.77 456.673 1134.9 Q456.673 1142.01 458.478 1145.58 Q460.307 1149.12 463.918 1149.12 Q467.552 1149.12 469.358 1145.58 Q471.187 1142.01 471.187 1134.9 Q471.187 1127.77 469.358 1124.23 Q467.552 1120.67 463.918 1120.67 M463.918 1116.96 Q469.728 1116.96 472.784 1121.57 Q475.863 1126.15 475.863 1134.9 Q475.863 1143.63 472.784 1148.24 Q469.728 1152.82 463.918 1152.82 Q458.108 1152.82 455.029 1148.24 Q451.974 1143.63 451.974 1134.9 Q451.974 1126.15 455.029 1121.57 Q458.108 1116.96 463.918 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M685.854 1121.66 L674.049 1140.11 L685.854 1140.11 L685.854 1121.66 M684.627 1117.59 L690.507 1117.59 L690.507 1140.11 L695.437 1140.11 L695.437 1144 L690.507 1144 L690.507 1152.15 L685.854 1152.15 L685.854 1144 L670.252 1144 L670.252 1139.49 L684.627 1117.59 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M713.169 1120.67 Q709.558 1120.67 707.729 1124.23 Q705.923 1127.77 705.923 1134.9 Q705.923 1142.01 707.729 1145.58 Q709.558 1149.12 713.169 1149.12 Q716.803 1149.12 718.609 1145.58 Q720.437 1142.01 720.437 1134.9 Q720.437 1127.77 718.609 1124.23 Q716.803 1120.67 713.169 1120.67 M713.169 1116.96 Q718.979 1116.96 722.035 1121.57 Q725.113 1126.15 725.113 1134.9 Q725.113 1143.63 722.035 1148.24 Q718.979 1152.82 713.169 1152.82 Q707.359 1152.82 704.28 1148.24 Q701.224 1143.63 701.224 1134.9 Q701.224 1126.15 704.28 1121.57 Q707.359 1116.96 713.169 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M931.76 1133.01 Q928.612 1133.01 926.76 1135.16 Q924.931 1137.31 924.931 1141.06 Q924.931 1144.79 926.76 1146.96 Q928.612 1149.12 931.76 1149.12 Q934.908 1149.12 936.737 1146.96 Q938.589 1144.79 938.589 1141.06 Q938.589 1137.31 936.737 1135.16 Q934.908 1133.01 931.76 1133.01 M941.042 1118.35 L941.042 1122.61 Q939.283 1121.78 937.477 1121.34 Q935.695 1120.9 933.936 1120.9 Q929.306 1120.9 926.852 1124.02 Q924.422 1127.15 924.075 1133.47 Q925.44 1131.45 927.501 1130.39 Q929.561 1129.3 932.038 1129.3 Q937.246 1129.3 940.255 1132.47 Q943.288 1135.62 943.288 1141.06 Q943.288 1146.39 940.139 1149.6 Q936.991 1152.82 931.76 1152.82 Q925.765 1152.82 922.593 1148.24 Q919.422 1143.63 919.422 1134.9 Q919.422 1126.71 923.311 1121.85 Q927.2 1116.96 933.751 1116.96 Q935.51 1116.96 937.292 1117.31 Q939.098 1117.66 941.042 1118.35 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M961.343 1120.67 Q957.732 1120.67 955.903 1124.23 Q954.098 1127.77 954.098 1134.9 Q954.098 1142.01 955.903 1145.58 Q957.732 1149.12 961.343 1149.12 Q964.977 1149.12 966.783 1145.58 Q968.612 1142.01 968.612 1134.9 Q968.612 1127.77 966.783 1124.23 Q964.977 1120.67 961.343 1120.67 M961.343 1116.96 Q967.153 1116.96 970.209 1121.57 Q973.287 1126.15 973.287 1134.9 Q973.287 1143.63 970.209 1148.24 Q967.153 1152.82 961.343 1152.82 Q955.533 1152.82 952.454 1148.24 Q949.399 1143.63 949.399 1134.9 Q949.399 1126.15 952.454 1121.57 Q955.533 1116.96 961.343 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1179.9 1135.74 Q1176.57 1135.74 1174.64 1137.52 Q1172.75 1139.3 1172.75 1142.43 Q1172.75 1145.55 1174.64 1147.33 Q1176.57 1149.12 1179.9 1149.12 Q1183.23 1149.12 1185.15 1147.33 Q1187.08 1145.53 1187.08 1142.43 Q1187.08 1139.3 1185.15 1137.52 Q1183.26 1135.74 1179.9 1135.74 M1175.22 1133.75 Q1172.21 1133.01 1170.52 1130.95 Q1168.86 1128.89 1168.86 1125.92 Q1168.86 1121.78 1171.8 1119.37 Q1174.76 1116.96 1179.9 1116.96 Q1185.06 1116.96 1188 1119.37 Q1190.94 1121.78 1190.94 1125.92 Q1190.94 1128.89 1189.25 1130.95 Q1187.58 1133.01 1184.6 1133.75 Q1187.98 1134.53 1189.85 1136.83 Q1191.75 1139.12 1191.75 1142.43 Q1191.75 1147.45 1188.67 1150.14 Q1185.62 1152.82 1179.9 1152.82 Q1174.18 1152.82 1171.1 1150.14 Q1168.05 1147.45 1168.05 1142.43 Q1168.05 1139.12 1169.95 1136.83 Q1171.84 1134.53 1175.22 1133.75 M1173.51 1126.36 Q1173.51 1129.05 1175.18 1130.55 Q1176.87 1132.06 1179.9 1132.06 Q1182.91 1132.06 1184.6 1130.55 Q1186.31 1129.05 1186.31 1126.36 Q1186.31 1123.68 1184.6 1122.17 Q1182.91 1120.67 1179.9 1120.67 Q1176.87 1120.67 1175.18 1122.17 Q1173.51 1123.68 1173.51 1126.36 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1210.06 1120.67 Q1206.45 1120.67 1204.62 1124.23 Q1202.82 1127.77 1202.82 1134.9 Q1202.82 1142.01 1204.62 1145.58 Q1206.45 1149.12 1210.06 1149.12 Q1213.7 1149.12 1215.5 1145.58 Q1217.33 1142.01 1217.33 1134.9 Q1217.33 1127.77 1215.5 1124.23 Q1213.7 1120.67 1210.06 1120.67 M1210.06 1116.96 Q1215.87 1116.96 1218.93 1121.57 Q1222.01 1126.15 1222.01 1134.9 Q1222.01 1143.63 1218.93 1148.24 Q1215.87 1152.82 1210.06 1152.82 Q1204.25 1152.82 1201.17 1148.24 Q1198.12 1143.63 1198.12 1134.9 Q1198.12 1126.15 1201.17 1121.57 Q1204.25 1116.96 1210.06 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1403.31 1148.21 L1410.94 1148.21 L1410.94 1121.85 L1402.63 1123.51 L1402.63 1119.26 L1410.9 1117.59 L1415.57 1117.59 L1415.57 1148.21 L1423.21 1148.21 L1423.21 1152.15 L1403.31 1152.15 L1403.31 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1442.66 1120.67 Q1439.05 1120.67 1437.22 1124.23 Q1435.41 1127.77 1435.41 1134.9 Q1435.41 1142.01 1437.22 1145.58 Q1439.05 1149.12 1442.66 1149.12 Q1446.29 1149.12 1448.1 1145.58 Q1449.93 1142.01 1449.93 1134.9 Q1449.93 1127.77 1448.1 1124.23 Q1446.29 1120.67 1442.66 1120.67 M1442.66 1116.96 Q1448.47 1116.96 1451.52 1121.57 Q1454.6 1126.15 1454.6 1134.9 Q1454.6 1143.63 1451.52 1148.24 Q1448.47 1152.82 1442.66 1152.82 Q1436.85 1152.82 1433.77 1148.24 Q1430.71 1143.63 1430.71 1134.9 Q1430.71 1126.15 1433.77 1121.57 Q1436.85 1116.96 1442.66 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1472.82 1120.67 Q1469.21 1120.67 1467.38 1124.23 Q1465.57 1127.77 1465.57 1134.9 Q1465.57 1142.01 1467.38 1145.58 Q1469.21 1149.12 1472.82 1149.12 Q1476.45 1149.12 1478.26 1145.58 Q1480.09 1142.01 1480.09 1134.9 Q1480.09 1127.77 1478.26 1124.23 Q1476.45 1120.67 1472.82 1120.67 M1472.82 1116.96 Q1478.63 1116.96 1481.68 1121.57 Q1484.76 1126.15 1484.76 1134.9 Q1484.76 1143.63 1481.68 1148.24 Q1478.63 1152.82 1472.82 1152.82 Q1467.01 1152.82 1463.93 1148.24 Q1460.87 1143.63 1460.87 1134.9 Q1460.87 1126.15 1463.93 1121.57 Q1467.01 1116.96 1472.82 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1651.98 1148.21 L1659.62 1148.21 L1659.62 1121.85 L1651.31 1123.51 L1651.31 1119.26 L1659.57 1117.59 L1664.25 1117.59 L1664.25 1148.21 L1671.88 1148.21 L1671.88 1152.15 L1651.98 1152.15 L1651.98 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1685.36 1148.21 L1701.68 1148.21 L1701.68 1152.15 L1679.73 1152.15 L1679.73 1148.21 Q1682.39 1145.46 1686.98 1140.83 Q1691.58 1136.18 1692.76 1134.83 Q1695.01 1132.31 1695.89 1130.58 Q1696.79 1128.82 1696.79 1127.13 Q1696.79 1124.37 1694.85 1122.64 Q1692.93 1120.9 1689.82 1120.9 Q1687.63 1120.9 1685.17 1121.66 Q1682.74 1122.43 1679.96 1123.98 L1679.96 1119.26 Q1682.79 1118.12 1685.24 1117.54 Q1687.69 1116.96 1689.73 1116.96 Q1695.1 1116.96 1698.3 1119.65 Q1701.49 1122.33 1701.49 1126.83 Q1701.49 1128.95 1700.68 1130.88 Q1699.89 1132.77 1697.79 1135.37 Q1697.21 1136.04 1694.11 1139.26 Q1691 1142.45 1685.36 1148.21 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1721.49 1120.67 Q1717.88 1120.67 1716.05 1124.23 Q1714.25 1127.77 1714.25 1134.9 Q1714.25 1142.01 1716.05 1145.58 Q1717.88 1149.12 1721.49 1149.12 Q1725.12 1149.12 1726.93 1145.58 Q1728.76 1142.01 1728.76 1134.9 Q1728.76 1127.77 1726.93 1124.23 Q1725.12 1120.67 1721.49 1120.67 M1721.49 1116.96 Q1727.3 1116.96 1730.36 1121.57 Q1733.44 1126.15 1733.44 1134.9 Q1733.44 1143.63 1730.36 1148.24 Q1727.3 1152.82 1721.49 1152.82 Q1715.68 1152.82 1712.6 1148.24 Q1709.55 1143.63 1709.55 1134.9 Q1709.55 1126.15 1712.6 1121.57 Q1715.68 1116.96 1721.49 1116.96 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  166.457,1063.66 1912.76,1063.66 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  166.457,827.584 1912.76,827.584 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  166.457,591.504 1912.76,591.504 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  166.457,355.423 1912.76,355.423 
-  "/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:2; stroke-opacity:0.1; fill:none" points="
-  166.457,119.343 1912.76,119.343 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,1093.27 166.457,47.2441 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,1063.66 185.355,1063.66 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,827.584 185.355,827.584 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,591.504 185.355,591.504 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,355.423 185.355,355.423 
-  "/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  166.457,119.343 185.355,119.343 
-  "/>
-<path clip-path="url(#clip280)" d="M125.113 1049.46 Q121.502 1049.46 119.673 1053.03 Q117.868 1056.57 117.868 1063.7 Q117.868 1070.81 119.673 1074.37 Q121.502 1077.91 125.113 1077.91 Q128.747 1077.91 130.553 1074.37 Q132.382 1070.81 132.382 1063.7 Q132.382 1056.57 130.553 1053.03 Q128.747 1049.46 125.113 1049.46 M125.113 1045.76 Q130.923 1045.76 133.979 1050.37 Q137.057 1054.95 137.057 1063.7 Q137.057 1072.43 133.979 1077.03 Q130.923 1081.62 125.113 1081.62 Q119.303 1081.62 116.224 1077.03 Q113.169 1072.43 113.169 1063.7 Q113.169 1054.95 116.224 1050.37 Q119.303 1045.76 125.113 1045.76 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M84.9975 810.304 L103.354 810.304 L103.354 814.239 L89.2799 814.239 L89.2799 822.712 Q90.2984 822.364 91.3169 822.202 Q92.3354 822.017 93.3539 822.017 Q99.141 822.017 102.521 825.188 Q105.9 828.36 105.9 833.776 Q105.9 839.355 102.428 842.457 Q98.9558 845.536 92.6364 845.536 Q90.4604 845.536 88.1919 845.165 Q85.9466 844.795 83.5392 844.054 L83.5392 839.355 Q85.6225 840.489 87.8447 841.045 Q90.0669 841.6 92.5438 841.6 Q96.5484 841.6 98.8863 839.494 Q101.224 837.387 101.224 833.776 Q101.224 830.165 98.8863 828.059 Q96.5484 825.952 92.5438 825.952 Q90.6688 825.952 88.7938 826.369 Q86.9419 826.786 84.9975 827.665 L84.9975 810.304 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 813.383 Q121.502 813.383 119.673 816.948 Q117.868 820.489 117.868 827.619 Q117.868 834.725 119.673 838.29 Q121.502 841.832 125.113 841.832 Q128.747 841.832 130.553 838.29 Q132.382 834.725 132.382 827.619 Q132.382 820.489 130.553 816.948 Q128.747 813.383 125.113 813.383 M125.113 809.679 Q130.923 809.679 133.979 814.286 Q137.057 818.869 137.057 827.619 Q137.057 836.346 133.979 840.952 Q130.923 845.536 125.113 845.536 Q119.303 845.536 116.224 840.952 Q113.169 836.346 113.169 827.619 Q113.169 818.869 116.224 814.286 Q119.303 809.679 125.113 809.679 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M55.5995 604.849 L63.2384 604.849 L63.2384 578.483 L54.9282 580.15 L54.9282 575.89 L63.1921 574.224 L67.868 574.224 L67.868 604.849 L75.5068 604.849 L75.5068 608.784 L55.5995 608.784 L55.5995 604.849 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M94.9512 577.303 Q91.3401 577.303 89.5114 580.867 Q87.7058 584.409 87.7058 591.539 Q87.7058 598.645 89.5114 602.21 Q91.3401 605.751 94.9512 605.751 Q98.5854 605.751 100.391 602.21 Q102.22 598.645 102.22 591.539 Q102.22 584.409 100.391 580.867 Q98.5854 577.303 94.9512 577.303 M94.9512 573.599 Q100.761 573.599 103.817 578.205 Q106.896 582.789 106.896 591.539 Q106.896 600.265 103.817 604.872 Q100.761 609.455 94.9512 609.455 Q89.141 609.455 86.0623 604.872 Q83.0068 600.265 83.0068 591.539 Q83.0068 582.789 86.0623 578.205 Q89.141 573.599 94.9512 573.599 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 577.303 Q121.502 577.303 119.673 580.867 Q117.868 584.409 117.868 591.539 Q117.868 598.645 119.673 602.21 Q121.502 605.751 125.113 605.751 Q128.747 605.751 130.553 602.21 Q132.382 598.645 132.382 591.539 Q132.382 584.409 130.553 580.867 Q128.747 577.303 125.113 577.303 M125.113 573.599 Q130.923 573.599 133.979 578.205 Q137.057 582.789 137.057 591.539 Q137.057 600.265 133.979 604.872 Q130.923 609.455 125.113 609.455 Q119.303 609.455 116.224 604.872 Q113.169 600.265 113.169 591.539 Q113.169 582.789 116.224 578.205 Q119.303 573.599 125.113 573.599 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M55.5995 368.768 L63.2384 368.768 L63.2384 342.403 L54.9282 344.069 L54.9282 339.81 L63.1921 338.143 L67.868 338.143 L67.868 368.768 L75.5068 368.768 L75.5068 372.703 L55.5995 372.703 L55.5995 368.768 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M84.9975 338.143 L103.354 338.143 L103.354 342.079 L89.2799 342.079 L89.2799 350.551 Q90.2984 350.204 91.3169 350.042 Q92.3354 349.856 93.3539 349.856 Q99.141 349.856 102.521 353.028 Q105.9 356.199 105.9 361.616 Q105.9 367.194 102.428 370.296 Q98.9558 373.375 92.6364 373.375 Q90.4604 373.375 88.1919 373.004 Q85.9466 372.634 83.5392 371.893 L83.5392 367.194 Q85.6225 368.328 87.8447 368.884 Q90.0669 369.44 92.5438 369.44 Q96.5484 369.44 98.8863 367.333 Q101.224 365.227 101.224 361.616 Q101.224 358.004 98.8863 355.898 Q96.5484 353.792 92.5438 353.792 Q90.6688 353.792 88.7938 354.208 Q86.9419 354.625 84.9975 355.504 L84.9975 338.143 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 341.222 Q121.502 341.222 119.673 344.787 Q117.868 348.329 117.868 355.458 Q117.868 362.565 119.673 366.129 Q121.502 369.671 125.113 369.671 Q128.747 369.671 130.553 366.129 Q132.382 362.565 132.382 355.458 Q132.382 348.329 130.553 344.787 Q128.747 341.222 125.113 341.222 M125.113 337.518 Q130.923 337.518 133.979 342.125 Q137.057 346.708 137.057 355.458 Q137.057 364.185 133.979 368.791 Q130.923 373.375 125.113 373.375 Q119.303 373.375 116.224 368.791 Q113.169 364.185 113.169 355.458 Q113.169 346.708 116.224 342.125 Q119.303 337.518 125.113 337.518 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M58.8171 132.688 L75.1365 132.688 L75.1365 136.623 L53.1921 136.623 L53.1921 132.688 Q55.8541 129.933 60.4375 125.304 Q65.0439 120.651 66.2245 119.308 Q68.4698 116.785 69.3494 115.049 Q70.2522 113.29 70.2522 111.6 Q70.2522 108.845 68.3078 107.109 Q66.3865 105.373 63.2847 105.373 Q61.0856 105.373 58.6319 106.137 Q56.2014 106.901 53.4236 108.452 L53.4236 103.73 Q56.2477 102.595 58.7014 102.017 Q61.155 101.438 63.1921 101.438 Q68.5624 101.438 71.7568 104.123 Q74.9513 106.808 74.9513 111.299 Q74.9513 113.429 74.1411 115.35 Q73.3541 117.248 71.2476 119.841 Q70.6689 120.512 67.567 123.73 Q64.4652 126.924 58.8171 132.688 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M94.9512 105.142 Q91.3401 105.142 89.5114 108.707 Q87.7058 112.248 87.7058 119.378 Q87.7058 126.484 89.5114 130.049 Q91.3401 133.591 94.9512 133.591 Q98.5854 133.591 100.391 130.049 Q102.22 126.484 102.22 119.378 Q102.22 112.248 100.391 108.707 Q98.5854 105.142 94.9512 105.142 M94.9512 101.438 Q100.761 101.438 103.817 106.045 Q106.896 110.628 106.896 119.378 Q106.896 128.105 103.817 132.711 Q100.761 137.294 94.9512 137.294 Q89.141 137.294 86.0623 132.711 Q83.0068 128.105 83.0068 119.378 Q83.0068 110.628 86.0623 106.045 Q89.141 101.438 94.9512 101.438 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M125.113 105.142 Q121.502 105.142 119.673 108.707 Q117.868 112.248 117.868 119.378 Q117.868 126.484 119.673 130.049 Q121.502 133.591 125.113 133.591 Q128.747 133.591 130.553 130.049 Q132.382 126.484 132.382 119.378 Q132.382 112.248 130.553 108.707 Q128.747 105.142 125.113 105.142 M125.113 101.438 Q130.923 101.438 133.979 106.045 Q137.057 110.628 137.057 119.378 Q137.057 128.105 133.979 132.711 Q130.923 137.294 125.113 137.294 Q119.303 137.294 116.224 132.711 Q113.169 128.105 113.169 119.378 Q113.169 110.628 116.224 106.045 Q119.303 101.438 125.113 101.438 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip282)" d="
-M262.507 81.5702 L262.507 1063.66 L324.675 1063.66 L324.675 81.5702 L262.507 81.5702 L262.507 81.5702  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  262.507,81.5702 262.507,1063.66 324.675,1063.66 324.675,81.5702 262.507,81.5702 
-  "/>
-<path clip-path="url(#clip282)" d="
-M324.675 1063.66 L324.675 1063.66 L386.843 1063.66 L386.843 1063.66 L324.675 1063.66 L324.675 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  324.675,1063.66 324.675,1063.66 386.843,1063.66 324.675,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M386.843 76.8486 L386.843 1063.66 L449.011 1063.66 L449.011 76.8486 L386.843 76.8486 L386.843 76.8486  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  386.843,76.8486 386.843,1063.66 449.011,1063.66 449.011,76.8486 386.843,76.8486 
-  "/>
-<path clip-path="url(#clip282)" d="
-M449.011 1063.66 L449.011 1063.66 L511.179 1063.66 L511.179 1063.66 L449.011 1063.66 L449.011 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  449.011,1063.66 449.011,1063.66 511.179,1063.66 449.011,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M511.179 1063.66 L511.179 1063.66 L573.347 1063.66 L573.347 1063.66 L511.179 1063.66 L511.179 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  511.179,1063.66 511.179,1063.66 573.347,1063.66 511.179,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M573.347 147.673 L573.347 1063.66 L635.515 1063.66 L635.515 147.673 L573.347 147.673 L573.347 147.673  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  573.347,147.673 573.347,1063.66 635.515,1063.66 635.515,147.673 573.347,147.673 
-  "/>
-<path clip-path="url(#clip282)" d="
-M635.515 1063.66 L635.515 1063.66 L697.683 1063.66 L697.683 1063.66 L635.515 1063.66 L635.515 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  635.515,1063.66 635.515,1063.66 697.683,1063.66 635.515,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M697.683 1063.66 L697.683 1063.66 L759.851 1063.66 L759.851 1063.66 L697.683 1063.66 L697.683 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  697.683,1063.66 697.683,1063.66 759.851,1063.66 697.683,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M759.851 1063.66 L759.851 1063.66 L822.019 1063.66 L822.019 1063.66 L759.851 1063.66 L759.851 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  759.851,1063.66 759.851,1063.66 822.019,1063.66 759.851,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M822.019 1063.66 L822.019 1063.66 L884.187 1063.66 L884.187 1063.66 L822.019 1063.66 L822.019 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  822.019,1063.66 822.019,1063.66 884.187,1063.66 822.019,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M884.187 1063.66 L884.187 1063.66 L946.355 1063.66 L946.355 1063.66 L884.187 1063.66 L884.187 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  884.187,1063.66 884.187,1063.66 946.355,1063.66 884.187,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M946.355 176.002 L946.355 1063.66 L1008.52 1063.66 L1008.52 176.002 L946.355 176.002 L946.355 176.002  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  946.355,176.002 946.355,1063.66 1008.52,1063.66 1008.52,176.002 946.355,176.002 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1008.52 1063.66 L1008.52 1063.66 L1070.69 1063.66 L1070.69 1063.66 L1008.52 1063.66 L1008.52 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1008.52,1063.66 1008.52,1063.66 1070.69,1063.66 1008.52,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1070.69 1063.66 L1070.69 1063.66 L1132.86 1063.66 L1132.86 1063.66 L1070.69 1063.66 L1070.69 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1070.69,1063.66 1070.69,1063.66 1132.86,1063.66 1070.69,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1132.86 1063.66 L1132.86 1063.66 L1195.03 1063.66 L1195.03 1063.66 L1132.86 1063.66 L1132.86 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1132.86,1063.66 1132.86,1063.66 1195.03,1063.66 1132.86,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1195.03 1063.66 L1195.03 1063.66 L1257.19 1063.66 L1257.19 1063.66 L1195.03 1063.66 L1195.03 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1195.03,1063.66 1195.03,1063.66 1257.19,1063.66 1195.03,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1257.19 1063.66 L1257.19 1063.66 L1319.36 1063.66 L1319.36 1063.66 L1257.19 1063.66 L1257.19 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1257.19,1063.66 1257.19,1063.66 1319.36,1063.66 1257.19,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1319.36 1063.66 L1319.36 1063.66 L1381.53 1063.66 L1381.53 1063.66 L1319.36 1063.66 L1319.36 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1319.36,1063.66 1319.36,1063.66 1381.53,1063.66 1319.36,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1381.53 1063.66 L1381.53 1063.66 L1443.7 1063.66 L1443.7 1063.66 L1381.53 1063.66 L1381.53 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1381.53,1063.66 1381.53,1063.66 1443.7,1063.66 1381.53,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1443.7 1063.66 L1443.7 1063.66 L1505.87 1063.66 L1505.87 1063.66 L1443.7 1063.66 L1443.7 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1443.7,1063.66 1443.7,1063.66 1505.87,1063.66 1443.7,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1505.87 1063.66 L1505.87 1063.66 L1568.03 1063.66 L1568.03 1063.66 L1505.87 1063.66 L1505.87 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1505.87,1063.66 1505.87,1063.66 1568.03,1063.66 1505.87,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1568.03 1063.66 L1568.03 1063.66 L1630.2 1063.66 L1630.2 1063.66 L1568.03 1063.66 L1568.03 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1568.03,1063.66 1568.03,1063.66 1630.2,1063.66 1568.03,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1630.2 1063.66 L1630.2 1063.66 L1692.37 1063.66 L1692.37 1063.66 L1630.2 1063.66 L1630.2 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1630.2,1063.66 1630.2,1063.66 1692.37,1063.66 1630.2,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1692.37 1063.66 L1692.37 1063.66 L1754.54 1063.66 L1754.54 1063.66 L1692.37 1063.66 L1692.37 1063.66  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1692.37,1063.66 1692.37,1063.66 1754.54,1063.66 1692.37,1063.66 
-  "/>
-<path clip-path="url(#clip282)" d="
-M1754.54 114.621 L1754.54 1063.66 L1816.71 1063.66 L1816.71 114.621 L1754.54 114.621 L1754.54 114.621  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip282)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1754.54,114.621 1754.54,1063.66 1816.71,1063.66 1816.71,114.621 1754.54,114.621 
-  "/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="293.591" cy="81.5702" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="355.759" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="417.927" cy="76.8486" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="480.095" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="542.263" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="604.431" cy="147.673" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="666.599" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="728.767" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="790.935" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="853.103" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="915.271" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="977.439" cy="176.002" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1039.61" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1101.77" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1163.94" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1226.11" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1288.28" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1350.45" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1412.61" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1474.78" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1536.95" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1599.12" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1661.29" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1723.45" cy="1063.66" r="2"/>
-<circle clip-path="url(#clip282)" style="fill:#009af9; stroke:none; fill-opacity:0" cx="1785.62" cy="114.621" r="2"/>
-<path clip-path="url(#clip280)" d="
-M1608.08 185.792 L1854.55 185.792 L1854.55 82.1116 L1608.08 82.1116  Z
-  " fill="#ffffff" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1608.08,185.792 1854.55,185.792 1854.55,82.1116 1608.08,82.1116 1608.08,185.792 
-  "/>
-<path clip-path="url(#clip280)" d="
-M1627.49 154.688 L1743.91 154.688 L1743.91 113.216 L1627.49 113.216 L1627.49 154.688  Z
-  " fill="#009af9" fill-rule="evenodd" fill-opacity="1"/>
-<polyline clip-path="url(#clip280)" style="stroke:#000000; stroke-linecap:butt; stroke-linejoin:round; stroke-width:4; stroke-opacity:1; fill:none" points="
-  1627.49,154.688 1743.91,154.688 1743.91,113.216 1627.49,113.216 1627.49,154.688 
-  "/>
-<path clip-path="url(#clip280)" d="M1777.15 153.639 Q1775.35 158.269 1773.63 159.681 Q1771.92 161.093 1769.05 161.093 L1765.65 161.093 L1765.65 157.528 L1768.15 157.528 Q1769.91 157.528 1770.88 156.695 Q1771.85 155.861 1773.03 152.759 L1773.8 150.815 L1763.31 125.306 L1767.82 125.306 L1775.92 145.583 L1784.03 125.306 L1788.54 125.306 L1777.15 153.639 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /><path clip-path="url(#clip280)" d="M1795.83 147.296 L1803.47 147.296 L1803.47 120.931 L1795.16 122.597 L1795.16 118.338 L1803.42 116.672 L1808.1 116.672 L1808.1 147.296 L1815.74 147.296 L1815.74 151.232 L1795.83 151.232 L1795.83 147.296 Z" fill="#000000" fill-rule="evenodd" fill-opacity="1" /></svg>
-
-```
+![](uniform_sampler.png)
 
 ````julia
 sort(unique(samples))
@@ -4040,11 +3235,11 @@ pretty(X)
 │ Float64    │ Float64    │ Float64    │
 │ Continuous │ Continuous │ Continuous │
 ├────────────┼────────────┼────────────┤
-│ -4.27165   │ 8.02646    │ 8.53392    │
-│ -4.26892   │ 9.43326    │ 7.80139    │
-│ -2.31856   │ 8.57958    │ 8.66223    │
-│ -10.8567   │ 7.74809    │ 11.3167    │
-│ -16.0841   │ 11.6774    │ 7.03383    │
+│ -0.797998  │ -12.135    │ -0.292572  │
+│ 10.2709    │ 6.93493    │ -3.00118   │
+│ 8.59446    │ 5.10898    │ -3.92894   │
+│ 10.7357    │ 5.25086    │ -4.17694   │
+│ 13.4137    │ 0.089483   │ -6.42931   │
 └────────────┴────────────┴────────────┘
 
 ````
@@ -4068,11 +3263,11 @@ yhat = predict(mach2, Xstand)
 
 ````
 5-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.0569, 2=>0.107, 3=>0.836)
- UnivariateFinite{Multiclass{3}}(1=>0.104, 2=>0.0614, 3=>0.835)
- UnivariateFinite{Multiclass{3}}(1=>0.0502, 2=>0.0821, 3=>0.868)
- UnivariateFinite{Multiclass{3}}(1=>0.0708, 2=>0.658, 3=>0.271)
- UnivariateFinite{Multiclass{3}}(1=>0.75, 2=>0.0604, 3=>0.19)
+ UnivariateFinite{Multiclass{3}}(1=>0.794, 2=>0.0317, 3=>0.174)
+ UnivariateFinite{Multiclass{3}}(1=>0.0647, 2=>0.0908, 3=>0.845)
+ UnivariateFinite{Multiclass{3}}(1=>0.0863, 2=>0.135, 3=>0.778)
+ UnivariateFinite{Multiclass{3}}(1=>0.0671, 2=>0.166, 3=>0.767)
+ UnivariateFinite{Multiclass{3}}(1=>0.0558, 2=>0.508, 3=>0.436)
 ````
 
 **Step 1** - Edit your code as follows:
@@ -4104,7 +3299,7 @@ Node{Machine{LogisticClassifier,…}}
         Machine{LogisticClassifier,…}, 
         transform(
             Machine{Standardizer,…}, 
-            Source @882))
+            Source @707))
 ````
 
 Now `X`, `y`, `Xstand` and `yhat` are *nodes* ("variables" or
@@ -4120,17 +3315,17 @@ Xstand() |> pretty
 
 ````
 [ Info: Training Machine{Standardizer,…}.
-┌────────────┬────────────┬─────────────┐
-│ x1         │ x2         │ x3          │
-│ Float64    │ Float64    │ Float64     │
-│ Continuous │ Continuous │ Continuous  │
-├────────────┼────────────┼─────────────┤
-│ 0.571032   │ -0.674353  │ -0.0839292  │
-│ 0.571505   │ 0.215184   │ -0.537029   │
-│ 0.910193   │ -0.324607  │ -0.00456439 │
-│ -0.572491  │ -0.850372  │ 1.63732     │
-│ -1.48024   │ 1.63415    │ -1.01179    │
-└────────────┴────────────┴─────────────┘
+┌────────────┬────────────┬────────────┐
+│ x1         │ x2         │ x3         │
+│ Float64    │ Float64    │ Float64    │
+│ Continuous │ Continuous │ Continuous │
+├────────────┼────────────┼────────────┤
+│ -1.69627   │ -1.6898    │ 1.47352    │
+│ 0.335451   │ 0.754247   │ 0.254171   │
+│ 0.0277376  │ 0.520228   │ -0.163481  │
+│ 0.420759   │ 0.538412   │ -0.275123  │
+│ 0.912322   │ -0.123084  │ -1.28908   │
+└────────────┴────────────┴────────────┘
 
 ````
 
@@ -4141,11 +3336,11 @@ yhat()
 
 ````
 5-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.0569, 2=>0.107, 3=>0.836)
- UnivariateFinite{Multiclass{3}}(1=>0.104, 2=>0.0614, 3=>0.835)
- UnivariateFinite{Multiclass{3}}(1=>0.0502, 2=>0.0821, 3=>0.868)
- UnivariateFinite{Multiclass{3}}(1=>0.0708, 2=>0.658, 3=>0.271)
- UnivariateFinite{Multiclass{3}}(1=>0.75, 2=>0.0604, 3=>0.19)
+ UnivariateFinite{Multiclass{3}}(1=>0.794, 2=>0.0317, 3=>0.174)
+ UnivariateFinite{Multiclass{3}}(1=>0.0647, 2=>0.0908, 3=>0.845)
+ UnivariateFinite{Multiclass{3}}(1=>0.0863, 2=>0.135, 3=>0.778)
+ UnivariateFinite{Multiclass{3}}(1=>0.0671, 2=>0.166, 3=>0.767)
+ UnivariateFinite{Multiclass{3}}(1=>0.0558, 2=>0.508, 3=>0.436)
 ````
 
 The node `yhat` is the "descendant" (in an associated DAG we have
@@ -4157,8 +3352,8 @@ sources(yhat)
 
 ````
 2-element Vector{Any}:
- Source @882 ⏎ `Table{AbstractVector{Continuous}}`
- Source @521 ⏎ `AbstractVector{Multiclass{3}}`
+ Source @707 ⏎ `Table{AbstractVector{Continuous}}`
+ Source @866 ⏎ `AbstractVector{Multiclass{3}}`
 ````
 
 The data at the source node is replaced by `Xnew` to obtain a
@@ -4171,8 +3366,8 @@ yhat(Xnew)
 
 ````
 2-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.00318, 2=>2.31e-5, 3=>0.997)
- UnivariateFinite{Multiclass{3}}(1=>0.000824, 2=>6.46e-7, 3=>0.999)
+ UnivariateFinite{Multiclass{3}}(1=>0.331, 2=>0.000216, 3=>0.669)
+ UnivariateFinite{Multiclass{3}}(1=>0.176, 2=>0.000586, 3=>0.823)
 ````
 
 **Step 2** - Export the learning network as a new stand-alone model type
@@ -4198,8 +3393,8 @@ mach = machine(surrogate, X, y; predict=yhat)
 ````
 Machine{ProbabilisticSurrogate,…} trained 0 times; does not cache data
   args: 
-    1:	Source @882 ⏎ `Table{AbstractVector{Continuous}}`
-    2:	Source @521 ⏎ `AbstractVector{Multiclass{3}}`
+    1:	Source @707 ⏎ `Table{AbstractVector{Continuous}}`
+    2:	Source @866 ⏎ `AbstractVector{Multiclass{3}}`
 
 ````
 
@@ -4214,8 +3409,8 @@ predict(mach, Xnew)
 
 ````
 2-element MLJBase.UnivariateFiniteVector{Multiclass{3}, Int64, UInt32, Float64}:
- UnivariateFinite{Multiclass{3}}(1=>0.00174, 2=>0.0228, 3=>0.975)
- UnivariateFinite{Multiclass{3}}(1=>0.00019, 2=>0.011, 3=>0.989)
+ UnivariateFinite{Multiclass{3}}(1=>0.68, 2=>0.11, 3=>0.21)
+ UnivariateFinite{Multiclass{3}}(1=>0.477, 2=>0.0994, 3=>0.423)
 ````
 
 Now we create a new model type using a Julia `struct` definition
@@ -4286,7 +3481,7 @@ y = source()
 ````
 
 ````
-Source @818 ⏎ `Nothing`
+Source @998 ⏎ `Nothing`
 ````
 
 **First layer and target transformation**
@@ -4304,11 +3499,11 @@ z = MLJ.transform(box, y)
 ````
 Node{Machine{UnivariateBoxCoxTransformer,…}}
   args:
-    1:	Source @818
+    1:	Source @998
   formula:
     transform(
         Machine{UnivariateBoxCoxTransformer,…}, 
-        Source @818)
+        Source @998)
 ````
 
 **Second layer**
@@ -4335,13 +3530,13 @@ Node{Nothing}
                 Machine{RidgeRegressor,…}, 
                 transform(
                     Machine{Standardizer,…}, 
-                    Source @491))),
+                    Source @696))),
         #134(
             predict(
                 Machine{RandomForestRegressor,…}, 
                 transform(
                     Machine{Standardizer,…}, 
-                    Source @491))))
+                    Source @696))))
 ````
 
 **Output**
@@ -4363,13 +3558,13 @@ Node{Machine{UnivariateBoxCoxTransformer,…}}
                     Machine{RidgeRegressor,…}, 
                     transform(
                         Machine{Standardizer,…}, 
-                        Source @491))),
+                        Source @696))),
             #134(
                 predict(
                     Machine{RandomForestRegressor,…}, 
                     transform(
                         Machine{Standardizer,…}, 
-                        Source @491)))))
+                        Source @696)))))
 ````
 
 With the learning network defined, we're ready to export:
@@ -4422,12 +3617,12 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────┬─────────────┬───────────┬─────────────────────────────────────┐
-│ measure                │ measurement │ operation │ per_fold                            │
-├────────────────────────┼─────────────┼───────────┼─────────────────────────────────────┤
-│ RootMeanSquaredError() │ 3.86        │ predict   │ [4.54, 2.83, 4.73, 2.8, 2.96, 4.69] │
-│ MeanAbsoluteError()    │ 2.45        │ predict   │ [2.7, 2.11, 2.89, 2.11, 2.14, 2.74] │
-└────────────────────────┴─────────────┴───────────┴─────────────────────────────────────┘
+┌────────────────────────┬─────────────┬───────────┬──────────────────────────────────────┐
+│ measure                │ measurement │ operation │ per_fold                             │
+├────────────────────────┼─────────────┼───────────┼──────────────────────────────────────┤
+│ RootMeanSquaredError() │ 3.82        │ predict   │ [3.67, 3.03, 4.4, 3.71, 4.18, 3.75]  │
+│ MeanAbsoluteError()    │ 2.45        │ predict   │ [2.32, 2.35, 2.65, 2.65, 2.39, 2.35] │
+└────────────────────────┴─────────────┴───────────┴──────────────────────────────────────┘
 
 ````
 
@@ -4729,16 +3924,16 @@ savefig("exercise_6ci.png")
 ````
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 29 models.
-Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:01[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
-[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
-[ Info: Attempting to evaluate 29 models.
-Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
+Evaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 29 models.
 Evaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 29 models.
 Evaluating over 29 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 29 metamodels:   3%[>                        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
+[ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
+[ Info: Attempting to evaluate 29 models.
+Evaluating over 29 metamodels:   7%[=>                       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  10%[==>                      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  14%[===>                     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  17%[====>                    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  21%[=====>                   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  24%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  28%[======>                  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  31%[=======>                 ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  34%[========>                ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  38%[=========>               ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  41%[==========>              ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  45%[===========>             ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  48%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  52%[============>            ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  55%[=============>           ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  59%[==============>          ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  62%[===============>         ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  66%[================>        ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  69%[=================>       ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  72%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  76%[==================>      ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  79%[===================>     ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  83%[====================>    ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  86%[=====================>   ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  90%[======================>  ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  93%[=======================> ]  ETA: 0:00:00[KEvaluating over 29 metamodels:  97%[========================>]  ETA: 0:00:00[KEvaluating over 29 metamodels: 100%[=========================] Time: 0:00:00[K
 
 ````
 
@@ -4766,7 +3961,7 @@ err_forest = evaluate!(mach, resampling=Holdout(),
 ````
 
 ````
-1.2607761032743634
+1.5724544828946136
 ````
 
 #### Exercise 7
@@ -4783,7 +3978,7 @@ pipe = @pipeline(Standardizer,
 ````
 
 ````
-Pipeline575(
+Pipeline770(
     standardizer = Standardizer(
             features = Symbol[],
             ignore = false,
@@ -4825,11 +4020,11 @@ PerformanceEvaluation object with these fields:
   per_observation, fitted_params_per_fold,
   report_per_fold, train_test_pairs
 Extract:
-┌────────────────────────────┬─────────────┬───────────┬────────────────────────────────────────────┐
-│ measure                    │ measurement │ operation │ per_fold                                   │
-├────────────────────────────┼─────────────┼───────────┼────────────────────────────────────────────┤
-│ LogLoss(tol = 2.22045e-16) │ 0.817       │ predict   │ [0.874, 0.916, 0.797, 0.868, 0.706, 0.738] │
-└────────────────────────────┴─────────────┴───────────┴────────────────────────────────────────────┘
+┌────────────────────────────┬─────────────┬───────────┬───────────────────────────────────────────┐
+│ measure                    │ measurement │ operation │ per_fold                                  │
+├────────────────────────────┼─────────────┼───────────┼───────────────────────────────────────────┤
+│ LogLoss(tol = 2.22045e-16) │ 0.809       │ predict   │ [0.833, 1.02, 0.789, 0.733, 0.789, 0.695] │
+└────────────────────────────┴─────────────┴───────────┴───────────────────────────────────────────┘
 
 ````
 
@@ -4852,7 +4047,7 @@ savefig("exercise_7c.png")
 ````
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 10 models.
-Evaluating over 10 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 10 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:21[K
+Evaluating over 10 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 10 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:26[K
 
 ````
 
@@ -4874,7 +4069,7 @@ savefig("exercise_7c_2.png")
 ````
 [ Info: Training Machine{ProbabilisticTunedModel{Grid,…},…}.
 [ Info: Attempting to evaluate 10 models.
-Evaluating over 10 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 10 metamodels:  10%[==>                      ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:03[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:24[K
+Evaluating over 10 metamodels:  20%[=====>                   ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  30%[=======>                 ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  40%[==========>              ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  50%[============>            ]  ETA: 0:00:01[KEvaluating over 10 metamodels:  60%[===============>         ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  70%[=================>       ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  80%[====================>    ]  ETA: 0:00:02[KEvaluating over 10 metamodels:  90%[======================>  ]  ETA: 0:00:02[KEvaluating over 10 metamodels: 100%[=========================] Time: 0:00:25[K
 
 ````
 
@@ -4895,7 +4090,7 @@ savefig("exercise_7c_3.png")
 ````
 
 ````
-Evaluating Learning curve with 6 rngs:   0%[>                 ]  ETA: N/A[KEvaluating Learning curve with 6 rngs:  17%[===>              ]  ETA: 0:01:51[KEvaluating Learning curve with 6 rngs:  33%[======>           ]  ETA: 0:01:32[KEvaluating Learning curve with 6 rngs:  50%[=========>        ]  ETA: 0:01:09[KEvaluating Learning curve with 6 rngs:  67%[============>     ]  ETA: 0:00:45[KEvaluating Learning curve with 6 rngs:  83%[===============>  ]  ETA: 0:00:23[KEvaluating Learning curve with 6 rngs: 100%[==================] Time: 0:02:19[K
+Evaluating Learning curve with 6 rngs:   0%[>                 ]  ETA: N/A[KEvaluating Learning curve with 6 rngs:  17%[===>              ]  ETA: 0:02:05[KEvaluating Learning curve with 6 rngs:  33%[======>           ]  ETA: 0:01:43[KEvaluating Learning curve with 6 rngs:  50%[=========>        ]  ETA: 0:01:18[KEvaluating Learning curve with 6 rngs:  67%[============>     ]  ETA: 0:00:53[KEvaluating Learning curve with 6 rngs:  83%[===============>  ]  ETA: 0:00:26[KEvaluating Learning curve with 6 rngs: 100%[==================] Time: 0:02:42[K
 
 ````
 
@@ -4916,7 +4111,7 @@ model = @pipeline ContinuousEncoder tree_booster
 ````
 
 ````
-Pipeline584(
+Pipeline779(
     continuous_encoder = ContinuousEncoder(
             drop_last = false,
             one_hot_ordered_factors = false),
@@ -4965,7 +4160,7 @@ savefig("exercise_8c.png")
 ````
 [ Info: Training Machine{DeterministicTunedModel{RandomSearch,…},…}.
 [ Info: Attempting to evaluate 40 models.
-Evaluating over 40 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 40 metamodels:   2%[>                        ]  ETA: 0:05:19[KEvaluating over 40 metamodels:   5%[=>                       ]  ETA: 0:02:58[KEvaluating over 40 metamodels:   8%[=>                       ]  ETA: 0:02:00[KEvaluating over 40 metamodels:  10%[==>                      ]  ETA: 0:01:39[KEvaluating over 40 metamodels:  12%[===>                     ]  ETA: 0:01:20[KEvaluating over 40 metamodels:  15%[===>                     ]  ETA: 0:01:11[KEvaluating over 40 metamodels:  18%[====>                    ]  ETA: 0:01:01[KEvaluating over 40 metamodels:  20%[=====>                   ]  ETA: 0:01:19[KEvaluating over 40 metamodels:  22%[=====>                   ]  ETA: 0:02:34[KEvaluating over 40 metamodels:  25%[======>                  ]  ETA: 0:02:25[KEvaluating over 40 metamodels:  28%[======>                  ]  ETA: 0:02:21[KEvaluating over 40 metamodels:  30%[=======>                 ]  ETA: 0:02:05[KEvaluating over 40 metamodels:  32%[========>                ]  ETA: 0:02:03[KEvaluating over 40 metamodels:  35%[========>                ]  ETA: 0:01:53[KEvaluating over 40 metamodels:  38%[=========>               ]  ETA: 0:01:45[KEvaluating over 40 metamodels:  40%[==========>              ]  ETA: 0:01:35[KEvaluating over 40 metamodels:  42%[==========>              ]  ETA: 0:01:28[KEvaluating over 40 metamodels:  45%[===========>             ]  ETA: 0:01:21[KEvaluating over 40 metamodels:  48%[===========>             ]  ETA: 0:01:14[KEvaluating over 40 metamodels:  50%[============>            ]  ETA: 0:01:08[KEvaluating over 40 metamodels:  52%[=============>           ]  ETA: 0:01:05[KEvaluating over 40 metamodels:  55%[=============>           ]  ETA: 0:01:06[KEvaluating over 40 metamodels:  58%[==============>          ]  ETA: 0:01:00[KEvaluating over 40 metamodels:  60%[===============>         ]  ETA: 0:00:55[KEvaluating over 40 metamodels:  62%[===============>         ]  ETA: 0:00:50[KEvaluating over 40 metamodels:  65%[================>        ]  ETA: 0:00:57[KEvaluating over 40 metamodels:  70%[=================>       ]  ETA: 0:00:45[KEvaluating over 40 metamodels:  72%[==================>      ]  ETA: 0:00:49[KEvaluating over 40 metamodels:  75%[==================>      ]  ETA: 0:00:43[KEvaluating over 40 metamodels:  78%[===================>     ]  ETA: 0:00:38[KEvaluating over 40 metamodels:  80%[====================>    ]  ETA: 0:00:34[KEvaluating over 40 metamodels:  82%[====================>    ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  85%[=====================>   ]  ETA: 0:00:24[KEvaluating over 40 metamodels:  88%[=====================>   ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  90%[======================>  ]  ETA: 0:00:28[KEvaluating over 40 metamodels:  92%[=======================> ]  ETA: 0:00:21[KEvaluating over 40 metamodels:  95%[=======================> ]  ETA: 0:00:14[KEvaluating over 40 metamodels:  98%[========================>]  ETA: 0:00:07[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:04:21[K
+Evaluating over 40 metamodels:   0%[>                        ]  ETA: N/A[KEvaluating over 40 metamodels:   2%[>                        ]  ETA: 0:06:11[KEvaluating over 40 metamodels:   5%[=>                       ]  ETA: 0:03:30[KEvaluating over 40 metamodels:   8%[=>                       ]  ETA: 0:02:20[KEvaluating over 40 metamodels:  10%[==>                      ]  ETA: 0:01:56[KEvaluating over 40 metamodels:  12%[===>                     ]  ETA: 0:01:33[KEvaluating over 40 metamodels:  15%[===>                     ]  ETA: 0:01:22[KEvaluating over 40 metamodels:  18%[====>                    ]  ETA: 0:01:10[KEvaluating over 40 metamodels:  20%[=====>                   ]  ETA: 0:01:27[KEvaluating over 40 metamodels:  22%[=====>                   ]  ETA: 0:02:49[KEvaluating over 40 metamodels:  25%[======>                  ]  ETA: 0:02:39[KEvaluating over 40 metamodels:  28%[======>                  ]  ETA: 0:02:37[KEvaluating over 40 metamodels:  30%[=======>                 ]  ETA: 0:02:19[KEvaluating over 40 metamodels:  32%[========>                ]  ETA: 0:02:18[KEvaluating over 40 metamodels:  35%[========>                ]  ETA: 0:02:06[KEvaluating over 40 metamodels:  38%[=========>               ]  ETA: 0:01:58[KEvaluating over 40 metamodels:  40%[==========>              ]  ETA: 0:01:47[KEvaluating over 40 metamodels:  42%[==========>              ]  ETA: 0:01:39[KEvaluating over 40 metamodels:  45%[===========>             ]  ETA: 0:01:32[KEvaluating over 40 metamodels:  48%[===========>             ]  ETA: 0:01:24[KEvaluating over 40 metamodels:  50%[============>            ]  ETA: 0:01:17[KEvaluating over 40 metamodels:  52%[=============>           ]  ETA: 0:01:15[KEvaluating over 40 metamodels:  55%[=============>           ]  ETA: 0:01:18[KEvaluating over 40 metamodels:  58%[==============>          ]  ETA: 0:01:10[KEvaluating over 40 metamodels:  60%[===============>         ]  ETA: 0:01:05[KEvaluating over 40 metamodels:  62%[===============>         ]  ETA: 0:00:58[KEvaluating over 40 metamodels:  65%[================>        ]  ETA: 0:01:07[KEvaluating over 40 metamodels:  70%[=================>       ]  ETA: 0:00:54[KEvaluating over 40 metamodels:  72%[==================>      ]  ETA: 0:00:58[KEvaluating over 40 metamodels:  75%[==================>      ]  ETA: 0:00:51[KEvaluating over 40 metamodels:  78%[===================>     ]  ETA: 0:00:46[KEvaluating over 40 metamodels:  80%[====================>    ]  ETA: 0:00:40[KEvaluating over 40 metamodels:  82%[====================>    ]  ETA: 0:00:34[KEvaluating over 40 metamodels:  85%[=====================>   ]  ETA: 0:00:29[KEvaluating over 40 metamodels:  88%[=====================>   ]  ETA: 0:00:36[KEvaluating over 40 metamodels:  90%[======================>  ]  ETA: 0:00:35[KEvaluating over 40 metamodels:  92%[=======================> ]  ETA: 0:00:26[KEvaluating over 40 metamodels:  95%[=======================> ]  ETA: 0:00:17[KEvaluating over 40 metamodels:  98%[========================>]  ETA: 0:00:08[KEvaluating over 40 metamodels: 100%[=========================] Time: 0:05:24[K
 
 ````
 
