@@ -1,12 +1,17 @@
 # # State-of-the-art model composition in MLJ (Machine Learning in Julia)
 
-# In this script we use [model
-# stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/)
-# to demonstrate the ease with which machine learning models can be
-# combined in sophisticated ways using MLJ. In the future MLJ will
-# have a canned version of stacking. For now we show how to stack
-# using MLJ's generic model composition syntax, which is an extension
-# of the normal fit/predict syntax.
+# In this script we use model stacking to demonstrate the ease with
+# which machine learning models can be combined in sophisticated ways
+# using MLJ. In practice, one would use MLJ's [canned stacking model
+# constructor](https://alan-turing-institute.github.io/MLJ.jl/dev/model_stacking/#Model-Stacking)
+# `Stack`. Here, however, we give a quick demonstation how you would
+# build a stack yourself, using MLJ's generic model composition
+# syntax, which is an extension of the normal fit/predict syntax.
+
+# For a more leisurely notebook on the same material, see
+# [this](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/stacking/)
+# tutorial.
+
 
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
@@ -48,9 +53,12 @@ using MLJ
 folds(data, nfolds) =
     partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);
 
-model1 = @load LinearRegressor pkg=MLJLinearModels
-model2 = @load LinearRegressor pkg=MLJLinearModels
-judge = @load LinearRegressor pkg=MLJLinearModels
+# these models are only going to be default choices for the stack:
+
+LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
+model1 = LinearRegressor()
+model2 = LinearRegressor()
+judge = LinearRegressor()
 
 X = source()
 y = source()
@@ -122,8 +130,10 @@ pipe = @pipeline Standardizer my_stack target=Standardizer
 
 # Want to change a base learner and adjudicator?
 
-pipe.my_stack.regressor2 = @load DecisionTreeRegressor pkg=DecisionTree;
-pipe.my_stack.judge = @load KNNRegressor;
+DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree;
+KNNRegressor = @load KNNRegressor;
+pipe.my_stack.regressor2 = DecisionTreeRegressor()
+pipe.my_stack.judge = KNNRegressor();
 
 # Want a CV estimate of performance of the complete model on some data?
 
@@ -149,8 +159,8 @@ fp.my_stack.regressor1[1].coefs
 # Want to tune multiple (nested) hyperparameters in the stack? Tuning is a
 # model wrapper (for better composition!):
 
-r1 = range(pipe, :(my_stack.regressor2.max_depth), lower = 1, upper = 25)
-r2 = range(pipe, :(my_stack.judge.K), lower=1, origin=10, unit=10)
+r1 = range(pipe, :(my_stack.regressor2.max_depth), lower = 1, upper = 25, scale=:linear)
+r2 = range(pipe, :(my_stack.judge.K), lower=1, origin=10, unit=10, scale=:log10)
 
 import Distributions.Poisson
 
@@ -169,10 +179,12 @@ max_depth = fitted_params(mach).best_model.my_stack.regressor2.max_depth
 # Visualize tuning results:
 
 using Plots
-pyplot()
-plot(mach)
+gr(size=(700,700*(sqrt(5) - 1)/2))
+plt = plot(mach)
+savefig("stacking.png")
+plt #!md
 
-#
+# ![](stacking.png)
 
 using Literate #src
 Literate.markdown(@__FILE__, @__DIR__, execute=false) #src

@@ -4,18 +4,22 @@ EditURL = "<unknown>/wow.jl"
 
 # State-of-the-art model composition in MLJ (Machine Learning in Julia)
 
-In this script we use [model
-stacking](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/)
-to demonstrate the ease with which machine learning models can be
-combined in sophisticated ways using MLJ. In the future MLJ will
-have a canned version of stacking. For now we show how to stack
-using MLJ's generic model composition syntax, which is an extension
-of the normal fit/predict syntax.
+In this script we use model stacking to demonstrate the ease with
+which machine learning models can be combined in sophisticated ways
+using MLJ. In practice, one would use MLJ's [canned stacking model
+constructor](https://alan-turing-institute.github.io/MLJ.jl/dev/model_stacking/#Model-Stacking)
+`Stack`. Here, however, we give a quick demonstation how you would
+build a stack yourself, using MLJ's generic model composition
+syntax, which is an extension of the normal fit/predict syntax.
 
-```@example wow
+For a more leisurely notebook on the same material, see
+[this](https://juliaai.github.io/DataScienceTutorials.jl/getting-started/stacking/)
+tutorial.
+
+````@example wow
 DIR = @__DIR__
 include(joinpath(DIR, "setup.jl"))
-```
+````
 
 ## Stacking is hard
 
@@ -49,15 +53,21 @@ three folds to create the base-learner [out-of-sample
 predictions](https://alan-turing-institute.github.io/DataScienceTutorials.jl/getting-started/stacking/)
 to make it easier to read. You can make this generic with little fuss.
 
-```@example wow
+````@example wow
 using MLJ
 
 folds(data, nfolds) =
     partition(1:nrows(data), (1/nfolds for i in 1:(nfolds-1))...);
+nothing #hide
+````
 
-model1 = @load LinearRegressor pkg=MLJLinearModels
-model2 = @load LinearRegressor pkg=MLJLinearModels
-judge = @load LinearRegressor pkg=MLJLinearModels
+these models are only going to be default choices for the stack:
+
+````@example wow
+LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
+model1 = LinearRegressor()
+model2 = LinearRegressor()
+judge = LinearRegressor()
 
 X = source()
 y = source()
@@ -111,7 +121,7 @@ yhat = predict(m_judge, X_judge)
 end
 
 my_stack = MyStack()
-```
+````
 
 For the curious: Only the last block defines the new model type. The
 rest defines a *[learning network]()* - a kind of working prototype
@@ -125,51 +135,53 @@ We did not include standardization of inputs and target (with
 post-prediction inversion) in our stack. However, we can add these
 now, using MLJ's canned pipeline composition:
 
-```@example wow
+````@example wow
 pipe = @pipeline Standardizer my_stack target=Standardizer
-```
+````
 
 Want to change a base learner and adjudicator?
 
-```@example wow
-pipe.my_stack.regressor2 = @load DecisionTreeRegressor pkg=DecisionTree;
-pipe.my_stack.judge = @load KNNRegressor;
+````@example wow
+DecisionTreeRegressor = @load DecisionTreeRegressor pkg=DecisionTree;
+KNNRegressor = @load KNNRegressor;
+pipe.my_stack.regressor2 = DecisionTreeRegressor()
+pipe.my_stack.judge = KNNRegressor();
 nothing #hide
-```
+````
 
 Want a CV estimate of performance of the complete model on some data?
 
-```@example wow
+````@example wow
 X, y = @load_boston;
 mach = machine(pipe, X, y)
 evaluate!(mach, resampling=CV(), measure=mae)
-```
+````
 
 Want to inspect the learned parameters of the adjudicator?
 
-```@example wow
+````@example wow
 fp =  fitted_params(mach);
 fp.my_stack.judge
-```
+````
 
 What about the first base-learner of the stack? There are four sets
 of learned parameters!  One for each fold to make an out-of-sample
 prediction, and one trained on all the data:
 
-```@example wow
+````@example wow
 fp.my_stack.regressor1
-```
+````
 
-```@example wow
+````@example wow
 fp.my_stack.regressor1[1].coefs
-```
+````
 
 Want to tune multiple (nested) hyperparameters in the stack? Tuning is a
 model wrapper (for better composition!):
 
-```@example wow
-r1 = range(pipe, :(my_stack.regressor2.max_depth), lower = 1, upper = 25)
-r2 = range(pipe, :(my_stack.judge.K), lower=1, origin=10, unit=10)
+````@example wow
+r1 = range(pipe, :(my_stack.regressor2.max_depth), lower = 1, upper = 25, scale=:linear)
+r2 = range(pipe, :(my_stack.judge.K), lower=1, origin=10, unit=10, scale=:log10)
 
 import Distributions.Poisson
 
@@ -185,15 +197,18 @@ K = fitted_params(mach).best_model.my_stack.judge.K;
 max_depth = fitted_params(mach).best_model.my_stack.regressor2.max_depth
 @show K max_depth;
 nothing #hide
-```
+````
 
 Visualize tuning results:
 
-```@example wow
+````@example wow
 using Plots
-pyplot()
-plot(mach)
-```
+gr(size=(700,700*(sqrt(5) - 1)/2))
+plt = plot(mach)
+savefig("stacking.png")
+````
+
+![](stacking.png)
 
 ---
 
