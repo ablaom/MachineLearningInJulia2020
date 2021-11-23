@@ -24,6 +24,8 @@ wish to access resources precisely matching those used in the video,
 switch to the `JuliaCon2020` branch by clicking
 [here](https://github.com/ablaom/MachineLearningInJulia2020/tree/for-MLJ-version-0.16).
 
+**Future revisions** of these tutorials will appear [here](https://github.com/ablaom/MLJTutorial.jl).
+
   
 ### [Options for running the tutorials](#options-for-running-the-tutorials)
 
